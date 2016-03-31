@@ -1,0 +1,72 @@
+	 .well {
+    position: relative;
+    left: 500px;
+    top: -300px;
+    width: 400px;
+    height: 320px;
+
+    }
+
+    .dropdownmenu {
+      position: absolute;
+      left: 250px;
+    }
+
+    .classdropdown {
+      display: inline-block;
+      position: absolute;
+      left: 160px;
+      bottom: 55px;
+      text-align: left;
+    }
+
+    .seatdropdown {
+      position: absolute;
+      left: 200px;
+      bottom: 0px;
+
+    }
+
+    .dropdownpref {
+      padding-left: 100px;
+    }
+
+    #seatpick {
+      padding-left: 30px;
+    }
+
+    #classpick {
+      padding-left: 40px;
+    }
+
+    .seatpref {
+      text-align: center;
+      font-size: 20px;
+      padding-bottom: 30px;
+    }
+
+    .bookbuttondiv {
+      position: absolute;
+      left: 120px;
+
+    }
+
+    #kolo {
+    padding: 20px;
+    width: 1000px;
+    height:400px;
+    border: none;
+    box-shadow: 1px 1px 5px rgba(49, 21, 4, 0.4);
+    background-color: hsla(0, 0%, 83%, 0.86);
+    position: relative;
+    top: 200px;
+    border-radius: 20px;
+    }
+
+
+    /*body {
+      background: url("../assets/greenery.JPG") no-repeat center center fixed;
+			background: url("https://upload.wikimedia.org/wikipedia/commons/a/a1/ArialViewIguazuFallsDistantNbr1of10.JPG") no-repeat center center fixed;
+    background-size: cover;
+
+    }*/

@@ -1,0 +1,24 @@
+{
+    "flightNumber": "SE2804",
+    "aircraft": "Boeing777",
+    "date": "Sun March 29 2016 17:54:57 GMT+0300 (EST)",
+    "duration": "2 hours",
+    "origin": "IAD",
+    "destination": "JFK",
+    "occupiedSeatsFirst":[
+            {
+                  "type":"window",
+                  "Number":"30K",
+                  "bookingRefNo":"B9XJEQ"
+            }
+    ],
+    "occupiedSeatsEconomy":[ 
+
+            {
+                  "type":"aisle",
+                  "Number":"5A",
+                  "bookingRefNo":"B9XTGF"
+            }
+    ],
+    "price":{"first":"dollar$","economy":"dollar$"}
+}
