@@ -1,0 +1,14 @@
+{
+
+    "_id": "VIW23Jfwq8vi3x0ef9",
+    "firstName": "Amr",
+    "lastName": "Desouky",
+    "passport": "USA",
+    "issueDate": "07 JAN 2014",
+    "expiryDate": "06 JAN 2024",
+    "TotalPrice":"int",
+    "receipt_number": "String",
+    "flightNumber": "SE2804",
+    "bookingRefNumber": "B9XJEQ",
+    "seat":{"number":"30k", "class":"first","type":"window"}
+}
