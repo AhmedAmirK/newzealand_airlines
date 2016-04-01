@@ -1,115 +1,16 @@
-[
-
-{"name": "Boeing777",
-"capacity": "100",
+{
+"name": "Boeing777",
+"capacity": "550",
 "seatmap":
         {
-         "first":{"windowMaximum":"20",
-                  "aisleMaximum":"20",
-                  "cabinMaximum":"20"
+         "first":{"windowMaximum":"int",
+                  "aisleMaximum":"int",
+                  "cabinMaximum":"int"
                   },
 
-         "economy":{"windowMaximum":"13",
-                  "aisleMaximum":"13",
-                  "cabinMaximum":"14"
+         "economy":{"windowMaximum":"int",
+                  "aisleMaximum":"int",
+                  "cabinMaximum":"int"
                   }
         }
 }
-
-{"name": "Boeing666",
-"capacity": "100",
-"seatmap":
-        {
-         "first":{"windowMaximum":"10",
-                  "aisleMaximum":"20",
-                  "cabinMaximum":"20"
-                  },
-
-         "economy":{"windowMaximum":"10",
-                  "aisleMaximum":"20",
-                  "cabinMaximum":"20"
-                  }
-        }
-}
-
-{"name": "Boeing555",
-"capacity": "100",
-"seatmap":
-        {
-         "first":{"windowMaximum":"23",
-                  "aisleMaximum":"23",
-                  "cabinMaximum":"24"
-                  },
-
-         "economy":{"windowMaximum":"10",
-                  "aisleMaximum":"10",
-                  "cabinMaximum":"10"
-                  }
-        }
-}
-
-{"name": "Boeing444",
-"capacity": "100",
-"seatmap":
-        {
-         "first":{"windowMaximum":"20",
-                  "aisleMaximum":"20",
-                  "cabinMaximum":"20"
-                  },
-
-         "economy":{"windowMaximum":"13",
-                  "aisleMaximum":"13",
-                  "cabinMaximum":"14"
-                  }
-        }
-}
-
-{"name": "Boeing333",
-"capacity": "100",
-"seatmap":
-        {
-         "first":{"windowMaximum":"20",
-                  "aisleMaximum":"20",
-                  "cabinMaximum":"20"
-                  },
-
-         "economy":{"windowMaximum":"13",
-                  "aisleMaximum":"13",
-                  "cabinMaximum":"14"
-                  }
-        }
-}
-
-{"name": "Boeing222",
-"capacity": "100",
-"seatmap":
-        {
-         "first":{"windowMaximum":"23",
-                  "aisleMaximum":"23",
-                  "cabinMaximum":"24"
-                  },
-
-         "economy":{"windowMaximum":"10",
-                  "aisleMaximum":"10",
-                  "cabinMaximum":"10"
-                  }
-        }
-}
-
-{"name": "Boeing111",
-"capacity": "100",
-"seatmap":
-        {
-         "first":{"windowMaximum":"20",
-                  "aisleMaximum":"20",
-                  "cabinMaximum":"20"
-                  },
-
-         "economy":{"windowMaximum":"13",
-                  "aisleMaximum":"13",
-                  "cabinMaximum":"14"
-                  }
-        }
-}
-
-]
