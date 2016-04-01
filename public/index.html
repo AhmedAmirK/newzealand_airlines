@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="WebApp">
 <head>
 	<title>New Zeland Airlines</title>
 
@@ -8,6 +8,7 @@
   <script src="./js/angular-route.min.js"></script>
   <script src="./js/bootstrap.min.js"></script>
   <script src="./js/ui-bootstrap-tpls-1.2.5.min.js"></script>
+  <script src="core.js"></script>
   <!-- <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
@@ -19,13 +20,7 @@
 				/*background: url("https://upload.wikimedia.org/wikipedia/commons/a/a1/ArialViewIguazuFallsDistantNbr1of10.JPG") no-repeat center center fixed;*/
 			background-size: cover;
 				}
-				.footer{
-					bottom: 0;
-					width: 100%;
-					height: 80px;
-					background-color:#000000;
-					position: fixed;
-				}
+				
 	</style>
 </head>
 
@@ -35,19 +30,19 @@
             <nav class="navbar navbar-inverse">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="#">New ZeaLand AirLines</a>
+                    <a class="navbar-brand" href="/#/">New ZeaLand AirLines</a>
                 </div>
 
                 <ul class="nav navbar-nav ">
-                    <li><a href="#">Home</a></li>
-                   <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Flights <span class="caret"></span></a>
+                    <li><a href="/#/"><i class="fa fa-home"></i>Home</a></li>
+                   <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" ><i class="fa fa-plane"></i>Flights</a> <span class="caret"></span></a>
        				 <ul class="dropdown-menu">
-        			  <li><a href="#Out">Outgoing</a></li>
+        			  <li><a href="#out">Outgoing</a></li>
          				 <li><a href="#return">Return</a></li>
 
       				  </ul>
       				</li>
-                    <li><a href="#track"> Track Flight</a></li>
+                    <li><a href="#track"> <i class="fa fa-binoculars"></i>Track Flight</a></li>
                 </ul>
             </div>
             </nav>
@@ -55,7 +50,6 @@
 
 <div ng-view></div>
 
-  <div class="footer"> <h2>footer here</h2> </div>
 
 
 </body>
