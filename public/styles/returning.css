@@ -1,14 +1,9 @@
 .container{
-  position: relative;
+  border-radius: 20px;
   color: black;
   border: none;
   box-shadow: 1px 1px 5px rgba(49, 21, 4, 0.4);
   background-color: hsla(0, 0%, 83%, 0.86);
 }
 
-/*body {*/
-  /*background: url("https://s-media-cache-ak0.pinimg.com/736x/70/e1/f0/70e1f05061bd4bc047c6baed76ff2950.jpg") no-repeat center center fixed;*/
-  /*background: url("../assets/greenery.JPG") no-repeat center center fixed;
-  background-size: cover;
 
-  }*/
