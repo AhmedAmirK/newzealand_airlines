@@ -4,12 +4,14 @@
 
 
 
-<h3>Flight number: </h3>
-<h3>Departure time: </h3>
-<h3>Arrival time: </h3>
-<h3>Date: </h3>
-<h3>Current State:</h3>
-<h3>ETA: </h3>
+<h3>Flight number: {{Flight.FlightNumber}}</h3>
+<h3>From: {{Flight.From}}</h3>
+<h3>To: {{Flight.To}}</h3>
+<h3>Departure time: {{Flight.Departure}}</h3>
+<h3>Arrival time: {{Flight.Arrival}}</h3>
+<h3>Date: {{Flight.Date}}</h3>
+<h3>Current State: {{message}} </h3>
+<h3>ETA: N/A</h3>
 
 
  <div class = "well">
@@ -17,10 +19,10 @@
   <form role="form">
     <div class="form-group">
       <label>Flight:</label>
-      <input type="text" class="form-control"  placeholder="Enter Number">
+      <input type="text" class="form-control" ng-model="num" placeholder="Enter Number">
     </div>
 
-    <button type="submit" class="btn btn-default">Track</button>
+    <button type="submit" class="btn btn-primary" ng-click="showData()">Track</button>
   </form>
  </div>
 </div>

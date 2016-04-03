@@ -1,0 +1,126 @@
+[
+    {
+        "iata": "Egypt",
+        "lon": "14.138242",
+        "iso": "DE",
+        "status": 1,
+        "name": "Heringsdorf Airport",
+        "continent": "EU",
+        "type": "airport",
+        "lat": "53.87825",
+        "size": "medium"
+    },
+    {
+        "iata": "NewZealand",
+        "lon": "14.138242",
+        "iso": "DE",
+        "status": 1,
+        "name": "Heringsdorf Airport",
+        "continent": "EU",
+        "type": "airport",
+        "lat": "53.87825",
+        "size": "medium"
+    },
+    {
+        "iata": "Indonesia",
+        "lon": "12.711667",
+        "iso": "DE",
+        "status": 1,
+        "name": "Barth Airport",
+        "continent": "EU",
+        "type": "airport",
+        "lat": "54.33972",
+        "size": "small"
+    },
+    {
+        "iata": "Taiwan",
+        "iso": "DE",
+        "status": 1,
+        "name": "Magdeburg Airport",
+        "continent": "EU",
+        "type": "airport",
+        "size": "medium"
+    },
+    {
+        "iata": "China",
+        "lon": "14.299167",
+        "iso": "DE",
+        "status": 1,
+        "name": "Cottbus-Drewitz Airport",
+        "continent": "EU",
+        "type": "airport",
+        "lat": "51.77028",
+        "size": "medium"
+    },
+    {
+        "iata": "Japan",
+        "lon": "13.521388",
+        "iso": "DE",
+        "status": 1,
+        "name": "South Easterwood Airport",
+        "continent": "EU",
+        "type": "airport",
+        "lat": "52.370277",
+        "size": "large"
+    },
+
+        {
+        "iata": "Australia",
+        "lon": "14.299167",
+        "iso": "DE",
+        "status": 1,
+        "name": "Cottbus-Drewitz Airport",
+        "continent": "EU",
+        "type": "airport",
+        "lat": "51.77028",
+        "size": "medium"
+    },
+
+        {
+        "iata": "Brazil",
+        "lon": "14.299167",
+        "iso": "DE",
+        "status": 1,
+        "name": "Cottbus-Drewitz Airport",
+        "continent": "EU",
+        "type": "airport",
+        "lat": "51.77028",
+        "size": "medium"
+    },
+
+        {
+        "iata": "Germany",
+        "lon": "14.299167",
+        "iso": "DE",
+        "status": 1,
+        "name": "Cottbus-Drewitz Airport",
+        "continent": "EU",
+        "type": "airport",
+        "lat": "51.77028",
+        "size": "medium"
+    },
+
+        {
+        "iata": "Saudi Arabia",
+        "lon": "14.299167",
+        "iso": "DE",
+        "status": 1,
+        "name": "Cottbus-Drewitz Airport",
+        "continent": "EU",
+        "type": "airport",
+        "lat": "51.77028",
+        "size": "medium"
+    },
+
+        {
+        "iata": "Canada",
+        "lon": "14.299167",
+        "iso": "DE",
+        "status": 1,
+        "name": "Cottbus-Drewitz Airport",
+        "continent": "EU",
+        "type": "airport",
+        "lat": "51.77028",
+        "size": "medium"
+    }
+]    

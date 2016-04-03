@@ -1,11 +1,13 @@
 <link rel="stylesheet" href="../styles/returning.css">
-
 <div class="container">
 <h2>Current Returning Flights</h2>
+
 <table class="table table-striped">
 <thead>
       <tr>
-        <th>Flight#</th>
+        <th>Flight Number</th>
+        <th>From</th>
+        <th>To</th>
         <th>Departure Time</th>
         <th>Arrival Time</th>
         <th>Date</th>
@@ -13,6 +15,16 @@
       </tr>
     </thead>
 <tbody>
+<tr ng-repeat="RFlight in RFlights">
+        <td> <a href ng-click="setFlight(RFlight)">{{RFlight.FlightNumber}}</a></td>
+        <td>{{RFlight.From}}</td>
+        <td>{{RFlight.To}}</td>
+        <td>{{RFlight.Departure}}</td>
+        <td>{{RFlight.Arrival}}</td>
+        <td>{{RFlight.Date}}</td>
+        <td>${{RFlight.Price}}</td>
+</tr>
 </tbody>
 </table>
+
 </div>
