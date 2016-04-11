@@ -42,11 +42,17 @@ App.factory('FlightsSrv', function ($http) {
          getDate2: function(){
           return this.date2;
          },
-         setFlight: function(value){
+         setOutFlight: function(value){
           this.FlightNo = value;
          },
-         getFlight: function(){
+         getOutFlight: function(){
           return this.FlightNo;
+         },
+         setRetFlight:function(value){
+          this.retFlightNo = value;
+         },
+         getRetFlight: function(value){
+          return this.retFlightNo;
          },
          setSeat: function(value){
           this.Seat = value;
@@ -54,11 +60,23 @@ App.factory('FlightsSrv', function ($http) {
          getSeat: function(){
           return this.Seat;
          },
-         setClass: function(value){
+         setOutClass: function(value){
           this.Class = value;
          },
-         getClass: function(){
+         getOutClass: function(){
           return this.Class;
+         },
+         setRetClass: function(value){
+          this.Rclass = value;
+         },
+         getRetClass: function(){
+          return this,Rclass;
+         },
+         setIfRoundTrip: function(value){
+          this.round= value;
+         },
+         getIfRoundTrip: function(){
+          return this.round;
          }
      };
  });

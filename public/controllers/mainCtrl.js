@@ -1,7 +1,7 @@
 
 App.controller('mainCtrl', function($scope, FlightsSrv, $location) {
 
-  $scope.format = 'dd-MMMM-yyyy';
+  $scope.format = 'shortDate';
 
   $scope.open1 = function() {
     $scope.popup1.opened = true;
@@ -16,7 +16,6 @@ App.controller('mainCtrl', function($scope, FlightsSrv, $location) {
   };
   $scope.setDate2 = function(year,month,day){
     $scope.date2 = new Date(year,month,day);
-    $scope.message = $scope.date2
   }
 
   $scope.popup1 = {
@@ -47,6 +46,10 @@ App.controller('mainCtrl', function($scope, FlightsSrv, $location) {
     FlightsSrv.setDate2($scope.date2);
     $location.url('/out');
   };
+
+  $scope.setRoundTrip = function() {
+    FlightsSrv.setIfRoundTrip($scope.Round);
+  }
 
 
   AirportCodes();
