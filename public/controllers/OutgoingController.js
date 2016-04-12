@@ -21,8 +21,11 @@ App.controller('outgoingFlightsCtrl', function ($scope , FlightsSrv,$location) {
 	});
 
     $scope.setFlight = function(num){
-      FlightsSrv.setFlight(num);
-      $location.url('/booking');
+      FlightsSrv.setOutFlight(num);
+      if(FlightsSrv.getIfRoundTrip()){
+        $location.url('/return');
+      }
+     else $location.url('/booking');
     }
 
 });

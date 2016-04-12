@@ -43,8 +43,32 @@
                       </span>
                     </p>
                   </div>
+                  <div class="checkbox">
+                            <label><input type="checkbox" ng-model="Round" ng-change="setRoundTrip()">Round Trip</label>
+                    </div>
                 </div>
-
+                <div class="row">
+                      <div id="returndate" class="col-md-8" ng-show="Round">
+                    <p class="input-group">
+                      <input type="text"
+                             class="form-control"
+                             placeholder="Return Date" 
+                             uib-datepicker-popup="{{format}}"
+                             ng-model="date2"
+                             is-open="popup2.opened"
+                             ng-required="true"
+                             close-text="Close"
+                             alt-input-formats="altInputFormats" />
+                      <span class="input-group-btn">
+                        <button type="button"
+                                class="btn btn-default"
+                                ng-click="open2()">
+                                <i class="glyphicon glyphicon-calendar"></i>
+                       </button>
+                      </span>
+                    </p>
+                  </div>
+                </div>
               <button type="button" class="btn btn-primary col-sm-offset-9 col-lg-offset-9" id='btnSearch' ng-click='SearchFlights()'>Search Flights</button>
 
             </div>

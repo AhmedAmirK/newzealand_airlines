@@ -30,6 +30,10 @@ App.config(function($routeProvider) {
             templateUrl:'partials/bookings.html',
             controller:'bookingsCtrl'
         })
+        .when('/bookingboth',{
+            templateUrl:'partials/bookoutandret.html',
+            controller:'bookingsCtrl'
+        })
         .when('/payment',{
             templateUrl:'partials/payment.html' ,
             controller:'paymentCtrl'
