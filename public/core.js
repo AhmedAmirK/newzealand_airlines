@@ -1,5 +1,5 @@
 
-App = angular.module('WebApp', ['ui.bootstrap', 'ngRoute']);
+var App = angular.module('WebApp', ['ui.bootstrap', 'ngRoute']);
 
 
 App.config(function($routeProvider) {
@@ -7,31 +7,35 @@ App.config(function($routeProvider) {
 
         // route for the home page
         .when('/', {
-            templateUrl : '/partials/LandingPage.html',
-          //  controller  : 'mainCtrl'
+            templateUrl : '/partials/main.html',
+            controller  : 'mainCtrl'
         })
 
         // route for the flights page
         .when('/out', {
             templateUrl : '/partials/outgoing.html',
-           // controller  : 'flightsCtrl'
+            controller  : 'outgoingFlightsCtrl'          
         })
 
         .when('/return',{
             templateUrl:'/partials/returning.html',
+            controller : 'returningFlightsCtrl'
 
         })
         .when('/track',{
             templateUrl:'partials/track.html',
-
+            controller: 'trackCtrl'
         })
-        .when('/booking/flightN',{
+        .when('/booking',{
             templateUrl:'partials/bookings.html',
+            controller:'bookingsCtrl'
+        })
+        .when('/bookingboth',{
+            templateUrl:'partials/bookoutandret.html',
+            controller:'bookingsCtrl'
         })
         .when('/payment',{
-            templateUrl:'partials/payment.html',
-        })
-        .when('/result',{
-            templateUrl:'partials/BookingFlightResults.html',
-        })
+            templateUrl:'partials/payment.html' ,
+            controller:'paymentCtrl'
+        });
 });

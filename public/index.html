@@ -1,56 +1,54 @@
-<!DOCTYPE html>
+<!doctype html>
+
 <html ng-app="WebApp">
-<head>
-	<title>New Zeland Airlines</title>
+  <head>
+    <title>New Zealand Airlines</title>
+    <script src="/js/jquery-2.2.0.min.js"></script>
+    <script src="/js/angular.min.js"></script>
+    <script src="/js/angular-route.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/ui-bootstrap-tpls-1.2.5.min.js"></script>
+    <script src="core.js"></script>
+    <script src="/controllers/mainCtrl.js"></script>
+    <script src="/controllers/returningFlightsCtrl.js"></script>
+    <script src="/controllers/OutgoingController.js"></script>
+    <script src="/controllers/bookingsCtrl.js"></script>
+    <script src="/controllers/track.js"></script>
+    <script src="/controllers/payment.js"></script>
+    <script src="/services/flightsSrv.js"></script>
+    <link rel="stylesheet" href="/styles/bootstrap.min.css">
+    <style type="text/css">
+        body {
+            background: url("./assets/greenery.JPG") no-repeat center center fixed;
+            background-size: cover;
+        }
+                
+    </style>
+  </head>
+    <body>
 
-  <script src="./js/jquery-2.2.0.min.js"></script>
-  <script src="./js/angular.min.js"></script>
-  <script src="./js/angular-route.min.js"></script>
-  <script src="./js/bootstrap.min.js"></script>
-  <script src="./js/ui-bootstrap-tpls-1.2.5.min.js"></script>
-  <script src="core.js"></script>
-  <!-- <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
- <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css" /> -->
-  <link rel="stylesheet" href="./styles/bootstrap.min.css">
-	<style type="text/css">
-		body {
-				background: url("./assets/greenery.JPG") no-repeat center center fixed;
-				/*background: url("https://upload.wikimedia.org/wikipedia/commons/a/a1/ArialViewIguazuFallsDistantNbr1of10.JPG") no-repeat center center fixed;*/
-			background-size: cover;
-				}
-				
-	</style>
-</head>
-
-<body>
-
- <header>
-            <nav class="navbar navbar-inverse">
+    <!-- TOP NAVBAR -->
+    <nav class="navbar navbar-inverse">
             <div class="container-fluid">
                 <div class="navbar-header">
                     <a class="navbar-brand" href="/#/">New ZeaLand AirLines</a>
                 </div>
 
                 <ul class="nav navbar-nav ">
-                    <li><a href="/#/"><i class="fa fa-home"></i>Home</a></li>
-                   <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" ><i class="fa fa-plane"></i>Flights</a> <span class="caret"></span></a>
-       				 <ul class="dropdown-menu">
-        			  <li><a href="#out">Outgoing</a></li>
-         				 <li><a href="#return">Return</a></li>
+                    <li><a href="/#/">Home</a></li>
+                   <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" >Flights <span class="caret"></span></a>
+                     <ul class="dropdown-menu">
+                      <li><a href="#out">Outgoing</a></li>
+                         <li><a href="#return">Return</a></li>
 
-      				  </ul>
-      				</li>
-                    <li><a href="#track"> <i class="fa fa-binoculars"></i>Track Flight</a></li>
+                      </ul>
+                    </li>
+                    <li><a href="#track">Track Flight</a></li>
                 </ul>
             </div>
             </nav>
-        </header>
+ 
+    <div ng-view></div>
 
-<div ng-view></div>
-
-
-
-</body>
+    </body>
 </html>

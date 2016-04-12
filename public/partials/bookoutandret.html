@@ -1,0 +1,64 @@
+<link rel="stylesheet" href="../styles/bookings.css">
+<style type="text/css">
+  #kolo{
+    position: relative;
+    top: 50px;
+    height: 800px;
+  }
+
+  .well{
+    position: relative;
+    top: -700px;
+    left: 500px;
+  }
+
+</style>
+<div  id = "kolo" class="container">
+<h1><u>Flight Details</u></h1>
+<h2><u>Outgoing</u></h2>
+<h3>Flight number:    {{OutFlight.FlightNumber}} </h3>
+<h3>Departure time:   {{OutFlight.Departure}} </h3>
+<h3>Arrival time:   {{OutFlight.Arrival}} </h3>
+<h3>Date:  {{OutFlight.Date}} </h3>
+<h3>Desired Class: </h3>
+<h3><label class = "price">Price: ${{OutFlight.Price}} </label></h3>
+<div class="dropdown">    
+    <select class="list" ng-model="selectedClass1" ng-change="selectOutClass()">
+      <option ng-value="First">First Class</option>
+      <option ng-value="Economy" ng-selected="selectedClass==selectedClass">Economy Class</option>
+    </select> 
+</div>
+
+<h2><u>Returning</u></h2>
+<h3>Flight number:    {{RetFlight.FlightNumber}} </h3>
+<h3>Departure time:   {{RetFlight.Departure}} </h3>
+<h3>Arrival time:   {{RetFlight.Arrival}} </h3>
+<h3>Date:  {{RetFlight.Date}} </h3>
+<h3>Desired Class: </h3>
+<h3><label class = "price">Price: ${{RetFlight.Price}} </label></h3>
+<div class="dropdown">    
+    <select class="list" ng-model="selectedClass2" ng-change="selectRetClass()">
+      <option ng-value="First">First Class</option>
+      <option ng-value="Economy" ng-selected="selectedClass==selectedClass">Economy Class</option>
+    </select> 
+</div>
+
+ <div class = "well">
+  <h2 class = "seatpref">Seating Preference</h2>
+  <form role="form">
+
+    <h3 class = "seattype">Seat Type</h3>
+    <select class="list2" ng-model="selectedSeat" ng-change="selectSeat()">
+      <option ng-value="Window" ng-selected="selectedSeat==selectedSeat">Window Seat</option>
+      <option ng-value="Aisle">Aisle Seat</option>
+      <option ng-value="Cabin">Cabin Seat</option>
+    </select> 
+
+
+        <div class="bookbuttondiv">
+            <a href="#payment"class="btn btn-primary">Book Flights</a>
+        </div>
+
+  </form>
+</div>
+ </div>

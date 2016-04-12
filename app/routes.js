@@ -14,4 +14,14 @@ module.exports = function(app,mongo) {
       res.sendFile(__dirname + '/public/index.html');
     });
 
+    app.get('/api/data/Outflights',function(req,res){
+     	var Outflights = require('../public/Dummydata/OutGoingFlights.json');
+        res.json(Outflights);
+    });
+
+    app.get('/api/data/Retflights',function(req,res){
+    	var Retflights = require('../public/Dummydata/ReturningFlights.json');
+    	res.json(Retflights);
+    });
+
 };

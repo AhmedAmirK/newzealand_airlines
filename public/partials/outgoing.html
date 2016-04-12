@@ -1,10 +1,13 @@
 <link rel="stylesheet" href="../styles/outgoing.css">
 <div class="container">
-<h2>Current Outgoing Flights</h2>
+<h2>Current Outgoing Flights </h2>
+
 <table class="table table-striped">
 <thead>
       <tr>
-        <th>Flight#</th>
+        <th>Flight Number</th>
+        <th>From</th>
+        <th>To</th>
         <th>Departure Time</th>
         <th>Arrival Time</th>
         <th>Date</th>
@@ -12,6 +15,17 @@
       </tr>
     </thead>
 <tbody>
+<tr ng-repeat="OFlight in OFlights">
+        <td> <a href ng-click="setFlight(OFlight)">{{OFlight.FlightNumber}}</a></td>
+        <td>{{OFlight.From}}</td>
+        <td>{{OFlight.To}}</td>
+        <td>{{OFlight.Departure}}</td>
+        <td>{{OFlight.Arrival}}</td>
+        <td>{{OFlight.Date}}</td>
+        <td>${{OFlight.Price}}</td>
+</tr>
 </tbody>
 </table>
 </div>
+
+
