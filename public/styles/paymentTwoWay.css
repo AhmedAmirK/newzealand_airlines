@@ -1,0 +1,12 @@
+.well {
+  box-shadow: 1px 1px 5px rgba(49, 21, 4, 0.4);
+  background-color: hsla(0, 0%, 83%, 0.86);
+
+}
+.jumbotron{
+ position: relative;
+ border: none;
+ box-shadow: 1px 1px 5px rgba(49, 21, 4, 0.4);
+ background-color: hsla(0, 0%, 83%, 0.86);
+ border-radius: 20px;
+}

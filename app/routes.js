@@ -5,7 +5,7 @@ module.exports = function(app,mongo) {
 
     /* GET ALL STATES ENDPOINT */
     app.get('/api/data/codes', function(req, res) {
-      var codes =  require('../airports.json');
+      var codes =  require('../public/Dummydata/airports.json');
       res.json( codes );
     });
 
