@@ -1,9 +1,9 @@
 {
-  "name"         : "The MEAN Machine",
+  "name"         : "the-MEAN-Machine",
   "version"      : "1.0.0",
   "description"  : "Air New ZeaLand airplane reservation system",
   "main"         : "server.js",
-  "authors"       : "MEAN Machines",
+  "authors"      : "MEAN Machines",
   "dependencies" : {
     "express"    : "^4.7.2",
     "morgan"     : "^1.2.2",
