@@ -35,6 +35,10 @@ App.config(function($routeProvider) {
             controller:'bookingsCtrl'
         })
         .when('/payment',{
+            templateUrl:'partials/payment.html' ,
+            controller:'paymentCtrl'
+        });
+        .when('/paymentTwoWay',{
             templateUrl:'partials/paymentTwoWay.html' ,
             controller:'paymentCtrl'
         });
