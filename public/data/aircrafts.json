@@ -1,0 +1,89 @@
+[{
+	"name"     : "Boeing 777",
+    "type"     : "Boeing",     
+    "model"    : 30,   
+    "capacity" : 200,
+    "seatmap"  :
+    {
+        "first" : {"windowMaximum":40 , "aisleMaximum":40 , "cabinMaximum":20},
+        "economy" : {"windowMaximum":40 , "aisleMaximum":40 , "cabinMaximum":20}
+    }
+	},
+	{
+	"name"     : "Airbus 310",
+    "type"     : "Airbus",     
+    "model"    : 30,   
+    "capacity" : 200,
+    "seatmap"  :
+    {
+        "first" : {"windowMaximum":40 , "aisleMaximum":40 , "cabinMaximum":20},
+        "economy" : {"windowMaximum":40 , "aisleMaximum":40 , "cabinMaximum":20}
+    }
+	},
+	{
+	"name"     : "Airbus 318",
+    "type"     : "Airbus",     
+    "model"    : 30,   
+    "capacity" : 200,
+    "seatmap"  :
+    {
+        "first" : {"windowMaximum":40 , "aisleMaximum":40 , "cabinMaximum":20},
+        "economy" : {"windowMaximum":40 , "aisleMaximum":40 , "cabinMaximum":20}
+    }
+	},
+	{
+	"name"     : "Boeing 357",
+    "type"     : "Boeing",     
+    "model"    : 30,   
+    "capacity" : 200,
+    "seatmap"  :
+    {
+        "first" : {"windowMaximum":40 , "aisleMaximum":40 , "cabinMaximum":20},
+        "economy" : {"windowMaximum":40 , "aisleMaximum":40 , "cabinMaximum":20}
+    }
+	},
+	{
+	"name"     : "Airbus 317",
+    "type"     : "Airbus",     
+    "model"    : 30,   
+    "capacity" : 200,
+    "seatmap"  :
+    {
+        "first" : {"windowMaximum":40 , "aisleMaximum":40 , "cabinMaximum":20},
+        "economy" : {"windowMaximum":40 , "aisleMaximum":40 , "cabinMaximum":20}
+    }
+	},
+	{
+	"name"     : "ATR 77",
+    "type"     : "ATR",     
+    "model"    : 30,   
+    "capacity" : 70,
+    "seatmap"  :
+    {
+        "first" : {"windowMaximum":10 , "aisleMaximum":10 , "cabinMaximum":10},
+        "economy" : {"windowMaximum":10 , "aisleMaximum":10 , "cabinMaximum":20}
+    }
+	},
+	{
+	"name"     : "ATR 214",
+    "type"     : "ATR",     
+    "model"    : 30,   
+    "capacity" : 200,
+    "seatmap"  :
+    {
+        "first" : {"windowMaximum":40 , "aisleMaximum":40 , "cabinMaximum":20},
+        "economy" : {"windowMaximum":40 , "aisleMaximum":40 , "cabinMaximum":20}
+    }
+	},
+	{
+	"name"     : "Boeing 720",
+    "type"     : "Boeing",     
+    "model"    : 30,   
+    "capacity" : 200,
+    "seatmap"  :
+    {
+        "first" : {"windowMaximum":40 , "aisleMaximum":40 , "cabinMaximum":20},
+        "economy" : {"windowMaximum":40 , "aisleMaximum":40 , "cabinMaximum":20}
+    }
+	}
+	]

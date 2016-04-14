@@ -197,6 +197,18 @@ exports.importAirports = function(data,cb){
 	});
 }
 
+exports.importAircrafts = function(data,cb){
+
+	data.forEach(function(air){
+		var tuple = new Aircraft(air);
+		tuple.save(function(err){
+			if (err)
+				cb(err);
+			else cb(null);
+		});
+	});
+}
+
 exports.searchInFlights = function(jsonObject , cb){
     var query = Flight.find(jsonObject);
     query.exec(function (err, results) {

@@ -1,5 +1,6 @@
 var db = require('../db.js');
 var airports =  require('../public/data/airports.json');
+var aircrafts = require('../public/data/aircrafts.json');
 var mongoose = require('mongoose');
 /**
  * App routes:
@@ -14,9 +15,12 @@ module.exports = function(app,mongo) {
         if (err) console.log(err);
       });
 
-      
+       db.importAircrafts(aircrafts,function(err){
+        if (err) console.log(err);
+      });
 
-
+       
+       
     });      
 
     /* DELETE DB */
@@ -40,15 +44,19 @@ module.exports = function(app,mongo) {
       res.json( airports );
     });
 
+
     /* RENDER MAIN PAGE */
     app.get('/', function (req, res) {
       res.sendFile(__dirname + '/public/index.html');
     });
 
+
+
     app.get('/api/data/Outflights',function(req,res){
      	var Outflights = require('../public/Dummydata/OutGoingFlights.json');
         res.json(Outflights);
     });
+
 
     app.get('/api/data/Retflights',function(req,res){
     	var Retflights = require('../public/Dummydata/ReturningFlights.json');
