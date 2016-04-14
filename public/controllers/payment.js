@@ -4,7 +4,7 @@ App.controller('paymentCtrl', function($scope, $location , FlightsSrv,$window){
   $scope.OutFlight= FlightsSrv.getOutFlight();
   $scope.Seat = FlightsSrv.getSeat();
   $scope.OutClass = FlightsSrv.getOutClass();
-
+  $scope.TotalPrice = 
   if(FlightsSrv.getIfRoundTrip()){
   	$scope.RetFlight = FlightsSrv.getRetFlight();
   	$scope.RetClass = FlightsSrv.getRetClass();

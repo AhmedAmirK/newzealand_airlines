@@ -70,7 +70,7 @@ App.factory('FlightsSrv', function ($http) {
           this.Rclass = value;
          },
          getRetClass: function(){
-          return this,Rclass;
+          return this.Rclass;
          },
          setIfRoundTrip: function(value){
           this.round= value;

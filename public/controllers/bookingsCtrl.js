@@ -19,5 +19,8 @@ App.controller('bookingsCtrl', function($scope, $location , FlightsSrv){
    $scope.selectRetClass= function(){
     FlightsSrv.setRetClass($scope.selectedClass2);
    }
+   $scope.bookFlights= function(){
+    $location.url('/paymentTwoWay');
+   }
 
 });
