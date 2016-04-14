@@ -2,6 +2,8 @@ var db = require('../db.js');
 var airports =  require('../public/data/airports.json');
 var aircrafts = require('../public/data/aircrafts.json');
 var mongoose = require('mongoose');
+var moment = require('moment');
+var flights = require('./Flights.js');
 /**
  * App routes:
  */
@@ -19,8 +21,11 @@ module.exports = function(app,mongo) {
         if (err) console.log(err);
       });
 
-       
-       
+      db.importFlights(flights,function(err){
+        if (err) console.log(err);
+      });       
+
+      
     });      
 
     /* DELETE DB */
