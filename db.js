@@ -131,17 +131,17 @@ exports.clearFlights = function(cb){
 };
 
 exports.clearBookings = function(cb){
-    Flight.remove(function(){console.log('Successfully cleared Bookings')});
+    Booking.remove(function(){console.log('Successfully cleared Bookings')});
     cb();
 };
 
 exports.clearAircrafts = function(cb){
-    Flight.remove(function(){console.log('Successfully cleared Aircrafts')});
+    Aircraft.remove(function(){console.log('Successfully cleared Aircrafts')});
     cb();
 };
 
 exports.clearAirports = function(cb){
-    Flight.remove(function(){console.log('Successfully cleared Airports')});
+    Airport.remove(function(){console.log('Successfully cleared Airports')});
     cb();
 };
 
@@ -185,6 +185,18 @@ exports.insertInAirports = function(jsonObject , cb){
     });
 }
 
+exports.importAirports = function(data,cb){
+
+	data.forEach(function(air){
+		var tuple = new Airport(air);
+		tuple.save(function(err){
+			if (err)
+				cb(err);
+			else cb(null);
+		});
+	});
+}
+
 exports.searchInFlights = function(jsonObject , cb){
     var query = Flight.find(jsonObject);
     query.exec(function (err, results) {
@@ -224,5 +236,3 @@ exports.searchInAirports = function(jsonObject , cb){
             cb(null,results);
     });
 }
-
-

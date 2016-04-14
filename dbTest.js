@@ -1,5 +1,5 @@
 var db = require('./db.js');
-
+var airports =  require('./public/data/airports.json');
 var aircraft = {
     name     : 'My awesome aircraft',
     type     : 'Boeing',     
@@ -14,7 +14,6 @@ var aircraft = {
 
 db.connect(function(){
 
-        db.clearAircrafts(function(){
             db.clearFlights(function(){});
             db.insertInAircrafts(aircraft , function(err){
                 if(err === null){
@@ -24,11 +23,18 @@ db.connect(function(){
                     console.log(err);
                 }
             });
-        });
+
 
         db.getAircrafts(function(err,data){
             console.log(data.toString());
+            db.clearAircrafts(function(){});
         });
+
+        db.importAirports(airports,function(err){
+            if (err) console.log(err);
+        });
+
+
 
 });
 

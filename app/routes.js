@@ -1,12 +1,43 @@
+var db = require('../db.js');
+var airports =  require('../public/data/airports.json');
+var mongoose = require('mongoose');
 /**
  * App routes:
  */
 module.exports = function(app,mongo) {
 
-    /* GET ALL STATES ENDPOINT */
+
+
+    app.get('/db/seed', function(req, res) {
+
+      db.importAirports(airports,function(err){
+        if (err) console.log(err);
+      });
+
+      
+
+
+    });      
+
+    /* DELETE DB */
+    app.get('/db/delete', function(req, res) {
+
+      db.clearFlights(
+        db.clearBookings(
+          db.clearAirports(
+            db.clearAircrafts(function(){});
+            )
+          )
+        )
+
+
+    });
+
+
+
     app.get('/api/data/codes', function(req, res) {
-      var codes =  require('../public/Dummydata/airports.json');
-      res.json( codes );
+      
+      res.json( airports );
     });
 
     /* RENDER MAIN PAGE */
