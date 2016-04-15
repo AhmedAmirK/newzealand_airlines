@@ -1,18 +1,26 @@
 {
-  "name"         : "the-MEAN-Machine",
+  "name"         : "the-mean-machine",
   "version"      : "1.0.0",
   "description"  : "Air New ZeaLand airplane reservation system",
   "main"         : "server.js",
   "authors"      : "MEAN Machines",
+  "repository": {
+    "type": "git",
+    "url" : "https://github.com/secourse2016/the-mean-machine"
+  },
   "dependencies" : {
-    "express"    : "^4.7.2",
-    "morgan"     : "^1.2.2",
-    "body-parser": "^1.5.2",
-    "mongoose"	 : "^3.6.2",
-    "mongodb": "^2.0.33",
-    "mocha" : "^2.4.5",
-     "chai" : "^3.5.0",
-     "supertest" : "^1.2.0",
-     "istanbul" : "^0.4.2"
+    "express"    : "*",
+    "morgan"     : "*",
+    "body-parser": "*",
+    "mongoose"	 : "*",
+    "mongodb": "*",
+    "mocha" : "*",
+     "chai" : "*",
+     "supertest" : "*",
+     "istanbul" : "*",
+     "dotenv"      : "*",
+    "jsonwebtoken": "*",
+    "underscore"  : "*",
+    "moment"      : "*"
     }
 }
