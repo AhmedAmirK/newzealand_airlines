@@ -24,4 +24,28 @@ module.exports = function(app,mongo) {
     	res.json(Retflights);
     });
 
+    /* Middleware */
+  app.use(function(req, res, next) {
+    // check header or url parameters or post parameters for token
+        var token = req.body.wt || req.query.wt || req.headers['x-access-token'];
+
+        console.log("{{{{ TOKEN }}}} => ", token);
+
+        var jwtSecret = process.env.JWTSECRET;
+
+        // Get JWT contents:
+        try
+        {
+          var payload = jwt.verify(token, jwtSecret);
+          req.payload = payload;
+          next();
+        }
+        catch (err)
+        {
+          console.error('[ERROR]: JWT Error reason:', err);
+          res.status(403).sendFile(path.join(__dirname, '../public/assets', '403.jpg'));
+        }
+
+  });
+
 };
