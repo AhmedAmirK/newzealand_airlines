@@ -32,9 +32,9 @@ module.exports = function(app,bodyparser) {
         db.clearBookings(
           db.clearAirports(
             db.clearAircrafts(function(){});
-            )
           )
         )
+      )
 
 
     });
@@ -67,15 +67,12 @@ module.exports = function(app,bodyparser) {
 
 
 
-    app.get('/api/data/Outflights',function(req,res){
-     	var Outflights = require('../public/Dummydata/OutGoingFlights.json');
-        res.json(Outflights);
-    });
+    app.get('/api/data/flights',function(req,res){
 
+      db.getFlights(function(err,data){
+          res.json(data);
+      });
 
-    app.get('/api/data/Retflights',function(req,res){
-    	var Retflights = require('../public/Dummydata/ReturningFlights.json');
-    	res.json(Retflights);
     });
 
     /* Middleware */
@@ -110,7 +107,7 @@ module.exports = function(app,bodyparser) {
         var Results = new Object();
         Results["origin"] = Origin;
         Results["departureDateTime"] = DepartingDate;
-        Results["class"] = Class;
+        //Results["class"] = Class;
         var jsonArray = JSON.stringify(Results);
         db.searchInFlights(jsonArray, function(err,results){
             if(err == null)
@@ -120,5 +117,27 @@ module.exports = function(app,bodyparser) {
         });
     }); 
 
+    app.get('/api/flights/search/:origin/:destination/:departingDate/:returningDate/:class', function(req, res) {
+        var conditions = new Object();
+        conditions["origin"] = req.param(origin);
+        conditions["destination"] = req.param(destination);
+        conditions["departuredatetime"] = (req.param(departingDate)).getTime();
+        var jsonObject = JSON.stringify(conditions);
+        db.searchInFlights(jsonObject, function(err,results){
+            if(err == null){
+              var conditions2 = new Object();
+              conditions2["origin"] = req.param(destination);
+              conditions2["destination"] = req.param(origin);
+              conditions2["departuredatetime"] = (req.param(returnDate)).getTime();
+              var jsonObject2 = JSON.stringify(conditions2);
+              db.searchInFlights(jsonObject2 , function(err2,results2){
+                if(err2 == null)
+                  res.json({outgoingFlights:results , returnFlights:results2});
+              });  
+            }
+            else
+                console.log(err);
+        });
+    }); 
 
 };
