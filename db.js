@@ -7,8 +7,8 @@ var flightSchema = new Schema ({
 
     flightNumber: Number,
     aircraft: String,
-    departuedatetime: { type: Date, default: Date.now },
-    arrivaldatetime:{type:Date,default:Date.now},
+    departuredatetime: Date
+    arrivaldatetime:Date,
     origin: String,
     destination: String,
     occupiedSeatsFirst : 

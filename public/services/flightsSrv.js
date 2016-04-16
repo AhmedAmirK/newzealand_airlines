@@ -7,11 +7,22 @@ App.factory('FlightsSrv', function ($http) {
            return $http.get('/api/data/codes');
          },
          getOutgoingFlights : function() {
-           return $http.get('/api/data/Outflights');
+           return $http.get('/api/flights/allflightstoday');
          },
          getReturningFlights : function() {
            return $http.get('/api/data/RetFlights');
          },
+         seedDB : function(){
+          $http.get('/db/seed');
+         },
+         trackFlight: function(data){
+          return $http.get('/api/flights/track/:flightNumber',{params:{"flightNumber":data}});
+         },
+         searchFlights: function(){
+          if(this.round)
+           return $http.get('/api/flights/search/:origin/:destination/:departingDate/:returningDate/:class',{params:{"origin": this.selectedOriginAirport , "destination":this.selectedDestinationAirport,"departingDate":this.date1,"returningDate":date2,"class":1}});
+          else return $http.get('/api/flights/search/:origin/:departingDate/:class',{params:{"origin": this.selectedOriginAirport,"departingDate":this.date1,"class":1}});
+         }
          setSelectedOriginAirport: function(value) {
            this.selectedOriginAirport = value;
          },

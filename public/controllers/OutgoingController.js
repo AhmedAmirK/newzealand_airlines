@@ -2,8 +2,11 @@
 App.controller('outgoingFlightsCtrl', function ($scope , FlightsSrv,$location) {
     $scope.OFlights = [];
     var temp=[];
-    FlightsSrv.getOutgoingFlights().success(function(OutFlights) {
-    		$scope.OFlights = OutFlights;
+    FlightsSrv.searchFlights().success(function(Flights) {
+
+
+    		if(FlightsSrv.getIfRoundTrip())
+          $scope.OFlights
     		
 
   		   var destination = FlightsSrv.getSelectedDestinationAirport();

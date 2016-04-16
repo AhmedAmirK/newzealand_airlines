@@ -45,11 +45,25 @@ module.exports = function(app,bodyparser) {
         condition["flightNumber"] = num;
         var jsonObject = JSON.stringify(condition);
         db.searchInFlights(jsonObject , function(err,results){
-        if(err == null)
+        if(err == null && results.length>0)
             res.json(results[0]);
         else
             console.log(err);
         });
+    });
+
+    app.get('/api/flights/allflightstoday',function(req,res){
+
+      var date = new Object();
+      date["departuredateTime"]= Date.now;
+      var jsonObject = JSON.stringify(date);
+      db.searchInFlights(jsonObject, function(err,results){
+        if(err)
+          console.log(err);
+        else
+          res.json(results);
+      })
+
     });
 
 
@@ -119,6 +133,5 @@ module.exports = function(app,bodyparser) {
                 console.log(err);
         });
     }); 
-
 
 };
