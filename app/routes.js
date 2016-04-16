@@ -19,7 +19,9 @@ module.exports = function(app,mongo) {
         if (err) console.log(err);
       });
 
-       
+        db.importFlights(flights,function(err){
+        if (err) console.log(err);
+      });   
        
     });      
 
