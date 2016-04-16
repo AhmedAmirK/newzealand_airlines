@@ -86,5 +86,25 @@ module.exports = function(app,mongo) {
         }
 
   });
+   
+    app.get('/api/flights/search/:origin/:departingDate/:class', function(req, res) {
+        var Origin = req.param(origin);
+        var dDate = req.param(departingDate);
+        var DepartingDate = dDate.getTime();
+        var Class = req.param(class);
+        var Results = new Object();
+        Results["origin"] = Origin;
+        Results["departureDateTime"] = DepartingDate;
+        Results["class"] = Class;
+        var jsonArray = JSON.stringify(Results);
+        db.searchInFlights(jsonArray, function(err,results){
+            if(err == null)
+                res.json(results.toString());
+            else
+                console.log(err);
+        });
+    });        
+
+
 
 };
