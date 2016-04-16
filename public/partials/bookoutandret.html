@@ -16,12 +16,11 @@
 <div  id = "kolo" class="container">
 <h1><u>Flight Details</u></h1>
 <h2><u>Outgoing</u></h2>
-<h3>Flight number:    {{OutFlight.FlightNumber}} </h3>
-<h3>Departure time:   {{OutFlight.Departure}} </h3>
-<h3>Arrival time:   {{OutFlight.Arrival}} </h3>
-<h3>Date:  {{OutFlight.Date}} </h3>
+<h3>Flight number:    {{OutFlight.flightNumber}} </h3>
+<h3>Departure time:   {{OutFlight.departuredatetime}} </h3>
+<h3>Arrival time:   {{OutFlight.arrivaldatetime}} </h3>
 <h3>Desired Class: </h3>
-<h3><label class = "price">Price: ${{OutFlight.Price}} </label></h3>
+<h3><label class = "price">Price: ${{price}} </label></h3>
 <div class="dropdown">    
     <select class="list" ng-model="selectedClass1" ng-change="selectOutClass()">
       <option ng-value="First">First Class</option>
@@ -30,12 +29,11 @@
 </div>
 
 <h2><u>Returning</u></h2>
-<h3>Flight number:    {{RetFlight.FlightNumber}} </h3>
-<h3>Departure time:   {{RetFlight.Departure}} </h3>
-<h3>Arrival time:   {{RetFlight.Arrival}} </h3>
-<h3>Date:  {{RetFlight.Date}} </h3>
+<h3>Flight number:    {{RetFlight.flightNumber}} </h3>
+<h3>Departure time:   {{RetFlight.departuredatetime}} </h3>
+<h3>Arrival time:   {{RetFlight.arrivaldatetime}} </h3>
 <h3>Desired Class: </h3>
-<h3><label class = "price">Price: ${{RetFlight.Price}} </label></h3>
+<h3><label class = "price">Price: ${{RetFlight.price2}} </label></h3>
 <div class="dropdown">    
     <select class="list" ng-model="selectedClass2" ng-change="selectRetClass()">
       <option ng-value="First">First Class</option>

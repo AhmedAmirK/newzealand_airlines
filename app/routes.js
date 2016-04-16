@@ -52,12 +52,7 @@ module.exports = function(app,bodyparser) {
         });
     });
 
-<<<<<<< HEAD
 
-
-=======
-    
->>>>>>> 9df49d0ec8c5f5c4042cbcc8cfc1e6f99ce9570f
 
     app.get('/api/data/codes', function(req, res) {
       
@@ -123,13 +118,11 @@ module.exports = function(app,bodyparser) {
         });
     }); 
 
-<<<<<<< HEAD
-=======
     app.get('/api/flights/search/:origin/:destination/:departingDate/:returningDate/:class', function(req, res) {
         var conditions = new Object();
         conditions["origin"] = req.param(origin);
         conditions["destination"] = req.param(destination);
-        conditions["departuredatetime"] = (req.param(departingDate)).getTime();
+        conditions["departuredatetime"] = (req.param(departingDate)).toDate();
         var jsonObject = JSON.stringify(conditions);
         db.searchInFlights(jsonObject, function(err,results){
             if(err == null){
@@ -148,11 +141,9 @@ module.exports = function(app,bodyparser) {
         });
     });
 
-    app.get('/api/booking/:email/:firstName/:lastName/:issueDate/:expiryDate/:TotalPrice/:flightNumber/:seatClass/:seatType' , function(req,res){
+    app.get('/api/booking/:email/:issueDate/:expiryDate/:TotalPrice/:flightNumber/:seatClass/:seatType' , function(req,res){
         var conditions = new Object();
         condition["email"] = req.param(email);
-        condition["firstName"] = req.param(firstName);
-        condition["lastName"] = req.param(lastName);
         condition["issueDate"] = req.param(issueDate);
         condition["expiryDate"] = req.param(expiryDate);
         condition["TotalPrice"] = req.param(TotalPrice);
@@ -167,5 +158,4 @@ module.exports = function(app,bodyparser) {
         });
     });
 
->>>>>>> 9df49d0ec8c5f5c4042cbcc8cfc1e6f99ce9570f
 };

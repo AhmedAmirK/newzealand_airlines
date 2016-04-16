@@ -31,11 +31,7 @@ var flightSchema = new Schema ({
 });
 
 var bookingSchema = new Schema({
-    email: String, 
-    id: String , 
-    firstName: String,
-    lastName: String,
-    passport: String,
+    email: String,  
     issueDate: { type: Date, default: Date.now },
     expiryDate: { type: Date, default: Date.now },
     TotalPrice: Number,

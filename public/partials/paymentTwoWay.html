@@ -5,13 +5,12 @@
   <div class="well row col-lg-offset-1 col-lg-10">
   <div class="text"> <h2>  <u>Outgoing Flight Details </u> </h2> </div>
   <div class="container">
-      <div class="num"> <h3> Flight Number: {{OutFlight.FlightNumber}} </h3> </div>
-      <div class="dep"> <h3> Departure Time: {{OutFlight.Departure}} </h3> </div>
-      <div class="arr"> <h3> Arrival Time: {{OutFlight.Arrival}} </h3> </div>
-      <div class="date"> <h3> Date: {{OutFlight.Date}} </h3> </div>
+      <div class="num"> <h3> Flight Number: {{OutFlight.flightNumber}} </h3> </div>
+      <div class="dep"> <h3> Departure Time: {{OutFlight.departuredatetime}} </h3> </div>
+      <div class="arr"> <h3> Arrival Time: {{OutFlight.arrivaldatetime}} </h3> </div>
       <div class="class"> <h3> Class: {{OutClass}}</h3> </div>
       <div class="seat"> <h3> Seat Type: {{Seat}}</h3> </div>
-      <div class="price"> <h3> Price : ${{OutFlight.Price}}  </h3> </div>
+      <div class="price"> <h3> Price : ${{price}}  </h3> </div>
   </div>
   </div>
 
@@ -19,13 +18,12 @@
   <div class="well row col-lg-offset-1 col-lg-10">
   <div class="text"> <h2>  <u>Return Flight Details </u> </h2> </div>
   <div class="container">
-      <div class="num"> <h3> Flight Number: {{RetFlight.FlightNumber}} </h3> </div>
-      <div class="dep"> <h3> Departure Time: {{RetFlight.Departure}} </h3> </div>
-      <div class="arr"> <h3> Arrival Time: {{RetFlight.Arrival}} </h3> </div>
-      <div class="date"> <h3> Date: {{RetFlight.Date}} </h3> </div>
+      <div class="num"> <h3> Flight Number: {{RetFlight.flightNumber}} </h3> </div>
+      <div class="dep"> <h3> Departure Time: {{RetFlight.departuredatetime}} </h3> </div>
+      <div class="arr"> <h3> Arrival Time: {{RetFlight.arrivaldatetime}} </h3> </div>
       <div class="class"> <h3> Class: {{RetClass}}</h3> </div>
       <div class="seat"> <h3> Seat Type: {{Seat}}</h3> </div>
-      <div class="price"> <h3> Price : ${{RetFlight.Price}}  </h3> </div>
+      <div class="price"> <h3> Price : ${{price2}}  </h3> </div>
   </div>
   </div>
 
@@ -54,6 +52,6 @@
        <a type="button" href="#/"ng-click="confirm()"class="btn btn-primary col-lg-offset-10">Confirm</a>
   </form>
   <div class="well col-lg-offset-2 col-lg-7">
-    <div class="Totalprice"> <h3>Total Price : ${{OutFlight.Price+RetFlight.Price}}  </h3> </div>
+    <div class="Totalprice"> <h3>Total Price : ${{TotalPrice}}  </h3> </div>
   </div>
 </div>
