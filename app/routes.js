@@ -52,6 +52,7 @@ module.exports = function(app,bodyparser) {
         });
     });
 
+    app.get()
 
     app.get('/api/data/codes', function(req, res) {
       
@@ -111,7 +112,7 @@ module.exports = function(app,bodyparser) {
         var jsonArray = JSON.stringify(Results);
         db.searchInFlights(jsonArray, function(err,results){
             if(err == null)
-                res.json(results.toString());
+                res.json({outgoingFlights:results});
             else
                 console.log(err);
         });
@@ -138,6 +139,25 @@ module.exports = function(app,bodyparser) {
             else
                 console.log(err);
         });
-    }); 
+    });
+
+    app.get('/api/booking/:email/:firstName/:lastName/:issueDate/:expiryDate/:TotalPrice/:flightNumber/:seatClass/:seatType' , function(req,res){
+        var conditions = new Object();
+        condition["email"] = req.param(email);
+        condition["firstName"] = req.param(firstName);
+        condition["lastName"] = req.param(lastName);
+        condition["issueDate"] = req.param(issueDate);
+        condition["expiryDate"] = req.param(expiryDate);
+        condition["TotalPrice"] = req.param(TotalPrice);
+        condition["flightNumber"] = req.param(flightNumber);
+        condition["seatClass"] = req.param(seatClass);
+        condition["seatType"] = req.param(seatType);
+        var jsonObject = JSON.stringify(conditions);
+        db.insertInBookings(jsonObject, function(err){
+          if(err != null){
+            console.log(err);
+          }
+        });
+    });
 
 };
