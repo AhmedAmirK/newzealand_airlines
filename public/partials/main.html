@@ -13,7 +13,7 @@
                 class="form-control",
                 typeahead-on-select="SetOriginAirport($item.iata)">
 
-                <input name="destinationAirports"
+                <input ng-show="Round" name="destinationAirports"
                 id="destinationAirports"
                 type="text"
                 placeholder="Flying To"

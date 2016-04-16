@@ -5,10 +5,10 @@ var Flight , Booking , Aircraft , Airport;
 
 var flightSchema = new Schema ({
 
-    flightNumber: String,
+    flightNumber: Number,
     aircraft: String,
-    date: { type: Date, default: Date.now },
-    duration: Number,
+    departuredatetime: Date
+    arrivaldatetime:Date,
     origin: String,
     destination: String,
     occupiedSeatsFirst : 
@@ -192,9 +192,9 @@ exports.importAirports = function(data,cb){
 		tuple.save(function(err){
 			if (err)
 				cb(err);
-			else cb(null);
 		});
 	});
+	cb();
 }
 
 exports.importAircrafts = function(data,cb){
@@ -204,9 +204,23 @@ exports.importAircrafts = function(data,cb){
 		tuple.save(function(err){
 			if (err)
 				cb(err);
-			else cb(null);
 		});
 	});
+	cb();
+}
+
+exports.importFlights = function(data,cb){
+
+	var i;
+	for(i = 0; i<data.length;i++){
+
+		var tuple = new Flight(data[i]);
+		tuple.save(function(err){
+			if (err)
+				cb(err);
+		});
+	}
+	cb();
 }
 
 exports.searchInFlights = function(jsonObject , cb){
