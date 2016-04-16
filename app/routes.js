@@ -5,7 +5,7 @@ var mongoose = require('mongoose');
 /**
  * App routes:
  */
-module.exports = function(app,mongo) {
+module.exports = function(app,bodyparser) {
 
 
 
