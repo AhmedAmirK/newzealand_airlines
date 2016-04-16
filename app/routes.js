@@ -39,12 +39,25 @@ module.exports = function(app,mongo) {
 
     });
 
+    app.get('/api/flights/track/:flightNumber' , function(req,res){
+        var num = req.param(flightNumber);
+        var condition = new Object();
+        condition["flightNumber"] = num;
+        var jsonObject = JSON.stringify(condition);
+        db.searchInFlights(jsonObject , function(err,results){
+        if(err == null)
+            res.json(results[0]);
+        else
+            console.log(err);
+        });
+    });
 
 
     app.get('/api/data/codes', function(req, res) {
       
       res.json( airports );
     });
+
 
 
     /* RENDER MAIN PAGE */
@@ -105,8 +118,7 @@ module.exports = function(app,mongo) {
             else
                 console.log(err);
         });
-    });        
-
+    }); 
 
 
 };
