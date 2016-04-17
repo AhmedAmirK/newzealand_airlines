@@ -29,17 +29,11 @@ var flightSchema = new Schema ({
     ],
     price:{business: Number , economy: Number , currency:String},
     capacity:{business:Number , economy:Number}
-<<<<<<< HEAD
     AirLine:{ type: String, default:'AirNewZealand'}
 });
 
 var bookingSchema = new Schema({
-
-=======
-});
-
-var bookingSchema = new Schema({
->>>>>>> f8022deedbc6f694c38d877d975cc5a6686b44ed
+	
     email: String,
     id: String ,
     firstName: String,
