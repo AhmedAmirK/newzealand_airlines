@@ -47,13 +47,15 @@ module.exports = function(app,bodyparser) {
     });
 
     app.get('/api/flights/track/:flightNumber' , function(req,res){
+      console.log('result is blaah');
         var num = req.params.flightNumber;
-        var condition = new Object();
-        condition["flightNumber"] = num;
-        var jsonObject = JSON.stringify(condition);
-        db.searchInFlights(jsonObject , function(err,results){
-        if(err == null && results.length>0)
-            res.json(results[0]);
+        console.log('result is ' + num);
+
+        db.searchInFlights({flightNumber:num} , function(err,results){
+        console.log('result is ' + results); 
+        if(err == null && results.length>0){
+          res.json(results[0]);
+        }     
         else
             console.log(err);
         });
@@ -84,32 +86,34 @@ module.exports = function(app,bodyparser) {
     });
 
     /* Middleware */
-  app.use(function(req, res, next) {
-    // check header or url parameters or post parameters for token
-        var token = req.body.wt || req.query.wt || req.headers['x-access-token'];
+  // app.use(function(req, res, next) {
+  //   // check header or url parameters or post parameters for token
+  //       var token = req.body.wt || req.query.wt || req.headers['x-access-token'];
 
-        console.log("{{{{ TOKEN }}}} => ", token);
+  //       console.log("{{{{ TOKEN }}}} => ", token);
 
-        var jwtSecret = process.env.JWTSECRET;
+  //       var jwtSecret = process.env.JWTSECRET;
 
-        // Get JWT contents:
-        try
-        {
-          var payload = jwt.verify(token, jwtSecret);
-          req.payload = payload;
-          next();
-        }
-        catch (err)
-        {
-          console.error('[ERROR]: JWT Error reason:', err);
-          res.status(403).sendFile(path.join(__dirname, '../public/assets', '403.jpg'));
-        }
+  //       // Get JWT contents:
+  //       try
+  //       {
+  //         var payload = jwt.verify(token, jwtSecret);
+  //         req.payload = payload;
+  //         next();
+  //       }
+  //       catch (err)
+  //       {
+  //         console.log(err);
+  //         //console.error('[ERROR]: JWT Error reason:', err);
+  //         //res.status(403).sendFile(path.join(__dirname, '../public/assets', '403.jpg'));
+  //       }
 
-  });
+  // });
    
-    app.get('/api/flights/search/:origin/:departingDate/:class', function(req, res) {
+    app.get('/api/flights/search/:origin/:destination/:departingDate/:class', function(req, res) {
         var Results = new Object();
         Results["origin"] = req.params.origin;
+        Results["destination"]= req.params.destination;
         Results["departureDateTime"] = (req.params.departingDate).toDate();
         //Results["class"] = req.params.class;
         var jsonArray = JSON.stringify(Results);
@@ -160,7 +164,7 @@ module.exports = function(app,bodyparser) {
             console.log(err);
           }
         });
-    });
+    }); 
   /**
        * ROUND-TRIP SEARCH REST ENDPOINT
        * @param origin - Flight Origin Location - Airport Code

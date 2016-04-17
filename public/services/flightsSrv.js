@@ -10,7 +10,7 @@ App.factory('FlightsSrv', function($http) {
             return $http.get('/db/seed');
         },
         trackFlight: function(data) {
-            return $http.get('/api/flights/track/:flightNumber', { params: { "flightNumber": data } });
+            return $http.get('/api/flights/track/'+data);
         },
         searchFlights: function() {
             if (this.round)
@@ -23,9 +23,10 @@ App.factory('FlightsSrv', function($http) {
                         "class": "economy"
                     }
                 });
-            else return $http.get('/api/flights/search/:origin/:departingDate/:class', {
+            else return $http.get('/api/flights/search/:origin/:destination/:departingDate/:class', {
                 params: {
                     "origin": this.selectedOriginAirport,
+                    "destination":this.selectedDestinationAirport,
                     "departingDate": this.date1,
                     "class": "economy"
                 }
