@@ -1,4 +1,5 @@
 
+
 App.controller('mainCtrl', function($scope, FlightsSrv, $location) {
 
   $scope.format = 'shortDate';
@@ -11,13 +12,6 @@ App.controller('mainCtrl', function($scope, FlightsSrv, $location) {
     $scope.popup2.opened = true;
   };
 
-  $scope.setDate1 = function(year, month, day) {
-    $scope.date1 = new Date(year, month, day);
-  };
-  $scope.setDate2 = function(year,month,day){
-    $scope.date2 = new Date(year,month,day);
-  }
-
   $scope.popup1 = {
     opened: false
   };
@@ -26,11 +20,12 @@ App.controller('mainCtrl', function($scope, FlightsSrv, $location) {
     opened: false
   };
 
-  function AirportCodes() {
+
+  function AirportCodes(){
     FlightsSrv.getAirportCodes().success(function(airports) {
          $scope.Airports = airports;
      });
-  };
+  }
 
   $scope.SetOriginAirport = function(originAirport) {
     FlightsSrv.setSelectedOriginAirport(originAirport);
@@ -49,7 +44,7 @@ App.controller('mainCtrl', function($scope, FlightsSrv, $location) {
 
   $scope.setRoundTrip = function() {
     FlightsSrv.setIfRoundTrip($scope.Round);
-  }
+  };
 
 
   AirportCodes();

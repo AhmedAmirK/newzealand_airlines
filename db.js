@@ -7,10 +7,9 @@ var Flight , Booking , Aircraft , Airport;
 var flightSchema = new Schema ({
 
     flightNumber: Number,
-    departuredatetime: Number,
-    arrivaldatetime:Number,
     aircraft:String,
-    duration: Number,
+    departuredatetime: Date,
+    arrivaldatetime:Date,
     origin: String,
     destination: String,
     occupiedSeatsBusiness :
