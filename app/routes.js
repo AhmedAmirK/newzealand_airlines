@@ -192,13 +192,16 @@ module.exports = function(app,bodyparser) {
                   result.departureDateTime=data[i].date;
                   result.arrivalDateTime=data[i].date+data[i].duration;
                   result.origin=data[i].origin;
+                  result.destination=data[i].destination;
                   result.cost=data[i].price.economy;
                   result.currency=data[i].price.currency;
+                  result.class="economy";
                   result.Airline=data[i].Airline;
                   outgoingFlightsArr[j]=result;
                   j++;
                   result={};
                 }
+              }
                 else if(Class=="business"){
                   if(data[i].capacity.business<data[i].occupiedSeatsBusiness.length){ //if there is space
                     result.flightNumber=data[i].flightNumber;
@@ -207,15 +210,16 @@ module.exports = function(app,bodyparser) {
                     result.departureDateTime=data[i].date;
                     result.arrivalDateTime=data[i].date+data[i].duration;
                     result.origin=data[i].origin;
+                    result.destination=data[i].destination;
                     result.cost=data[i].price.business;
                     result.currency=data[i].price.currency;
+                    result.class="business";
                     result.Airline=data[i].Airline;
                     outgoingFlightsArr[j]=result;
                     j++;
                     result={};
                   }
               }
-            }
           }
           //==> populating returningFlights array
           if(data[i].origin==destination && data[i].destination==origin && data[i].date==returningDate){
@@ -228,13 +232,16 @@ module.exports = function(app,bodyparser) {
                 result.departureDateTime=data[i].date;
                 result.arrivalDateTime=data[i].date+data[i].duration;
                 result.origin=data[i].origin;
+                result.destination=data[i].destination;
                 result.cost=data[i].price.economy;
                 result.currency=data[i].price.currency;
+                result.class="economy";
                 result.Airline=data[i].Airline;
                 returningFlightsArr[k]=result;
                 k++;
                 result={};
               }
+            }
               //if it's business class
               else if(Class=="business"){
                 if(data[i].capacity.business<data[i].occupiedSeatsBusiness.length){ //if there is room
@@ -244,8 +251,10 @@ module.exports = function(app,bodyparser) {
                   result.departureDateTime=data[i].date;
                   result.arrivalDateTime=data[i].date+data[i].duration;
                   result.origin=data[i].origin;
+                  result.destination=data[i].destination;
                   result.cost=data[i].price.business;
                   result.currency=data[i].price.currency;
+                  result.class="business";
                   result.Airline=data[i].Airline;
                   returningFlightsArr[k]=result;
                   k++;
@@ -253,7 +262,6 @@ module.exports = function(app,bodyparser) {
                 }
             }
           }
-        }
         }
           res.json({
           "outgoingFlights":outgoingFlightsArr,
@@ -268,10 +276,11 @@ module.exports = function(app,bodyparser) {
         * @param class - economy or business only
         * @returns {Array}
         */
-       app.get('/api/flights/search/:origin/:departingDate/:class', function(req, res) {
+       app.get('/api/flights/search/:origin/:destination/:departingDate/:class', function(req, res) {
          var origin=req.params.origin;
          var departingDate=req.params.departingDate;
          var Class = req.params.class;
+         var destination=req.params.destination;
          var result={};
          var outgoingFlightsArr=[];
          db.getFlights(function(err,data){
@@ -279,7 +288,7 @@ module.exports = function(app,bodyparser) {
            int j=0;
            for(int i=0 ; i<data.length;i++){
              //populating outgoingFlights array
-             if(data[i].origin==origin && data[i].date==departingDate){
+             if(data[i].origin==origin && data[i].destination==destination && data[i].date==departingDate){
                if(Class=="economy"){
                  if(data[i].capacity.economy<data[i].occupiedSeatsEconomy.length){ //if there is space
                    result.flightNumber=data[i].flightNumber;
@@ -295,6 +304,7 @@ module.exports = function(app,bodyparser) {
                    j++;
                    result={};
                  }
+               }
                  else if(Class=="business"){
                    if(data[i].capacity.business<data[i].occupiedSeatsBusiness.length){ //if there is space
                      result.flightNumber=data[i].flightNumber;
@@ -313,7 +323,6 @@ module.exports = function(app,bodyparser) {
                }
              }
            }
-       }
        res.json({
        "outgoingFlights":outgoingFlightsArr});
      });
