@@ -48,11 +48,8 @@ module.exports = function(app,bodyparser) {
 
     app.get('/api/flights/track/:flightNumber' , function(req,res){
         var num = req.params.flightNumber;
-        var condition = new Object();
-        condition["flightNumber"] = num;
-        var jsonObject = JSON.stringify(condition);
-        db.searchInFlights(jsonObject , function(err,results){
-        if(err == null && results.length>0)
+        db.searchInFlights({'flightNumber':num} , function(err,results){
+        if(err == null && results.length > 0)
             res.json(results[0]);
         else
             console.log(err);
@@ -84,7 +81,7 @@ module.exports = function(app,bodyparser) {
     });
 
     /* Middleware */
-  app.use(function(req, res, next) {
+/*  app.use(function(req, res, next) {
     // check header or url parameters or post parameters for token
         var token = req.body.wt || req.query.wt || req.headers['x-access-token'];
 
@@ -105,15 +102,17 @@ module.exports = function(app,bodyparser) {
           res.status(403).sendFile(path.join(__dirname, '../public/assets', '403.jpg'));
         }
 
-  });
+  });*/
    
-    app.get('/api/flights/search/:origin/:departingDate/:class', function(req, res) {
-        var Results = new Object();
-        Results["origin"] = req.params.origin;
-        Results["departureDateTime"] = (req.params.departingDate).toDate();
-        //Results["class"] = req.params.class;
-        var jsonArray = JSON.stringify(Results);
-        db.searchInFlights(jsonArray, function(err,results){
+    app.get('/api/flights/search/:origin/:departingDate', function(req, res) {
+        var origin = req.params.origin;
+        var depDate = req.params.departingDate;
+        var depDateConverted = depDate.toDate();
+        var jsonObject = {
+            'origin':origin , 
+            'departuredatetime':depDateConverted
+        };
+        db.searchInFlights(jsonObject, function(err,results){
             if(err == null)
                 res.json({outgoingFlights:results});
             else
@@ -122,26 +121,41 @@ module.exports = function(app,bodyparser) {
     }); 
 
     app.get('/api/flights/search/:origin/:destination/:departingDate/:returningDate/:class', function(req, res) {
-        var conditions = new Object();
-        conditions["origin"] = req.params.origin;
-        conditions["destination"] = req.params.destination;
-        conditions["departuredatetime"] = (req.params.departingDate).toDate();
-        var jsonObject = JSON.stringify(conditions);
-        db.searchInFlights(jsonObject, function(err,results){
+
+        var origin = req.params.origin;
+        var destination = req.params.destination;
+
+        var depDate = req.params.departingDate;
+        var depDateConverted = depDate.toDate();
+
+        var retDate = req.params.returningDate;
+        var retDateConverted = retDate.toDate();
+
+        var jsonObject = {
+            'origin':origin,
+            'destination':destination,
+            'departureDateTime':depDateConverted
+        };
+
+        var jsonObject2 = {
+            'origin':destination,
+            'destination':origin,
+            'departureDateTime':retDateConverted
+        };
+
+        db.searchInFlights(jsonObject , function(err,results){
             if(err == null){
-              var conditions2 = new Object();
-              conditions2["origin"] = req.params.destination;
-              conditions2["destination"] = req.params.origin;
-              conditions2["departuredatetime"] = (req.params.returnDate).getTime();
-              var jsonObject2 = JSON.stringify(conditions2);
               db.searchInFlights(jsonObject2 , function(err2,results2){
                 if(err2 == null)
-                  res.json({outgoingFlights:results , returnFlights:results2});
+                    res.json({outgoingFlights:results , returnFlights:results2});
+                else
+                    console.log(err);
               });  
             }
             else
                 console.log(err);
         });
+        
     });
 
 

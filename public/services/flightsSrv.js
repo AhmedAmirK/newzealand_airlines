@@ -10,26 +10,16 @@ App.factory('FlightsSrv', function($http) {
             return $http.get('/db/seed');
         },
         trackFlight: function(data) {
-            return $http.get('/api/flights/track/:flightNumber', { params: { "flightNumber": data } });
+            return $http.get('/api/flights/track/' + data);
         },
         searchFlights: function() {
+            var myQuery; 
             if (this.round)
-                return $http.get('/api/flights/search/:origin/:destination/:departingDate/:returningDate/:class', {
-                    params: {
-                        "origin": this.selectedOriginAirport,
-                        "destination": this.selectedDestinationAirport,
-                        "departingDate": this.date1,
-                        "returningDate": date2,
-                        "class": "economy"
-                    }
-                });
-            else return $http.get('/api/flights/search/:origin/:departingDate/:class', {
-                params: {
-                    "origin": this.selectedOriginAirport,
-                    "departingDate": this.date1,
-                    "class": "economy"
-                }
-            });
+                myQuery = this.selectedOriginAirport + '&' + this.selectedDestinationAirport + '&' + this.date1 + '&' + date2;
+            else
+                myQuery = this.selectedOriginAirport + '&' + this.date1;
+            
+            return $http.get('/api/flights/search/' + myQuery);   
         },
         bookFlight: function(flightNumber, departingDate, email, TotalPrice, c) {
             $http.get('/api/booking/:email/:issueDate/:expiryDate/:TotalPrice/:flightNumber/:seatClass/:seatType', {
