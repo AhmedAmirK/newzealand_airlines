@@ -10,19 +10,17 @@
         <th>To</th>
         <th>Departure Time</th>
         <th>Arrival Time</th>
-        <th>Date</th>
         <th>Price</th>
       </tr>
     </thead>
 <tbody>
 <tr ng-repeat="RFlight in RFlights">
-        <td> <a href ng-click="setFlight(RFlight)">{{RFlight.FlightNumber}}</a></td>
-        <td>{{RFlight.From}}</td>
-        <td>{{RFlight.To}}</td>
-        <td>{{RFlight.Departure}}</td>
-        <td>{{RFlight.Arrival}}</td>
-        <td>{{RFlight.Date}}</td>
-        <td>${{RFlight.Price}}</td>
+        <td> <a href ng-click="setFlight(RFlight)">{{RFlight.flightNumber}}</a></td>
+        <td>{{RFlight.origin}}</td>
+        <td>{{RFlight.destination}}</td>
+        <td>{{RFlight.departuredatetime}}</td>
+        <td>{{RFlight.arrivaldatetime}}</td>
+        <td>${{RFlight.price.economy}}</td>
 </tr>
 </tbody>
 </table>

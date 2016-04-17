@@ -6,12 +6,6 @@ App.factory('FlightsSrv', function ($http) {
          getAirportCodes : function() {
            return $http.get('/api/data/codes');
          },
-         getOutgoingFlights : function() {
-           return $http.get('/api/flights/allflightstoday');
-         },
-         getReturningFlights : function() {
-           return $http.get('/api/data/RetFlights');
-         },
          seedDB : function(){
           $http.get('/db/seed');
          },
@@ -20,9 +14,12 @@ App.factory('FlightsSrv', function ($http) {
          },
          searchFlights: function(){
           if(this.round)
-           return $http.get('/api/flights/search/:origin/:destination/:departingDate/:returningDate/:class',{params:{"origin": this.selectedOriginAirport , "destination":this.selectedDestinationAirport,"departingDate":this.date1,"returningDate":date2,"class":1}});
-          else return $http.get('/api/flights/search/:origin/:departingDate/:class',{params:{"origin": this.selectedOriginAirport,"departingDate":this.date1,"class":1}});
-         }
+           return $http.get('/api/flights/search/:origin/:destination/:departingDate/:returningDate/:class',{params:{"origin": this.selectedOriginAirport , "destination":this.selectedDestinationAirport,"departingDate":this.date1,"returningDate":date2,"class":"economy"}});
+          else return $http.get('/api/flights/search/:origin/:departingDate/:class',{params:{"origin": this.selectedOriginAirport,"departingDate":this.date1,"class":"economy"}});
+         },
+         bookFlight: function(flightNumber,departingDate,email,TotalPrice,class){
+            $http.get('/api/booking/:email/:issueDate/:expiryDate/:TotalPrice/:flightNumber/:seatClass/:seatType',{params:{"email":email,"issueDate":Date.now,"expiryDate":departingDate,"TotalPrice":TotalPrice,"flightNumber":flightNumber,"seatClass":class,"seatType":this.Seat}});
+         },
          setSelectedOriginAirport: function(value) {
            this.selectedOriginAirport = value;
          },

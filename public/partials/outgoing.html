@@ -10,19 +10,17 @@
         <th>To</th>
         <th>Departure Time</th>
         <th>Arrival Time</th>
-        <th>Date</th>
         <th>Price</th>
       </tr>
     </thead>
 <tbody>
 <tr ng-repeat="OFlight in OFlights">
-        <td> <a href ng-click="setFlight(OFlight)">{{OFlight.FlightNumber}}</a></td>
-        <td>{{OFlight.From}}</td>
-        <td>{{OFlight.To}}</td>
-        <td>{{OFlight.Departure}}</td>
-        <td>{{OFlight.Arrival}}</td>
-        <td>{{OFlight.Date}}</td>
-        <td>${{OFlight.Price}}</td>
+        <td> <a href ng-click="setFlight(OFlight)">{{OFlight.flightNumber}}</a></td>
+        <td>{{OFlight.origin}}</td>
+        <td>{{OFlight.destination}}</td>
+        <td>{{OFlight.departuredatetime}}</td>
+        <td>{{OFlight.arrivaldatetime}}</td>
+        <td>${{OFlight.price.economy}}</td>
 </tr>
 </tbody>
 </table>
