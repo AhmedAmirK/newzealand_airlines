@@ -10,40 +10,16 @@ App.factory('FlightsSrv', function($http) {
             return $http.get('/db/seed');
         },
         trackFlight: function(data) {
-<<<<<<< HEAD
-            return $http.get('/api/flights/track/' + data);
-=======
             return $http.get('/api/flights/track/'+data);
->>>>>>> a11dbec8232cc4a5a3cbcb393dc09cd8145743d5
         },
         searchFlights: function() {
             var myQuery; 
             if (this.round)
-<<<<<<< HEAD
                 myQuery = this.selectedOriginAirport + '&' + this.selectedDestinationAirport + '&' + this.date1 + '&' + date2;
             else
-                myQuery = this.selectedOriginAirport + '&' + this.date1;
+                myQuery = this.selectedOriginAirport + '&' + this.selectedDestinationAirport + '&' + this.date1;
             
             return $http.get('/api/flights/search/' + myQuery);   
-=======
-                return $http.get('/api/flights/search/:origin/:destination/:departingDate/:returningDate/:class', {
-                    params: {
-                        "origin": this.selectedOriginAirport,
-                        "destination": this.selectedDestinationAirport,
-                        "departingDate": this.date1,
-                        "returningDate": date2,
-                        "class": "economy"
-                    }
-                });
-            else return $http.get('/api/flights/search/:origin/:destination/:departingDate/:class', {
-                params: {
-                    "origin": this.selectedOriginAirport,
-                    "destination":this.selectedDestinationAirport,
-                    "departingDate": this.date1,
-                    "class": "economy"
-                }
-            });
->>>>>>> a11dbec8232cc4a5a3cbcb393dc09cd8145743d5
         },
         bookFlight: function(flightNumber, departingDate, email, TotalPrice, c) {
             $http.get('/api/booking/:email/:issueDate/:expiryDate/:TotalPrice/:flightNumber/:seatClass/:seatType', {

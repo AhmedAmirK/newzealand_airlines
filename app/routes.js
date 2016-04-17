@@ -110,12 +110,14 @@ module.exports = function(app, bodyparser) {
 
 
    
-    app.get('/api/flights/search/:origin/:departingDate', function(req, res) {
+    app.get('/api/flights/search/:origin/:destination/:departingDate', function(req, res) {
         var origin = req.params.origin;
+        var destination = req.params.destination;
         var depDate = req.params.departingDate;
         var depDateConverted = depDate.toDate();
         var jsonObject = {
-            'origin':origin , 
+            'origin':origin ,
+            'destination':destination, 
             'departuredatetime':depDateConverted
         };
         db.searchInFlights(jsonObject, function(err,results){
@@ -127,7 +129,7 @@ module.exports = function(app, bodyparser) {
         });
     });
 
-    app.get('/api/flights/search/:origin/:destination/:departingDate/:returningDate/:class', function(req, res) {
+    app.get('/api/flights/search/:origin/:destination/:departingDate/:returningDate', function(req, res) {
 
 
         var origin = req.params.origin;
