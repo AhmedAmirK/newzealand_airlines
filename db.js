@@ -7,7 +7,7 @@ var flightSchema = new Schema ({
 
     flightNumber: Number,
     aircraft: String,
-    departuredatetime: Date
+    departuredatetime: Date,
     arrivaldatetime:Date,
     origin: String,
     destination: String,
@@ -70,6 +70,11 @@ var airportSchema = new Schema(
     }
 );
 
+ Flight = mongoose.model('Flight' , flightSchema);
+        Booking = mongoose.model('Booking' , bookingSchema);
+        Aircraft = mongoose.model('Aircraft' , aircraftSchema);
+        Airport = mongoose.model('Airport', airportSchema);
+
 exports.connect = function(cb){
     var connection = mongoose.createConnection('mongodb://localhost:27017/MyDatabase');
     connection.on('error', function(){
@@ -77,10 +82,6 @@ exports.connect = function(cb){
     });
     connection.once('open', function() {
         console.log('Successfully connected to the database');
-        Flight = connection.model('Flight' , flightSchema);
-        Booking = connection.model('Booking' , bookingSchema);
-        Aircraft = connection.model('Aircraft' , aircraftSchema);
-        Airport = connection.model('Airport', airportSchema);
         cb();
     });
 };
@@ -182,7 +183,6 @@ exports.insertInAirports = function(jsonObject , cb){
 }
 
 exports.importAirports = function(data,cb){
-
 	data.forEach(function(air){
 		var tuple = new Airport(air);
 		tuple.save(function(err){

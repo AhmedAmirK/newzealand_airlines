@@ -1,7 +1,6 @@
 
 App.controller('mainCtrl', function($scope, FlightsSrv, $location) {
 
-  FlightsSrv.seedDB();
   $scope.format = 'shortDate';
 
   $scope.open1 = function() {

@@ -349,6 +349,4 @@ var moment = require('moment');
         arrive.add(2,'hours');
        }
 
-       console.log(Flights);
-
 module.exports = Flights;
