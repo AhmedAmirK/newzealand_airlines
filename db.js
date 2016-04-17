@@ -1,14 +1,15 @@
 
 var mongoose = require('mongoose');
+mongoose.set('debug',true);
 var Schema = mongoose.Schema;
 var Flight , Booking , Aircraft , Airport;
 
 var flightSchema = new Schema ({
 
     flightNumber: Number,
-    departuredatetime: Date,
-    aircraft:{name:String, model:String, type:String},
-    date: { type: Date, default: Date.now },
+    departuredatetime: Number,
+    arrivaldatetime:Number,
+    aircraft:String,
     duration: Number,
     origin: String,
     destination: String,
@@ -29,20 +30,14 @@ var flightSchema = new Schema ({
             }
     ],
     price:{business: Number , economy: Number , currency:String},
-    capacity:{business:Number , economy:Number},
     AirLine:{ type: String, default:'AirNewZealand'}
 });
 
 var bookingSchema = new Schema({
 	
     email: String,
-    id: String ,
-    firstName: String,
-    lastName: String,
-    passport: String,
-
-    issueDate: { type: Date, default: Date.now },
-    expiryDate: { type: Date, default: Date.now },
+    issueDate: Date,
+    expiryDate: Date,
     TotalPrice: Number,
     receipt_number: String,
     flightNumber: String,
@@ -78,11 +73,11 @@ var airportSchema = new Schema(
         "size": String
     }
 );
-
- Flight = mongoose.model('Flight' , flightSchema);
-        Booking = mongoose.model('Booking' , bookingSchema);
-        Aircraft = mongoose.model('Aircraft' , aircraftSchema);
-        Airport = mongoose.model('Airport', airportSchema);
+ var connection = mongoose.createConnection('mongodb://localhost:27017/MyDatabase');
+ Flight = connection.model('Flight' , flightSchema);
+ Booking = connection.model('Booking' , bookingSchema);
+ Aircraft = connection.model('Aircraft' , aircraftSchema);
+ Airport = connection.model('Airport', airportSchema);
 
 exports.connect = function(cb){
     var connection = mongoose.createConnection('mongodb://localhost:27017/MyDatabase');

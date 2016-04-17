@@ -47,6 +47,7 @@ module.exports = function(app,bodyparser) {
     });
 
     app.get('/api/flights/track/:flightNumber' , function(req,res){
+      console.log('result is blaah');
         var num = req.params.flightNumber;
         db.searchInFlights({'flightNumber':num} , function(err,results){
         if(err == null && results.length > 0)
@@ -81,6 +82,7 @@ module.exports = function(app,bodyparser) {
     });
 
     /* Middleware */
+<<<<<<< HEAD
 /*  app.use(function(req, res, next) {
     // check header or url parameters or post parameters for token
         var token = req.body.wt || req.query.wt || req.headers['x-access-token'];
@@ -174,7 +176,7 @@ module.exports = function(app,bodyparser) {
             console.log(err);
           }
         });
-    });
+    }); 
   /**
        * ROUND-TRIP SEARCH REST ENDPOINT
        * @param origin - Flight Origin Location - Airport Code
