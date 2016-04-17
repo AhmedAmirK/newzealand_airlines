@@ -25,6 +25,7 @@
     "jsonwebtoken": "*",
     "underscore"  : "*",
     "moment"      : "*",
-    "chai-http"   : "*"
+    "chai-http"   : "*",
+    "request": "*"
     }
 }
