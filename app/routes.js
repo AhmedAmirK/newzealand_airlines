@@ -113,12 +113,11 @@ module.exports = function(app, bodyparser) {
     app.get('/api/flights/search/:origin/:destination/:departingDate', function(req, res) {
         var origin = req.params.origin;
         var destination = req.params.destination;
-        var depDate = req.params.departingDate;
-        var depDateConverted = depDate.toDate();
+        var depDate = moment(req.params.departingDate).format('YYYY-MM-DD');
         var jsonObject = {
             'origin':origin ,
             'destination':destination, 
-            'departuredatetime':depDateConverted
+            'departuredatetime':depDate
         };
         db.searchInFlights(jsonObject, function(err,results){
             if(err == null)

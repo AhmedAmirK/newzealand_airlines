@@ -16,7 +16,7 @@ var moment = require('moment');
 
             flightNumber: 300+i,
             aircraft: "Airbus 318",
-            departuredatetime: moment(now).format('YYYY-MM-DD hh:mm A'),
+            departuredatetime: moment(now).format('YYYY-MM-DD'),
             arrivaldatetime: moment(arrive).format('YYYY-MM-DD hh:mm A'),
             origin: "BOM",
             destination: "DEL" ,
@@ -32,8 +32,9 @@ var moment = require('moment');
 
             flightNumber: 300+i,
             aircraft: "Airbus 318",
-            departuredatetime: moment(now).format('YYYY-MM-DD hh:mm A'),
+            departuredatetime: moment(now).format('YYYY-MM-DD'),
             arrivaldatetime: moment(arrive).format('YYYY-MM-DD hh:mm A'),
+
             origin: "CAI",
             destination: "JED" ,
             occupiedSeatsFirst : [],
@@ -49,8 +50,9 @@ var moment = require('moment');
 
             flightNumber: 300+i,
             aircraft: "Airbus 318",
-            departuredatetime: moment(now).format('YYYY-MM-DD hh:mm A'),
+            departuredatetime: moment(now).format('YYYY-MM-DD'),
             arrivaldatetime: moment(arrive).format('YYYY-MM-DD hh:mm A'),
+
             origin: "HKG",
             destination: "TPE" ,
             occupiedSeatsFirst : [],
@@ -66,8 +68,9 @@ var moment = require('moment');
 
             flightNumber: 300+i,
             aircraft: "Airbus 318",
-            departuredatetime: moment(now).format('YYYY-MM-DD hh:mm A'),
+            departuredatetime: moment(now).format('YYYY-MM-DD'),
             arrivaldatetime: moment(arrive).format('YYYY-MM-DD hh:mm A'),
+
             origin: "JNB",
             destination: "CPT" ,
             occupiedSeatsFirst : [],
@@ -83,8 +86,9 @@ var moment = require('moment');
 
             flightNumber: 300+i,
             aircraft: "Airbus 318",
-            departuredatetime: moment(now).format('YYYY-MM-DD hh:mm A'),
+            departuredatetime: moment(now).format('YYYY-MM-DD'),
             arrivaldatetime: moment(arrive).format('YYYY-MM-DD hh:mm A'),
+
             origin: "RUH",
             destination: "JED" ,
             occupiedSeatsFirst : [],
@@ -100,8 +104,9 @@ var moment = require('moment');
 
             flightNumber: 300+i,
             aircraft: "Airbus 318",
-            departuredatetime: moment(now).format('YYYY-MM-DD hh:mm A'),
+            departuredatetime: moment(now).format('YYYY-MM-DD'),
             arrivaldatetime: moment(arrive).format('YYYY-MM-DD hh:mm A'),
+
             origin: "LHR",
             destination: "JFK" ,
             occupiedSeatsFirst : [],
@@ -117,8 +122,9 @@ var moment = require('moment');
 
             flightNumber: 300+i,
             aircraft: "Airbus 318",
-            departuredatetime: moment(now).format('YYYY-MM-DD hh:mm A'),
+            departuredatetime: moment(now).format('YYYY-MM-DD'),
             arrivaldatetime: moment(arrive).format('YYYY-MM-DD hh:mm A'),
+
             origin: "LCF",
             destination: "LAX" ,
             occupiedSeatsFirst : [],
@@ -134,8 +140,9 @@ var moment = require('moment');
 
             flightNumber: 300+i,
             aircraft: "Airbus 318",
-            departuredatetime: moment(now).format('YYYY-MM-DD hh:mm A'),
+            departuredatetime: moment(now).format('YYYY-MM-DD'),
             arrivaldatetime: moment(arrive).format('YYYY-MM-DD hh:mm A'),
+
             origin: "LAX",
             destination: "SFO" ,
             occupiedSeatsFirst : [],
@@ -151,8 +158,9 @@ var moment = require('moment');
 
             flightNumber: 300+i,
             aircraft: "Airbus 318",
-            departuredatetime: moment(now).format('YYYY-MM-DD hh:mm A'),
+            departuredatetime: moment(now).format('YYYY-MM-DD'),
             arrivaldatetime: moment(arrive).format('YYYY-MM-DD hh:mm A'),
+
             origin: "FRA",
             destination: "TXL" ,
             occupiedSeatsFirst : [],
@@ -168,8 +176,9 @@ var moment = require('moment');
 
             flightNumber: 300+i,
             aircraft: "Airbus 318",
-            departuredatetime: moment(now).format('YYYY-MM-DD hh:mm A'),
+            departuredatetime: moment(now).format('YYYY-MM-DD'),
             arrivaldatetime: moment(arrive).format('YYYY-MM-DD hh:mm A'),
+
             origin: "MXP",
             destination: "FCO" ,
             occupiedSeatsFirst : [],
@@ -185,8 +194,9 @@ var moment = require('moment');
 
             flightNumber: 300+i,
             aircraft: "Airbus 318",
-            departuredatetime: moment(now).format('YYYY-MM-DD hh:mm A'),
+            departuredatetime: moment(now).format('YYYY-MM-DD'),
             arrivaldatetime: moment(arrive).format('YYYY-MM-DD hh:mm A'),
+
             origin: "DEL",
             destination: "BOM" ,
             occupiedSeatsFirst : [],
@@ -202,8 +212,9 @@ var moment = require('moment');
 
             flightNumber: 300+i,
             aircraft: "Airbus 318",
-            departuredatetime: moment(now).format('YYYY-MM-DD hh:mm A'),
+            departuredatetime: moment(now).format('YYYY-MM-DD'),
             arrivaldatetime: moment(arrive).format('YYYY-MM-DD hh:mm A'),
+
             origin: "JED",
             destination: "CAI" ,
             occupiedSeatsFirst : [],
@@ -219,8 +230,9 @@ var moment = require('moment');
 
             flightNumber: 300+i,
             aircraft: "Airbus 318",
-            departuredatetime: moment(now).format('YYYY-MM-DD hh:mm A'),
+            departuredatetime: moment(now).format('YYYY-MM-DD'),
             arrivaldatetime: moment(arrive).format('YYYY-MM-DD hh:mm A'),
+
             origin: "TPE",
             destination: "HKG" ,
             occupiedSeatsFirst : [],
@@ -236,8 +248,9 @@ var moment = require('moment');
 
             flightNumber: 300+i,
             aircraft: "Airbus 318",
-            departuredatetime: moment(now).format('YYYY-MM-DD hh:mm A'),
+            departuredatetime: moment(now).format('YYYY-MM-DD'),
             arrivaldatetime: moment(arrive).format('YYYY-MM-DD hh:mm A'),
+
             origin: "CPT",
             destination: "JNB" ,
             occupiedSeatsFirst : [],
@@ -253,8 +266,9 @@ var moment = require('moment');
 
             flightNumber: 300+i,
             aircraft: "Airbus 318",
-            departuredatetime: moment(now).format('YYYY-MM-DD hh:mm A'),
+            departuredatetime: moment(now).format('YYYY-MM-DD'),
             arrivaldatetime: moment(arrive).format('YYYY-MM-DD hh:mm A'),
+
             origin: "JED",
             destination: "RUH" ,
             occupiedSeatsFirst : [],
@@ -270,8 +284,9 @@ var moment = require('moment');
 
             flightNumber: 300+i,
             aircraft: "Airbus 318",
-             departuredatetime: moment(now).format('YYYY-MM-DD hh:mm A'),
+            departuredatetime: moment(now).format('YYYY-MM-DD'),
             arrivaldatetime: moment(arrive).format('YYYY-MM-DD hh:mm A'),
+
             origin: "JFK",
             destination: "LHR" ,
             occupiedSeatsFirst : [],
@@ -287,7 +302,7 @@ var moment = require('moment');
 
             flightNumber: 300+i,
             aircraft: "Airbus 318",
-            departuredatetime: moment(now).format('YYYY-MM-DD hh:mm A'),
+            departuredatetime: moment(now).format('YYYY-MM-DD'),
             arrivaldatetime: moment(arrive).format('YYYY-MM-DD hh:mm A'),
             origin: "LAX",
             destination: "LCF" ,
@@ -303,8 +318,9 @@ var moment = require('moment');
 
             flightNumber: 300+i,
             aircraft: "Airbus 318",
-            departuredatetime: moment(now).format('YYYY-MM-DD hh:mm A'),
+            departuredatetime: moment(now).format('YYYY-MM-DD'),
             arrivaldatetime: moment(arrive).format('YYYY-MM-DD hh:mm A'),
+
             origin: "SFO",
             destination: "LAX" ,
             occupiedSeatsFirst : [],
@@ -320,8 +336,9 @@ var moment = require('moment');
 
             flightNumber: 300+i,
             aircraft: "Airbus 318",
-            departuredatetime: moment(now).format('YYYY-MM-DD hh:mm A'),
+            departuredatetime: moment(now).format('YYYY-MM-DD'),
             arrivaldatetime: moment(arrive).format('YYYY-MM-DD hh:mm A'),
+
             origin: "TXL",
             destination: "FRA" ,
             occupiedSeatsFirst : [],
@@ -336,7 +353,7 @@ var moment = require('moment');
 
             flightNumber: 300+i,
             aircraft: "Airbus 318",
-            departuredatetime: moment(now).format('YYYY-MM-DD hh:mm A'),
+            departuredatetime: moment(now).format('YYYY-MM-DD'),
             arrivaldatetime: moment(arrive).format('YYYY-MM-DD hh:mm A'),
             origin: "FCP",
             destination: "MXP" ,
