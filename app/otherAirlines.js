@@ -46,10 +46,12 @@ exports.OneWayFlight=function(){request({
 }
 
 exports.TwoWayFlight= function(){request({
+exports.TwoWayFlight= function()
+{request({
     url: urlOneWay,
     json: true,
     headers: {
-       'x-access-token': token
+    'x-access-token': token
      }
 }, function (error, response, body) {
   if(error) console.log(error);
