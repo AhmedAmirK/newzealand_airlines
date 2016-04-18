@@ -5,10 +5,14 @@ var mongoose = require('mongoose');
 var flights = require('./Flights.js');
 var moment = require('moment');
 var jwt = require('jsonwebtoken');
+var request = require("request");
+require('dotenv').load();
+
+var bookingRefNumber = 0 , seatNum = 0;
 
 //App routes :
 
-module.exports = function(app, bodyparser) {
+module.exports = function(app) { 
 
 
 
@@ -83,37 +87,11 @@ module.exports = function(app, bodyparser) {
 
     });
 
-    /* Middleware */
-    // app.use(function(req, res, next) {
-    //   // check header or url parameters or post parameters for token
-    //       var token = req.body.wt || req.query.wt || req.headers['x-access-token'];
-
-    //       console.log("{{{{ TOKEN }}}} => ", token);
-
-    //       var jwtSecret = process.env.JWTSECRET;
-
-    //       // Get JWT contents:
-    //       try
-    //       {
-    //         var payload = jwt.verify(token, jwtSecret);
-    //         req.payload = payload;
-    //         next();
-    //       }
-    //       catch (err)
-    //       {
-    //         console.log(err);
-    //         //console.error('[ERROR]: JWT Error reason:', err);
-    //         //res.status(403).sendFile(path.join(__dirname, '../public/assets', '403.jpg'));
-    //       }
-
-    // });
-
-
    
-    app.get('/api/flights/search/:origin/:destination/:departingDate', function(req, res) {
+    app.get('/api/local/flights/search/:origin/:destination/:departingDate', function(req, res) {
         var origin = req.params.origin;
         var destination = req.params.destination;
-        var depDate = moment(req.params.departingDate).format('YYYY-MM-DD');
+        var depDate = moment(new Date(req.params.departingDate)).format('YYYY-MM-DD');
         var jsonObject = {
             'origin':origin ,
             'destination':destination, 
@@ -128,15 +106,15 @@ module.exports = function(app, bodyparser) {
         });
     });
 
-    app.get('/api/flights/search/:origin/:destination/:departingDate/:returningDate', function(req, res) {
+    app.get('/api/local/flights/search/:origin/:destination/:departingDate/:returningDate', function(req, res) {
 
 
         var origin = req.params.origin;
         var destination = req.params.destination;
 
-        var depDate = new Date(moment(req.params.departingDate).format('YYYY-MM-DD'));
+        var depDate = moment(new Date(req.params.departingDate)).format('YYYY-MM-DD');
 
-        var retDate = new Date(moment(req.params.returningDate).format('YYYY-MM-DD'));
+        var retDate = moment(new Date(req.params.returningDate)).format('YYYY-MM-DD');
 
         var jsonObject = {
             'origin':origin,
@@ -169,196 +147,126 @@ module.exports = function(app, bodyparser) {
     });
 
 
-    app.get('/api/booking/:email/:issueDate/:expiryDate/:TotalPrice/:flightNumber/:seatClass/:seatType', function(req, res) {
+    app.post('/api/booking/:email/:expiryDate/:TotalPrice/:flightNumber/:seatClass/:seatType', function(req, res) {
         var email = req.params.email;
-        var issueDate = req.params.issueDate; 
-        var expiryDate = req.params.expiryDate;
         var TotalPrice = req.params.TotalPrice;
         var flightNumber = req.params.flightNumber;
         var seatClass = req.params.seatClass;
         var seatType = req.params.seatType;
+
         var jsonObject = {
-            "email":email,
-            "issueDate":issueDate,
-            "expiryDate":expiryDate,
-            "TotalPrice":TotalPrice,
-            "flightNumber":flightNumber,
-            "seatClass":seatClass,
-            "seatType":seatType
+          'email': email,
+          'TotalPrice': TotalPrice,
+          'flightNumber': flightNumber,
+          'bookingRefNumber': bookingRefNumber,
+          'seat' : {
+            'number': seatNum , 
+            'class': seatClass , 
+            'type': seatType
+          }
         };
+
         db.insertInBookings(jsonObject, function(err) {
             if (err != null) {
                 console.log(err);
             }
+            else{
+              bookingRefNumber = bookingRefNumber + 1;
+              seatNum = seatNum + 1;
+              console.log('REF : '+bookingRefNumber);
+            }
+        });
+
+    });
+
+    //////TOKEN///////
+/*    app.get('/api/token',function(request,response){
+        var jwtSecret = process.env.JWTSECRET;
+        var token = jwt.sign('payload', jwtSecret,  { algorithm: 'HS256' });
+        response.json({token:token});
+    });*/
+
+    ////////////////////////////////////////////MIDDELE WARRREE!!!!
+/*    app.use(function(req, res, next) {
+          var token = req.body.wt || req.query.wt || req.headers['x-access-token'];
+
+          console.log("{{{{ TOKEN }}}} ", token);
+
+          var jwtSecret = process.env.JWTSECRET;
+
+          // Get JWT contents:
+          try
+          {
+            var payload = jwt.verify(token, jwtSecret);
+            req.payload = payload;
+            next();
+          }
+          catch (err)
+          {
+            console.log(err);
+            //console.error('[ERROR]: JWT Error reason:', err);
+            //res.status(403).sendFile(path.join(__dirname, '../public/assets', '403.jpg'));
+          }
+
+    });*/
+        ////////////////////////////////////// END OF MIDDLEWARE!!!
+
+    app.get('/api/flights/search/:origin/:destination/:departingDate/:class', function(req, res) {
+        var origin = req.params.origin;
+        var destination = req.params.destination;
+        var depDate = moment(new Date(req.params.departingDate)).toDate().getTime();
+        var jsonObject = {
+            'origin':origin ,
+            'destination':destination, 
+            'departuredatetime':depDate
+        };
+        db.searchInFlights(jsonObject, function(err,results){
+            if(err == null){
+                res.json({outgoingFlights:results});
+            }
+            else
+                console.log(err);
         });
     });
-    /**
-     * ROUND-TRIP SEARCH REST ENDPOINT
-     * @param origin - Flight Origin Location - Airport Code
-     * @param destination - Flight Destination Location - Airport Code
-     * @param departingDate - JavaScript Date.GetTime() numerical value corresponding to format `YYYY-MM-DD`
-     * @param returningDate - JavaScript Date.GetTime() numerical value corresponding to format `YYYY-MM-DD`
-     * @param class - economy or business only
-     * @returns {Array}
-     */
-    // app.get('/api/flights/search/:origin/:destination/:departingDate/:returningDate/:class', function(req, res) {
-    //       // retrieve params from req.params.{{origin | departingDate | ...}}
-    //       var origin=req.params.origin;
-    //       var destination=req.params.destination;
-    //       var departingDate=req.params.departingDate;
-    //       var returningDate= req.params.returningDate;
-    //       var Class = req.params.class;
-    //       var result={};
-    //       var outgoingFlightsArr=[];
-    //       var returningFlightsArr=[];
-    //       db.getFlights(function(err,data){
-    //         if(err) throw err;
-    //         var j=0;
-    //         var k=0;
-    //         for(var i=0 ; i<data.length;i++){
-    //           //==> populating outgoingFlights array
-    //           if(data[i].origin==origin && data[i].destination==destination && data[i].date==departingDate){
-    //             if(Class=="economy"){
-    //               if(data[i].capacity.economy<data[i].occupiedSeatsEconomy.length){ //if there is space
-    //                 result.flightNumber=data[i].flightNumber;
-    //                 result.aircraftType=data[i].aircraft.type;
-    //                 result.aircraftModel=data[i].aircraft.model;
-    //                 result.departureDateTime=data[i].date;
-    //                 result.arrivalDateTime=data[i].date+data[i].duration;
-    //                 result.origin=data[i].origin;
-    //                 result.destination=data[i].destination;
-    //                 result.cost=data[i].price.economy;
-    //                 result.currency=data[i].price.currency;
-    //                 result.class="economy";
-    //                 result.Airline=data[i].Airline;
-    //                 outgoingFlightsArr[j]=result;
-    //                 j++;
-    //                 result={};
-    //               }
-    //             }
-    //               else if(Class=="business"){
-    //                 if(data[i].capacity.business<data[i].occupiedSeatsBusiness.length){ //if there is space
-    //                   result.flightNumber=data[i].flightNumber;
-    //                   result.aircraftType=data[i].aircraft.type;
-    //                   result.aircraftModel=data[i].aircraft.model;
-    //                   result.departureDateTime=data[i].date;
-    //                   result.arrivalDateTime=data[i].date+data[i].duration;
-    //                   result.origin=data[i].origin;
-    //                   result.destination=data[i].destination;
-    //                   result.cost=data[i].price.business;
-    //                   result.currency=data[i].price.currency;
-    //                   result.class="business";
-    //                   result.Airline=data[i].Airline;
-    //                   outgoingFlightsArr[j]=result;
-    //                   j++;
-    //                   result={};
-    //                 }
-    //             }
-    //         }
-    //         //==> populating returningFlights array
-    //         if(data[i].origin==destination && data[i].destination==origin && data[i].date==returningDate){
-    //           //if it's economy class
-    //           if(Class=="economy"){
-    //             if(data[i].capacity.economy<data[i].occupiedSeatsEconomy.length){ // checks if there is room
-    //               result.flightNumber=data[i].flightNumber;
-    //               result.aircraftType=data[i].aircraft.type;
-    //               result.aircraftModel=data[i].aircraft.model;
-    //               result.departureDateTime=data[i].date;
-    //               result.arrivalDateTime=data[i].date+data[i].duration;
-    //               result.origin=data[i].origin;
-    //               result.destination=data[i].destination;
-    //               result.cost=data[i].price.economy;
-    //               result.currency=data[i].price.currency;
-    //               result.class="economy";
-    //               result.Airline=data[i].Airline;
-    //               returningFlightsArr[k]=result;
-    //               k++;
-    //               result={};
-    //             }
-    //           }
-    //             //if it's business class
-    //             else if(Class=="business"){
-    //               if(data[i].capacity.business<data[i].occupiedSeatsBusiness.length){ //if there is room
-    //                 result.flightNumber=data[i].flightNumber;
-    //                 result.aircraftType=data[i].aircraft.type;
-    //                 result.aircraftModel=data[i].aircraft.model;
-    //                 result.departureDateTime=data[i].date;
-    //                 result.arrivalDateTime=data[i].date+data[i].duration;
-    //                 result.origin=data[i].origin;
-    //                 result.destination=data[i].destination;
-    //                 result.cost=data[i].price.business;
-    //                 result.currency=data[i].price.currency;
-    //                 result.class="business";
-    //                 result.Airline=data[i].Airline;
-    //                 returningFlightsArr[k]=result;
-    //                 k++;
-    //                 result={};
-    //               }
-    //           }
-    //         }
-    //       }
-    //         res.json({
-    //         "outgoingFlights":outgoingFlightsArr,
-    //         "returnFlights":returningFlightsArr}
-    //       );
-    //     });
-    //   });
-    /**
-     * ONE-WAY SEARCH REST ENDPOINT
-     * @param origin - Flight Origin Location - Airport Code
-     * @param DepartingDate - JavaScript Date.GetTime() numerical value corresponding to format `YYYY-MM-DD`
-     * @param class - economy or business only
-     * @returns {Array}
-     */
-    //        app.get('/api/flights/search/:origin/:destination/:departingDate/:class', function(req, res) {
-    //          var origin=req.params.origin;
-    //          var departingDate=req.params.departingDate;
-    //          var Class = req.params.class;
-    //          var destination=req.params.destination;
-    //          var result={};
-    //          var outgoingFlightsArr=[];
-    //          db.getFlights(function(err,data){
-    //            if(err) throw err;
-    //            var j=0;
-    //            for(var i=0 ; i<data.length;i++){
-    //              //populating outgoingFlights array
-    //              if(data[i].origin==origin && data[i].destination==destination && data[i].date==departingDate){
-    //                if(Class=="economy"){
-    //                  if(data[i].capacity.economy<data[i].occupiedSeatsEconomy.length){ //if there is space
-    //                    result.flightNumber=data[i].flightNumber;
-    //                    result.aircraftType=data[i].aircraft.type;
-    //                    result.aircraftModel=data[i].aircraft.model;
-    //                    result.departureDateTime=data[i].date;
-    //                    result.arrivalDateTime=data[i].date+data[i].duration;
-    //                    result.origin=data[i].origin;
-    //                    result.cost=data[i].price.economy;
-    //                    result.currency=data[i].price.currency;
-    //                    result.Airline=data[i].Airline;
-    //                    outgoingFlightsArr[j]=result;
-    //                    j++;
-    //                    result={};
-    //                  }
-    //                }
-    //                  else if(Class=="business"){
-    //                    if(data[i].capacity.business<data[i].occupiedSeatsBusiness.length){ //if there is space
-    //                      result.flightNumber=data[i].flightNumber;
-    //                      result.aircraftType=data[i].aircraft.type;
-    //                      result.aircraftModel=data[i].aircraft.model;
-    //                      result.departureDateTime=data[i].date;
-    //                      result.arrivalDateTime=data[i].date+data[i].duration;
-    //                      result.origin=data[i].origin;
-    //                      result.cost=data[i].price.business;
-    //                      result.currency=data[i].price.currency;
-    //                      result.Airline=data[i].Airline;
-    //                      outgoingFlightsArr[j]=result;
-    //                      j++;
-    //                      result={};
-    //                    }
-    //                }
-    //              }
-    //            }
-    //        res.json({
-    //        "outgoingFlights":outgoingFlightsArr});
-    //      });
-    // };
+
+    app.get('/api/flights/search/:origin/:destination/:departingDate/:returningDate/:class', function(req, res) {
+
+
+        var origin = req.params.origin;
+        var destination = req.params.destination;
+
+        var depDate = moment(new Date(req.params.departingDate)).toDate().getTime();
+
+        var retDate = moment(new Date(req.params.returningDate)).toDate().getTime();
+
+        var jsonObject = {
+            'origin':origin,
+            'destination':destination,
+            'departuredatetime':depDate
+        };
+
+        var jsonObject2 = {
+            'origin':destination,
+            'destination':origin,
+            'departuredatetime':retDate
+        };
+
+        db.searchInFlights(jsonObject , function(err,results){
+            if(err == null){
+              console.log(results);
+              db.searchInFlights(jsonObject2 , function(err2,results2){
+                if(err2 == null){
+                  console.log(results2);
+                    res.json({outgoingFlights:results , returnFlights:results2});
+                }
+                else
+                    console.log(err);
+              });  
+            }
+            else
+                console.log(err);
+        });
+        
+    });
+
 };
