@@ -4,7 +4,7 @@ require('dotenv').load();
 
 var jwtSecret = process.env.JWTSECRET;
 
-var origin,destination,departingDate,returningDate,Class;
+var origin,destination,departingDate,returningDate,Class , uri;
 //Must use setters first before calling function
 exports.setOrigin=function(val){
   origin=val;
@@ -21,32 +21,42 @@ exports.setReturningDate=function(val){
 exports.setClass=function(val){
   Class=val;
 }
+exports.setUri=function(val){
+  uri=val;
+}
 
-var urlTwoWay = 'http://52.90.41.197/'+'api/flights/search/'+origin+'/'+destination+'/'+departingDate+'/'+returningDate+'/'+Class; //austrin airlines
-var urlOneWay='http://52.90.41.197/'+'api/flights/search/'+origin+'/'+destination+'/'+departingDate+'/'+Class;
+var urlTwoWay = 'http://'+'52.90.41.197'+'/'+'api/flights/search/'+origin+'/'+destination+'/'+departingDate+'/'+returningDate+'/'+Class; //austrin airlines
+var urlOneWay='http://'+'www.swiss-air.me'+'/'+'api/flights/search/'+origin+'/'+destination+'/'+departingDate+'/'+Class;
 var token = jwt.sign('payload', jwtSecret,  { algorithm: 'HS256' });
 ///api/flights/search/:origin/:destination/:departingDate/:returningDate/:class'
-exports.OneWayFlight=request({
+exports.OneWayFlight=function(){request({
     url: urlOneWay,
     json: true,
     headers: {
        'x-access-token': token
      }
 }, function (error, response, body) {
-    if(error) throw error;
+    if(error) console.log(error);
     // if (!error && response.statusCode === 200) {
-        console.log(body) // Print the json response
+    else    console.log(body) // Print the json response
     // }
+    // cb();
 });
-exports.TwoWayFlight=request({
+}
+exports.TwoWayFlight= function()
+{request({
     url: urlOneWay,
     json: true,
     headers: {
        'x-access-token': token
      }
 }, function (error, response, body) {
-  if(error) throw error;
+  if(error) console.log(error);
+
+  // if(error) throw error;
     // if (!error && response.statusCode === 200) {
         console.log(body) // Print the json response
     // }
+    // cb();
 });
+}
