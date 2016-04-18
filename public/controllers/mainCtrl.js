@@ -49,5 +49,6 @@ App.controller('mainCtrl', function($scope, FlightsSrv, $location) {
 
   AirportCodes();
   FlightsSrv.setSearchOut(false);
+  FlightsSrv.setIfRoundTrip(false);
 
 });

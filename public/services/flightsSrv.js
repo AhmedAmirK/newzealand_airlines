@@ -15,7 +15,7 @@ App.factory('FlightsSrv', function($http) {
         searchFlights: function() {
             var myQuery; 
             if (this.round)
-                myQuery = this.selectedOriginAirport + '/' + this.selectedDestinationAirport + '/' + this.date1 + '/' + date2;
+                myQuery = this.selectedOriginAirport + '/' + this.selectedDestinationAirport + '/' + this.date1 + '/' + this.date2;
             else
                 myQuery = this.selectedOriginAirport + '/' + this.selectedDestinationAirport + '/' + this.date1;
             

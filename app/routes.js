@@ -134,29 +134,30 @@ module.exports = function(app, bodyparser) {
         var origin = req.params.origin;
         var destination = req.params.destination;
 
-        var depDate = req.params.departingDate;
-        var depDateConverted = depDate.toDate();
+        var depDate = new Date(moment(req.params.departingDate).format('YYYY-MM-DD'));
 
-        var retDate = req.params.returningDate;
-        var retDateConverted = retDate.toDate();
+        var retDate = new Date(moment(req.params.returningDate).format('YYYY-MM-DD'));
 
         var jsonObject = {
             'origin':origin,
             'destination':destination,
-            'departureDateTime':depDateConverted
+            'departuredatetime':depDate
         };
 
         var jsonObject2 = {
             'origin':destination,
             'destination':origin,
-            'departureDateTime':retDateConverted
+            'departuredatetime':retDate
         };
 
         db.searchInFlights(jsonObject , function(err,results){
             if(err == null){
+              console.log(results);
               db.searchInFlights(jsonObject2 , function(err2,results2){
-                if(err2 == null)
+                if(err2 == null){
+                  console.log(results2);
                     res.json({outgoingFlights:results , returnFlights:results2});
+                }
                 else
                     console.log(err);
               });  
