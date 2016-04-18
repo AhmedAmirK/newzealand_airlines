@@ -11,7 +11,7 @@ var moment = require('moment');
        date = date.toDate().getTime();
        var i = 0;
        while(now<date){
-        
+
         var Flight= {
 
             flightNumber: 300+i,
@@ -179,7 +179,7 @@ var moment = require('moment');
             departuredatetime: moment(now).format('YYYY-MM-DD'),
             arrivaldatetime: moment(arrive).format('YYYY-MM-DD hh:mm A'),
 
-            origin: "MXP",
+            origin: "LIN",
             destination: "FCO" ,
             occupiedSeatsFirst : [],
             occupiedSeatsEconomy: [],
@@ -356,7 +356,7 @@ var moment = require('moment');
             departuredatetime: moment(now).format('YYYY-MM-DD'),
             arrivaldatetime: moment(arrive).format('YYYY-MM-DD hh:mm A'),
             origin: "FCP",
-            destination: "MXP" ,
+            destination: "LIN" ,
             occupiedSeatsFirst : [],
             occupiedSeatsEconomy: [],
             price:{first: 100 , economy: 50 , currency:"USD"}

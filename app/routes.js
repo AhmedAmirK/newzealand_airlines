@@ -6,13 +6,14 @@ var flights = require('./Flights.js');
 var moment = require('moment');
 var jwt = require('jsonwebtoken');
 var request = require("request");
+const async = require('async');
 require('dotenv').load();
 
 var bookingRefNumber = 0 , seatNum = 0;
 
 //App routes :
 
-module.exports = function(app) { 
+module.exports = function(app) {
 
 
 
@@ -87,14 +88,14 @@ module.exports = function(app) {
 
     });
 
-   
+
     app.get('/api/local/flights/search/:origin/:destination/:departingDate', function(req, res) {
         var origin = req.params.origin;
         var destination = req.params.destination;
         var depDate = moment(new Date(req.params.departingDate)).format('YYYY-MM-DD');
         var jsonObject = {
             'origin':origin ,
-            'destination':destination, 
+            'destination':destination,
             'departuredatetime':depDate
         };
         db.searchInFlights(jsonObject, function(err,results){
@@ -138,12 +139,12 @@ module.exports = function(app) {
                 }
                 else
                     console.log(err);
-              });  
+              });
             }
             else
                 console.log(err);
         });
-        
+
     });
 
     app.post('/api/booking/:email/:expiryDate/:TotalPrice/:flightNumber/:seatClass/:seatType', function(req, res) {
@@ -160,8 +161,8 @@ module.exports = function(app) {
           'flightNumber': flightNumber,
           'bookingRefNumber': bookingRefNumber,
           'seat' : {
-            'number': seatNum , 
-            'class': seatClass , 
+            'number': seatNum ,
+            'class': seatClass ,
             'type': seatType
           }
         };
@@ -185,7 +186,7 @@ module.exports = function(app) {
         var depDate = moment(new Date(req.params.departingDate)).toDate().getTime();
         var jsonObject = {
             'origin':origin ,
-            'destination':destination, 
+            'destination':destination,
             'departuredatetime':depDate
         };
         db.searchInFlights(jsonObject, function(err,results){
@@ -198,7 +199,7 @@ module.exports = function(app) {
     });
 
     app.get('/api/flights/search/:origin/:destination/:departingDate/:returningDate/:class', function(req, res) {
-      
+
         var origin = req.params.origin;
         var destination = req.params.destination;
 
@@ -228,16 +229,99 @@ module.exports = function(app) {
                 }
                 else
                     console.log(err);
-              });  
+              });
             }
             else
                 console.log(err);
         });
-        
+
     });
+    // Two way to query other airlines
+  app.get('/api/otherAirlines/twoWay/:origin/:destination/:departingDate/:returningDate/:class', function(req, response) {
+    var origin=req.params.origin;
+    var destination=req.params.destination;
+    var departingDate=req.params.departingDate;
+    var returningDate= req.params.returningDate;
+    var Class = req.params.class;
+    var jwtSecret = process.env.JWTSECRET;
+    var uri;
+    var urli;
+    var token = jwt.sign('payload', jwtSecret,  { algorithm: 'HS256' });
+    // array.forEach(function(entry){ // depends on being synchronus but works
+    //       uri=entry;
+    //   console.log(entry);
+    //   urli='http://'+uri+'/'+'api/flights/search/'+origin+'/'+destination+'/'+departingDate+'/'+returningDate+'/'+Class;
+    //   request({
+    //       url: urli,
+    //       json: true,
+    //       headers: {
+    //          'x-access-token': token
+    //        }
+    //   }, function (error, response, body) {
+    //       if(error) console.log(error);
+    //       // if (!error && response.statusCode === 200) {}
+    //       else    console.log(body);
+    // });
+    // });
+
+function httpGet(url, callback) {
+    urli='http://'+uri+'/'+'api/flights/search/'+origin+'/'+destination+'/'+departingDate+'/'+returningDate+'/'+Class;
+  const options = {
+    url: urli,
+    json: true,
+    headers: {
+       'x-access-token': token
+     }
+  };
+  request(options,
+    function(err, res, body) {
+      callback(err, body);
+    }
+  );
+}
+
+async.map(array, httpGet, function (err, res){
+  if (err) console.log("err");
+  response.json(res);
+});
+
+});
+
+app.get('/api/otherAirlines/oneWay/:origin/:destination/:departingDate/:class', function(req, res) {
+var origin=req.params.origin;
+var destination=req.params.destination;
+var departingDate=req.params.departingDate;
+var returningDate= req.params.returningDate;
+var Class = req.params.class;
+var jwtSecret = process.env.JWTSECRET;
+var uri;
+var urli;
+var token = jwt.sign('payload', jwtSecret,  { algorithm: 'HS256' });
+function httpGet(url, callback) {
+    urli='http://'+uri+'/'+'api/flights/search/'+origin+'/'+destination+'/'+departingDate+'/'+Class;
+  const options = {
+    url: urli,
+    json: true,
+    headers: {
+       'x-access-token': token
+     }
+  };
+  request(options,
+    function(err, res, body) {
+      callback(err, body);
+    }
+  );
+}
+
+async.map(array, httpGet, function (err, res){
+  if (err) console.log("err");
+  response.json(res);
+});
+
+  });
 
     //////TOKEN///////
-/*    app.get('/api/token',function(request,response){
+    app.get('/api/token',function(request,response){
         var jwtSecret = process.env.JWTSECRET;
         var token = jwt.sign('payload', jwtSecret,  { algorithm: 'HS256' });
         response.json({token:token});
@@ -262,10 +346,10 @@ module.exports = function(app) {
           {
             console.log(err);
             //console.error('[ERROR]: JWT Error reason:', err);
-            //res.status(403).sendFile(path.join(__dirname, '../public/assets', '403.jpg'));
+            res.status(403).send("Not Authorized to access!");
           }
 
-    });*/
+    });
         ////////////////////////////////////// END OF MIDDLEWARE!!!
 
     app.get('/api/flights/search/:origin/:destination/:departingDate/:class', function(req, res) {
@@ -274,7 +358,7 @@ module.exports = function(app) {
         var depDate = moment(req.params.departingDate).format('YYYY-MM-DD');
         var jsonObject = {
             'origin':origin ,
-            'destination':destination, 
+            'destination':destination,
             'departuredatetime':depDate
         };
         db.searchInFlights(jsonObject, function(err,results){
@@ -320,11 +404,11 @@ module.exports = function(app) {
                 }
                 else
                     console.log(err);
-              });  
+              });
             }
             else
                 console.log(err);
         });
-        
+
     });
 };

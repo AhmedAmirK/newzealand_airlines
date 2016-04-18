@@ -13,7 +13,7 @@ exports.setDestination=function(val){
   destination=val;
 }
 exports.setDepartingDate=function(val){
-  departingDate=val;
+  destination=val;
 }
 exports.setReturningDate=function(val){
   returningDate=val;
@@ -25,11 +25,10 @@ exports.setUri=function(val){
   uri=val;
 }
 
-var urlTwoWay = 'http://localhost:3000/api/flights/search/'+origin+'/'+destination+'/'+departingDate+'/'+returningDate+'/'+Class; //austrin airlines
-var urlOneWay='http://localhost:3000/api/flights/search/'+origin+'/'+destination+'/'+departingDate+'/'+Class;
+var urlTwoWay = 'http://'+'52.90.41.197'+'/'+'api/flights/search/'+origin+'/'+destination+'/'+departingDate+'/'+returningDate+'/'+Class; //austrin airlines
+var urlOneWay='http://'+uri+'/'+'api/flights/search/'+origin+'/'+destination+'/'+departingDate+'/'+Class;
 var token = jwt.sign('payload', jwtSecret,  { algorithm: 'HS256' });
 ///api/flights/search/:origin/:destination/:departingDate/:returningDate/:class'
-
 exports.OneWayFlight=function(){request({
     url: urlOneWay,
     json: true,
@@ -44,17 +43,12 @@ exports.OneWayFlight=function(){request({
     // cb();
 });
 }
-
-exports.TwoWayFlight= function(){request({
-<<<<<<< HEAD
-=======
 exports.TwoWayFlight= function()
 {request({
->>>>>>> 1b87de2bbdcc2b8098ab06faa5212aa56460f750
     url: urlOneWay,
     json: true,
     headers: {
-    'x-access-token': token
+       'x-access-token': token
      }
 }, function (error, response, body) {
   if(error) console.log(error);
