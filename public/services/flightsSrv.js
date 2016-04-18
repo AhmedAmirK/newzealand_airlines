@@ -1,6 +1,7 @@
 /**
  * Flights Service
  */
+
 App.factory('FlightsSrv', function($http) {
     return {
         getAirportCodes: function() {
@@ -22,17 +23,11 @@ App.factory('FlightsSrv', function($http) {
             return $http.get('/api/flights/search/' + myQuery);   
         },
         bookFlight: function(flightNumber, departingDate, email, TotalPrice, c) {
-            $http.get('/api/booking/:email/:issueDate/:expiryDate/:TotalPrice/:flightNumber/:seatClass/:seatType', {
-                params: {
-                    "email": email,
-                    "issueDate": Date.now,
-                    "expiryDate": departingDate,
-                    "TotalPrice": TotalPrice,
-                    "flightNumber": flightNumber,
-                    "seatClass": c,
-                    "seatType": this.Seat
-                }
-            });
+            var departingDateConv = departingDate.toISOString().substring(0, 10);
+            var today = new Date();
+            var todayConv = today.toISOString().substring(0, 10);
+            var myQuery = email+'/'+todayConv+'/'+departingDateConv+'/'+TotalPrice+'/'+flightNumber+'/'+c+'/'+this.Seat;
+            $http.get('/api/booking/'+myQuery);
         },
         setSelectedOriginAirport: function(value) {
             this.selectedOriginAirport = value;

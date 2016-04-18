@@ -5,9 +5,9 @@ var mongoose = require('mongoose');
 var flights = require('./Flights.js');
 var moment = require('moment');
 var jwt = require('jsonwebtoken');
-/**
- * App routes:
- */
+
+//App routes :
+
 module.exports = function(app, bodyparser) {
 
 
@@ -170,15 +170,22 @@ module.exports = function(app, bodyparser) {
 
 
     app.get('/api/booking/:email/:issueDate/:expiryDate/:TotalPrice/:flightNumber/:seatClass/:seatType', function(req, res) {
-        var conditions = new Object();
-        condition["email"] = req.params.email;
-        condition["issueDate"] = req.params.issueDate;
-        condition["expiryDate"] = req.params.expiryDate;
-        condition["TotalPrice"] = req.params.TotalPrice;
-        condition["flightNumber"] = req.params.flightNumber;
-        condition["seatClass"] = req.params.seatClass;
-        condition["seatType"] = req.params.seatType;
-        var jsonObject = JSON.stringify(conditions);
+        var email = req.params.email;
+        var issueDate = req.params.issueDate; 
+        var expiryDate = req.params.expiryDate;
+        var TotalPrice = req.params.TotalPrice;
+        var flightNumber = req.params.flightNumber;
+        var seatClass = req.params.seatClass;
+        var seatType = req.params.seatType;
+        var jsonObject = {
+            "email":email,
+            "issueDate":issueDate,
+            "expiryDate":expiryDate,
+            "TotalPrice":TotalPrice,
+            "flightNumber":flightNumber,
+            "seatClass":seatClass,
+            "seatType":seatType
+        };
         db.insertInBookings(jsonObject, function(err) {
             if (err != null) {
                 console.log(err);
