@@ -18,15 +18,26 @@ App.factory('FlightsSrv', function($http) {
             if (this.round)
                 myQuery = this.selectedOriginAirport + '/' + this.selectedDestinationAirport + '/' + this.date1 + '/' + this.date2;
             else
-                myQuery = this.selectedOriginAirport + '/' + this.selectedDestinationAirport + '/' + this.date1;
-            
-            return $http.get('/api/flights/search/' + myQuery);   
+                myQuery = this.selectedOriginAirport + '/' + this.selectedDestinationAirport + '/' + this.date1;        
+            return $http.get('/api/local/flights/search/' + myQuery);   
         },
-        bookFlight: function(flightNumber, departingDate, email, TotalPrice, c) {
-            var departingDateConv = departingDate.toISOString().substring(0, 10);
-            var today = new Date();
-            var todayConv = today.toISOString().substring(0, 10);
-            var myQuery = email+'/'+todayConv+'/'+departingDateConv+'/'+TotalPrice+'/'+flightNumber+'/'+c+'/'+this.Seat;
+        searchOtherFlights: function(){
+            var myQuery; 
+            $http.get('/api/token').success(function(tokenObject){
+                var token = tokenObject.token;
+                if(this.round)
+                return $http.get('/api/otherAirlines/twoWay/'+this.setSelectedOriginAirport+'/'+this.selectedDestinationAirport+'/'+this.date1+'/'+this.date2+'/'+this.Class);
+                else return $http.get('/api/otherAirlines/oneWay/'+this.selectedOriginAirport+'/'+this.selectedDestinationAirport+'/'+this.date1+'/'+this.Class);
+            });
+        },
+        setOtherAir:function(value){
+            this.Other =value; 
+        },
+        getOtherAir:function(){
+            return this.Other;
+        },
+        bookFlight: function(flightNumber, email, TotalPrice,c) {
+            var myQuery = email+'/'+this.date1+'/'+TotalPrice+'/'+flightNumber+'/'+c+'/'+this.Seat;
             $http.get('/api/booking/'+myQuery);
         },
         setSelectedOriginAirport: function(value) {

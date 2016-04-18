@@ -35,8 +35,6 @@ var flightSchema = new Schema ({
 var bookingSchema = new Schema({
 	
     email: String,
-    issueDate: Date,
-    expiryDate: Date,
     TotalPrice: Number,
     receipt_number: String,
     flightNumber: String,
