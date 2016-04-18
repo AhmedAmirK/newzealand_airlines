@@ -21,11 +21,16 @@ App.factory('FlightsSrv', function($http) {
                 myQuery = this.selectedOriginAirport + '/' + this.selectedDestinationAirport + '/' + this.date1;        
             return $http.get('/api/local/flights/search/' + myQuery);   
         },
+<<<<<<< HEAD
         searchSecureFlights: function(){
+=======
+        searchOtherFlights: function(){
+>>>>>>> 1b87de2bbdcc2b8098ab06faa5212aa56460f750
             var myQuery; 
             $http.get('/api/token').success(function(tokenObject){
                 var token = tokenObject.token;
                 if(this.round)
+<<<<<<< HEAD
                 return $http.get('http://swiss-air.me'+'/api/flights/search/'+this.setSelectedOriginAirport+'/'+this.selectedDestinationAirport+'/'+this.date1+'/'+this.date2+'/'+this.Class,
                 {
                     "headers" : {'x-access-token':token}
@@ -33,6 +38,10 @@ App.factory('FlightsSrv', function($http) {
                 else return $http.get('http://swiss-air.me'+'/api/flights/search/'+this.selectedOriginAirport+'/'+this.selectedDestinationAirport+'/'+this.date2+'/'+this.Class,{
                     "headers" : {'x-access-token':token}
                 });
+=======
+                return $http.get('/api/otherAirlines/twoWay/'+this.setSelectedOriginAirport+'/'+this.selectedDestinationAirport+'/'+this.date1+'/'+this.date2+'/'+this.Class);
+                else return $http.get('/api/otherAirlines/oneWay/'+this.selectedOriginAirport+'/'+this.selectedDestinationAirport+'/'+this.date1+'/'+this.Class);
+>>>>>>> 1b87de2bbdcc2b8098ab06faa5212aa56460f750
             });
         },
         setOtherAir:function(value){

@@ -35,7 +35,12 @@ var flightSchema = new Schema ({
 var bookingSchema = new Schema({
 	
     email: String,
+<<<<<<< HEAD
     TotalPrice: String,
+=======
+    TotalPrice: Number,
+    receipt_number: String,
+>>>>>>> 1b87de2bbdcc2b8098ab06faa5212aa56460f750
     flightNumber: String,
     bookingRefNumber: Number,
     seat : {
