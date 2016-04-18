@@ -42,6 +42,10 @@ App.controller('mainCtrl', function($scope, FlightsSrv, $location) {
     $location.url('/out');
   };
 
+  $scope.setOtherAir= function(){
+    FlightsSrv.setOtherAir($scope.Other);
+  };
+
   $scope.setRoundTrip = function() {
     FlightsSrv.setIfRoundTrip($scope.Round);
   };
@@ -50,5 +54,6 @@ App.controller('mainCtrl', function($scope, FlightsSrv, $location) {
   AirportCodes();
   FlightsSrv.setSearchOut(false);
   FlightsSrv.setIfRoundTrip(false);
+  FlightsSrv.setOtherAir(false);
 
 });

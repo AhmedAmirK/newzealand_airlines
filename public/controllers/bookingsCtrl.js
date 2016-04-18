@@ -5,9 +5,12 @@ App.controller('bookingsCtrl', function($scope, $location , FlightsSrv){
     $scope.selectedSeat = "Window";
     FlightsSrv.setSeat($scope.selectedSeat);
     $scope.selectedClass1 = "Economy";
+    $scope.price = $scope.OutFlight.price.economy;
     FlightsSrv.setOutClass($scope.selectedClass1);
     $scope.selectedClass2 = "Economy";
     FlightsSrv.setRetClass($scope.selectedClass2);
+    if($scope.RetFlight!=undefined)
+    $scope.price2 = $scope.RetFlight.price.economy;
 
 
 

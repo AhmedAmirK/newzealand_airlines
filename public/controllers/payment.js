@@ -10,9 +10,6 @@ App.controller('paymentCtrl', function($scope, $location , FlightsSrv,$window){
   else $scope.price = $scope.OutFlight.price.economy;
 
 
- FlightsSrv.bookFlight($scope.OutFlight.flightNumber,$scope.OutFlight.departuredatetime,$scope.email,$scope.price,$scope.OutClass).success(function(){
-  console.log("Success");
- });
 
   if(FlightsSrv.getIfRoundTrip()){
   	$scope.RetFlight = FlightsSrv.getRetFlight();
@@ -24,12 +21,13 @@ App.controller('paymentCtrl', function($scope, $location , FlightsSrv,$window){
 
     $scope.TotalPrice = $scope.price + $scope.price2;
 
-    FlightsSrv.bookFlight($scope.RetFlight.flightNumber,$scope.RetFlight.departuredatetime,$scope.email,$scope.price2,$scope.RetClass).success(function(){
-  console.log("Success");
- });
+  
     }
 
   $scope.confirm= function(){
+     FlightsSrv.bookFlight($scope.OutFlight.flightNumber,$scope.email,$scope.price,$scope.OutClass);
+     if(FlightsSrv.getIfRoundTrip())
+     FlightsSrv.bookFlight($scope.RetFlight.flightNumber,$scope.email,$scope.price,$scope.RetClass);
   	$window.alert("Payment Completed Succesfully! You will receive your ticket shortly by email Thank You for choosing New Zealand Air!");
   }
 });

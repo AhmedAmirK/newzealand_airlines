@@ -18,15 +18,31 @@ App.factory('FlightsSrv', function($http) {
             if (this.round)
                 myQuery = this.selectedOriginAirport + '/' + this.selectedDestinationAirport + '/' + this.date1 + '/' + this.date2;
             else
-                myQuery = this.selectedOriginAirport + '/' + this.selectedDestinationAirport + '/' + this.date1;
-            
-            return $http.get('/api/flights/search/' + myQuery);   
+                myQuery = this.selectedOriginAirport + '/' + this.selectedDestinationAirport + '/' + this.date1;        
+            return $http.get('/api/local/flights/search/' + myQuery);   
         },
-        bookFlight: function(flightNumber, departingDate, email, TotalPrice, c) {
-            var departingDateConv = departingDate.toISOString().substring(0, 10);
-            var today = new Date();
-            var todayConv = today.toISOString().substring(0, 10);
-            var myQuery = email+'/'+todayConv+'/'+departingDateConv+'/'+TotalPrice+'/'+flightNumber+'/'+c+'/'+this.Seat;
+        searchSecureFlights: function(){
+            var myQuery; 
+            $http.get('/api/token').success(function(tokenObject){
+                var token = tokenObject.token;
+                if(this.round)
+                return $http.get('http://swiss-air.me'+'/api/flights/search/'+this.setSelectedOriginAirport+'/'+this.selectedDestinationAirport+'/'+this.date1+'/'+this.date2+'/'+this.Class,
+                {
+                    "headers" : {'x-access-token':token}
+                });
+                else return $http.get('http://swiss-air.me'+'/api/flights/search/'+this.selectedOriginAirport+'/'+this.selectedDestinationAirport+'/'+this.date2+'/'+this.Class,{
+                    "headers" : {'x-access-token':token}
+                });
+            });
+        },
+        setOtherAir:function(value){
+            this.Other =value; 
+        },
+        getOtherAir:function(){
+            return this.Other;
+        },
+        bookFlight: function(flightNumber, email, TotalPrice,c) {
+            var myQuery = email+'/'+this.date1+'/'+TotalPrice+'/'+flightNumber+'/'+c+'/'+this.Seat;
             $http.get('/api/booking/'+myQuery);
         },
         setSelectedOriginAirport: function(value) {

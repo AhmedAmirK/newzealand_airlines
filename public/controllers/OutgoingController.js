@@ -1,19 +1,31 @@
-
-App.controller('outgoingFlightsCtrl', function ($scope , FlightsSrv,$location) {
+App.controller('outgoingFlightsCtrl', function($scope, FlightsSrv, $location) {
     $scope.OFlights = [];
-    
-    FlightsSrv.searchFlights().success(function(Flights) {
-    		$scope.OFlights = Flights.outgoingFlights;
-  	});
+    if (FlightsSrv.getOtherAir()) {
+        FlightsSrv.searchFlights().success(function(MyFlights) {
+            var res = FlightsSrv.searchSecureFlights(); 
+            if(res != undefined){
+                res.success(function(FlightsOther) {
+                    $scope.OFlights = (MyFlights.outgoingFlights).concat(FlightsOther.outgoingFlights);
+                });
+            }
+            else{
+                $scope.OFlights = MyFlights.outgoingFlights;
+            }
+        });
+    } 
+    else {
+        FlightsSrv.searchFlights().success(function(MyFlights) {
+            $scope.OFlights = MyFlights.outgoingFlights;
+        });
+    }
 
 
-    $scope.setFlight = function(num){
-      FlightsSrv.setOutFlight(num);
-      if(FlightsSrv.getIfRoundTrip()){
-        $location.url('/return');
-      }
-      else 
-        $location.url('/booking');
+    $scope.setFlight = function(num) {
+        FlightsSrv.setOutFlight(num);
+        if (FlightsSrv.getIfRoundTrip()) {
+            $location.url('/return');
+        } else
+            $location.url('/booking');
     }
 
 });

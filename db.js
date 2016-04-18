@@ -1,6 +1,6 @@
 
 var mongoose = require('mongoose');
-mongoose.set('debug',true);
+//mongoose.set('debug',true);
 var Schema = mongoose.Schema;
 var Flight , Booking , Aircraft , Airport;
 
@@ -35,13 +35,14 @@ var flightSchema = new Schema ({
 var bookingSchema = new Schema({
 	
     email: String,
-    issueDate: Date,
-    expiryDate: Date,
-    TotalPrice: Number,
-    receipt_number: String,
+    TotalPrice: String,
     flightNumber: String,
-    bookingRefNumber: String,
-    seat:{number: String , class: String , type:String}
+    bookingRefNumber: Number,
+    seat : {
+        number: Number , 
+        class: String , 
+        type:String
+    }
 
 });
 
