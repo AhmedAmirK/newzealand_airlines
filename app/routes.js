@@ -179,38 +179,6 @@ module.exports = function(app) {
 
     });
 
-    //////TOKEN///////
-/*    app.get('/api/token',function(request,response){
-        var jwtSecret = process.env.JWTSECRET;
-        var token = jwt.sign('payload', jwtSecret,  { algorithm: 'HS256' });
-        response.json({token:token});
-    });*/
-
-    ////////////////////////////////////////////MIDDELE WARRREE!!!!
-/*    app.use(function(req, res, next) {
-          var token = req.body.wt || req.query.wt || req.headers['x-access-token'];
-
-          console.log("{{{{ TOKEN }}}} ", token);
-
-          var jwtSecret = process.env.JWTSECRET;
-
-          // Get JWT contents:
-          try
-          {
-            var payload = jwt.verify(token, jwtSecret);
-            req.payload = payload;
-            next();
-          }
-          catch (err)
-          {
-            console.log(err);
-            //console.error('[ERROR]: JWT Error reason:', err);
-            //res.status(403).sendFile(path.join(__dirname, '../public/assets', '403.jpg'));
-          }
-
-    });*/
-        ////////////////////////////////////// END OF MIDDLEWARE!!!
-
     app.get('/api/flights/search/:origin/:destination/:departingDate/:class', function(req, res) {
         var origin = req.params.origin;
         var destination = req.params.destination;
@@ -230,8 +198,7 @@ module.exports = function(app) {
     });
 
     app.get('/api/flights/search/:origin/:destination/:departingDate/:returningDate/:class', function(req, res) {
-
-
+      
         var origin = req.params.origin;
         var destination = req.params.destination;
 
@@ -270,7 +237,7 @@ module.exports = function(app) {
     });
 
     //////TOKEN///////
-    app.get('/api/token',function(request,response){
+/*    app.get('/api/token',function(request,response){
         var jwtSecret = process.env.JWTSECRET;
         var token = jwt.sign('payload', jwtSecret,  { algorithm: 'HS256' });
         response.json({token:token});
@@ -298,7 +265,7 @@ module.exports = function(app) {
             //res.status(403).sendFile(path.join(__dirname, '../public/assets', '403.jpg'));
           }
 
-    });
+    });*/
         ////////////////////////////////////// END OF MIDDLEWARE!!!
 
     app.get('/api/flights/search/:origin/:destination/:departingDate/:class', function(req, res) {
