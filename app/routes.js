@@ -180,62 +180,6 @@ module.exports = function(app) {
 
     });
 
-    app.get('/api/flights/search/:origin/:destination/:departingDate/:class', function(req, res) {
-        var origin = req.params.origin;
-        var destination = req.params.destination;
-        var depDate = moment(new Date(req.params.departingDate)).toDate().getTime();
-        var jsonObject = {
-            'origin':origin ,
-            'destination':destination,
-            'departuredatetime':depDate
-        };
-        db.searchInFlights(jsonObject, function(err,results){
-            if(err == null){
-                res.json({outgoingFlights:results});
-            }
-            else
-                console.log(err);
-        });
-    });
-
-    app.get('/api/flights/search/:origin/:destination/:departingDate/:returningDate/:class', function(req, res) {
-
-        var origin = req.params.origin;
-        var destination = req.params.destination;
-
-        var depDate = moment(new Date(req.params.departingDate)).toDate().getTime();
-
-        var retDate = moment(new Date(req.params.returningDate)).toDate().getTime();
-
-        var jsonObject = {
-            'origin':origin,
-            'destination':destination,
-            'departuredatetime':depDate
-        };
-
-        var jsonObject2 = {
-            'origin':destination,
-            'destination':origin,
-            'departuredatetime':retDate
-        };
-
-        db.searchInFlights(jsonObject , function(err,results){
-            if(err == null){
-              console.log(results);
-              db.searchInFlights(jsonObject2 , function(err2,results2){
-                if(err2 == null){
-                  console.log(results2);
-                    res.json({outgoingFlights:results , returnFlights:results2});
-                }
-                else
-                    console.log(err);
-              });
-            }
-            else
-                console.log(err);
-        });
-
-    });
     // Two way to query other airlines
   app.get('/api/otherAirlines/twoWay/:origin/:destination/:departingDate/:returningDate/:class', function(req, response) {
     var origin=req.params.origin;
@@ -247,7 +191,7 @@ module.exports = function(app) {
     var uri;
     var urli;
     var token = jwt.sign('payload', jwtSecret,  { algorithm: 'HS256' });
-    // array.forEach(function(entry){ // depends on being synchronus but works
+    // array.forEach(function(entry){ //this needs to be synchronus but works
     //       uri=entry;
     //   console.log(entry);
     //   urli='http://'+uri+'/'+'api/flights/search/'+origin+'/'+destination+'/'+departingDate+'/'+returningDate+'/'+Class;
@@ -282,7 +226,7 @@ function httpGet(url, callback) {
 
 async.map(array, httpGet, function (err, res){
   if (err) console.log("err");
-  response.json(res);
+  response.send(res);
 });
 
 });
@@ -315,7 +259,7 @@ function httpGet(url, callback) {
 
 async.map(array, httpGet, function (err, res){
   if (err) console.log("err");
-  response.json(res);
+  response.send(res);
 });
 
   });
@@ -355,16 +299,39 @@ async.map(array, httpGet, function (err, res){
     app.get('/api/flights/search/:origin/:destination/:departingDate/:class', function(req, res) {
         var origin = req.params.origin;
         var destination = req.params.destination;
-        var depDate = moment(req.params.departingDate).format('YYYY-MM-DD');
+        var depDate = new Date(moment(req.params.departingDate).format('YYYY-MM-DD'));
+        // var depDate = moment(new Date(req.params.departingDate)).format('YYYY-MM-DD');
+        var Class = req.params.class;
+        var result={};
+        var outgoingFlightsArr=[];
+        var i=0; var j=0;
         var jsonObject = {
             'origin':origin ,
             'destination':destination,
-            'departuredatetime':depDate
+            // 'departuredatetime':depDate
         };
         db.searchInFlights(jsonObject, function(err,results){
             if(err == null){
-
-                res.json({outgoingFlights:results});
+              for(i=0;i<results.length;i++){
+                  result.flightNumber=results[i].flightNumber;
+                  result.aircraftType=results[i].aircraft;
+                  result.aircraftModel=results[i].aircraft;
+                  result.departureDateTime=results[i].departuredatetime;
+                  result.arrivalDateTime=results[i].arrivaldatetime;
+                  result.origin=results[i].origin;
+                  result.destination=results[i].destination;
+                  if(Class=="economy"){
+                  result.cost=results[i].price.economy;}
+                  else if(Class="business"){
+                  result.cost=results[i].price.business;}
+                  result.currency=results[i].price.currency;
+                  result.class=Class;
+                  result.Airline="AirNewZealand"
+                  outgoingFlightsArr[j]=result;
+                  j++;
+                  result={};
+              }
+                res.json({"outgoingFlights":outgoingFlightsArr});
             }
 
             else
@@ -377,30 +344,70 @@ async.map(array, httpGet, function (err, res){
 
         var origin = req.params.origin;
         var destination = req.params.destination;
-
+        var Class = req.params.class;
         var depDate = new Date(moment(req.params.departingDate).format('YYYY-MM-DD'));
-
         var retDate = new Date(moment(req.params.returningDate).format('YYYY-MM-DD'));
-
+        var result={};
+        var outgoingFlightsArr=[];
+        var returningFlightsArr=[];
+        var i=0;var k=0; var j=0;
         var jsonObject = {
             'origin':origin,
             'destination':destination,
-            'departuredatetime':depDate
+            // 'departuredatetime':depDate
         };
 
         var jsonObject2 = {
             'origin':destination,
             'destination':origin,
-            'departuredatetime':retDate
+            // 'departuredatetime':retDate
         };
 
         db.searchInFlights(jsonObject , function(err,results){
             if(err == null){
               console.log(results);
+              for(i=0;i<results.length;i++){
+                  result.flightNumber=results[i].flightNumber;
+                  result.aircraftType=results[i].aircraft;
+                  result.aircraftModel=results[i].aircraft;
+                  result.departureDateTime=results[i].departuredatetime;
+                  result.arrivalDateTime=results[i].arrivaldatetime;
+                  result.origin=results[i].origin;
+                  result.destination=results[i].destination;
+                  if(Class=="economy"){
+                  result.cost=results[i].price.economy;}
+                  else if(Class="business"){
+                  result.cost=results[i].price.business;}
+                  result.currency=results[i].price.currency;
+                  result.class=Class;
+                  result.Airline="AirNewZealand"
+                  outgoingFlightsArr[j]=result;
+                  j++;
+                  result={};
+              }
               db.searchInFlights(jsonObject2 , function(err2,results2){
                 if(err2 == null){
                   console.log(results2);
-                    res.json({outgoingFlights:results , returnFlights:results2});
+                  for(i=0;i<results2.length;i++){
+                      result.flightNumber=results2[i].flightNumber;
+                      result.aircraftType=results2[i].aircraft;
+                      result.aircraftModel=results2[i].aircraft;
+                      result.departureDateTime=results2[i].departuredatetime;
+                      result.arrivalDateTime=results2[i].arrivaldatetime;
+                      result.origin=results2[i].origin;
+                      result.destination=results2[i].destination;
+                      if(Class=="economy"){
+                      result.cost=results2[i].price.economy;}
+                      else if(Class="business"){
+                      result.cost=results2[i].price.business;}
+                      result.currency=results2[i].price.currency;
+                      result.class=Class;
+                      result.Airline="AirNewZealand";
+                      returningFlightsArr[k]=result;
+                      k++;
+                      result={};
+                  }
+                    res.json({"outgoingFlights":outgoingFlightsArr , "returnFlights":returningFlightsArr});
                 }
                 else
                     console.log(err);
