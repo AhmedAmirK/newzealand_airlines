@@ -8,8 +8,8 @@ var flightSchema = new Schema ({
 
     flightNumber: Number,
     aircraft:String,
-    departuredatetime: Date,
-    arrivaldatetime:Date,
+    departureDateTime: Date,
+    arrivalDateTime:Date,
     origin: String,
     destination: String,
     occupiedSeatsBusiness :
@@ -33,14 +33,14 @@ var flightSchema = new Schema ({
 });
 
 var bookingSchema = new Schema({
-	
+
     email: String,
     TotalPrice: String,
     flightNumber: String,
     bookingRefNumber: Number,
     seat : {
-        number: Number , 
-        class: String , 
+        number: Number ,
+        class: String ,
         type:String
     }
 

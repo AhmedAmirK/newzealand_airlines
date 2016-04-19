@@ -96,7 +96,7 @@ module.exports = function(app) {
         var jsonObject = {
             'origin':origin ,
             'destination':destination,
-            'departuredatetime':depDate
+            'departureDateTime':depDate
         };
         db.searchInFlights(jsonObject, function(err,results){
             if(err == null)
@@ -120,13 +120,13 @@ module.exports = function(app) {
         var jsonObject = {
             'origin':origin,
             'destination':destination,
-            'departuredatetime':depDate
+            'departureDateTime':depDate
         };
 
         var jsonObject2 = {
             'origin':destination,
             'destination':origin,
-            'departuredatetime':retDate
+            'departureDateTime':retDate
         };
 
         db.searchInFlights(jsonObject , function(err,results){
@@ -226,6 +226,7 @@ function httpGet(url, callback) {
 
 async.map(array, httpGet, function (err, res){
   if (err) console.log("err");
+  console.log(res);
   response.send(res);
 });
 
@@ -259,6 +260,7 @@ function httpGet(url, callback) {
 
 async.map(array, httpGet, function (err, res){
   if (err) console.log("err");
+  console.log(res);
   response.send(res);
 });
 
@@ -308,7 +310,7 @@ async.map(array, httpGet, function (err, res){
         var jsonObject = {
             'origin':origin ,
             'destination':destination,
-            // 'departuredatetime':depDate
+            // 'departureDateTime':depDate
         };
         db.searchInFlights(jsonObject, function(err,results){
             if(err == null){
@@ -316,8 +318,8 @@ async.map(array, httpGet, function (err, res){
                   result.flightNumber=results[i].flightNumber;
                   result.aircraftType=results[i].aircraft;
                   result.aircraftModel=results[i].aircraft;
-                  result.departureDateTime=results[i].departuredatetime;
-                  result.arrivalDateTime=results[i].arrivaldatetime;
+                  result.departureDateTime=results[i].departureDateTime;
+                  result.arrivalDateTime=results[i].arrivalDateTime;
                   result.origin=results[i].origin;
                   result.destination=results[i].destination;
                   if(Class=="economy"){
@@ -354,13 +356,13 @@ async.map(array, httpGet, function (err, res){
         var jsonObject = {
             'origin':origin,
             'destination':destination,
-            // 'departuredatetime':depDate
+            // 'departureDateTime':depDate
         };
 
         var jsonObject2 = {
             'origin':destination,
             'destination':origin,
-            // 'departuredatetime':retDate
+            // 'departureDateTime':retDate
         };
 
         db.searchInFlights(jsonObject , function(err,results){
@@ -370,8 +372,8 @@ async.map(array, httpGet, function (err, res){
                   result.flightNumber=results[i].flightNumber;
                   result.aircraftType=results[i].aircraft;
                   result.aircraftModel=results[i].aircraft;
-                  result.departureDateTime=results[i].departuredatetime;
-                  result.arrivalDateTime=results[i].arrivaldatetime;
+                  result.departureDateTime=results[i].departureDateTime;
+                  result.arrivalDateTime=results[i].arrivalDateTime;
                   result.origin=results[i].origin;
                   result.destination=results[i].destination;
                   if(Class=="economy"){
@@ -392,8 +394,8 @@ async.map(array, httpGet, function (err, res){
                       result.flightNumber=results2[i].flightNumber;
                       result.aircraftType=results2[i].aircraft;
                       result.aircraftModel=results2[i].aircraft;
-                      result.departureDateTime=results2[i].departuredatetime;
-                      result.arrivalDateTime=results2[i].arrivaldatetime;
+                      result.departureDateTime=results2[i].departureDateTime;
+                      result.arrivalDateTime=results2[i].arrivalDateTime;
                       result.origin=results2[i].origin;
                       result.destination=results2[i].destination;
                       if(Class=="economy"){
