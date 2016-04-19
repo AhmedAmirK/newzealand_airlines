@@ -4,13 +4,12 @@
   <div class="text"> <h2>  <u>Flight Details Confirmation</u> </h2> </div>
 
   <div class="container">
-      <div class="num"> <h3> Flight Number: {{OutFlight.FlightNumber}} </h3> </div>
-      <div class="dep"> <h3> Departure Time: {{OutFlight.Departure}} </h3> </div>
-      <div class="arr"> <h3> Arrival Time: {{OutFlight.Arrival}} </h3> </div>
-      <div class="date"> <h3> Date: {{OutFlight.Date}} </h3> </div>
+      <div class="num"> <h3> Flight Number: {{OutFlight.flightNumber}} </h3> </div>
+      <div class="dep"> <h3> Departure Time: {{OutFlight.departuredatetime}} </h3> </div>
+      <div class="arr"> <h3> Arrival Time: {{OutFlight.arrivaldatetime}} </h3> </div>
       <div class="class"> <h3> Class: {{OutClass}}</h3> </div>
       <div class="seat"> <h3> Seat Type: {{Seat}}</h3> </div>
-      <div class="price"> <h3> Price : ${{OutFlight.Price}}  </h3> </div>
+      <div class="price"> <h3> Price : ${{price}}  </h3> </div>
 
   </div>
 
@@ -39,7 +38,7 @@
      <input class="form-control" type="text">
     
      <label>Email Address :</label>
-     <input class="form-control" type="email" ></input>
+     <input class="form-control" type="email" ng-model"email"></input>
 
 
 

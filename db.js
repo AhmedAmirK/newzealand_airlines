@@ -1,18 +1,19 @@
 
 var mongoose = require('mongoose');
+//mongoose.set('debug',true);
 var Schema = mongoose.Schema;
 var Flight , Booking , Aircraft , Airport;
 
 var flightSchema = new Schema ({
 
-    flightNumber: String,
-    aircraft: String,
-    date: { type: Date, default: Date.now },
-    duration: Number,
+    flightNumber: Number,
+    aircraft:String,
+    departuredatetime: Date,
+    arrivaldatetime:Date,
     origin: String,
     destination: String,
-    occupiedSeatsFirst : 
-    [     
+    occupiedSeatsBusiness :
+    [
             {
                   type: String,
                   Number: String,
@@ -20,29 +21,28 @@ var flightSchema = new Schema ({
             }
     ],
     occupiedSeatsEconomy:
-    [     
+    [
             {
                   type: String,
                   Number: String,
                   bookingRefNo: String
             }
     ],
-    price:{first: Number , economy: Number , currency:String}
+    price:{business: Number , economy: Number , currency:String},
+    AirLine:{ type: String, default:'AirNewZealand'}
 });
 
 var bookingSchema = new Schema({
-    email: String, 
-    id: String , 
-    firstName: String,
-    lastName: String,
-    passport: String,
-    issueDate: { type: Date, default: Date.now },
-    expiryDate: { type: Date, default: Date.now },
-    TotalPrice: Number,
-    receipt_number: String,
-    flightNumber: String, 
-    bookingRefNumber: String,
-    seat:{number: String , class: String , type:String} 
+	
+    email: String,
+    TotalPrice: String,
+    flightNumber: String,
+    bookingRefNumber: Number,
+    seat : {
+        number: Number , 
+        class: String , 
+        type:String
+    }
 
 });
 
@@ -50,11 +50,11 @@ var aircraftSchema = new Schema({
 
     name: String,
     type:String,     //Example : Boeing
-    model:Number,   
+    model:Number,
     capacity: Number,
     seatmap:
     {
-        first : {windowMaximum:Number , aisleMaximum:Number , cabinMaximum:Number},
+        business : {windowMaximum:Number , aisleMaximum:Number , cabinMaximum:Number},
         economy : {windowMaximum:Number , aisleMaximum:Number , cabinMaximum:Number}
     }
 
@@ -73,6 +73,11 @@ var airportSchema = new Schema(
         "size": String
     }
 );
+ var connection = mongoose.createConnection('mongodb://localhost:27017/MyDatabase');
+ Flight = connection.model('Flight' , flightSchema);
+ Booking = connection.model('Booking' , bookingSchema);
+ Aircraft = connection.model('Aircraft' , aircraftSchema);
+ Airport = connection.model('Airport', airportSchema);
 
 exports.connect = function(cb){
     var connection = mongoose.createConnection('mongodb://localhost:27017/MyDatabase');
@@ -81,10 +86,6 @@ exports.connect = function(cb){
     });
     connection.once('open', function() {
         console.log('Successfully connected to the database');
-        Flight = connection.model('Flight' , flightSchema);
-        Booking = connection.model('Booking' , bookingSchema);
-        Aircraft = connection.model('Aircraft' , aircraftSchema);
-        Airport = connection.model('Airport', airportSchema);
         cb();
     });
 };
@@ -145,7 +146,7 @@ exports.clearAirports = function(cb){
     cb();
 };
 
-exports.insertInFlights = function(jsonObject , cb){ 
+exports.insertInFlights = function(jsonObject , cb){
     var tuple = new Flight(jsonObject);
     tuple.save(function(err){
         if(err)
@@ -155,7 +156,7 @@ exports.insertInFlights = function(jsonObject , cb){
     });
 }
 
-exports.insertInBookings = function(jsonObject , cb){ 
+exports.insertInBookings = function(jsonObject , cb){
     var tuple = new Booking(jsonObject);
     tuple.save(function(err){
         if(err)
@@ -165,7 +166,7 @@ exports.insertInBookings = function(jsonObject , cb){
     });
 }
 
-exports.insertInAircrafts = function(jsonObject , cb){ 
+exports.insertInAircrafts = function(jsonObject , cb){
     var tuple = new Aircraft(jsonObject);
     tuple.save(function(err){
         if(err)
@@ -175,7 +176,7 @@ exports.insertInAircrafts = function(jsonObject , cb){
     });
 }
 
-exports.insertInAirports = function(jsonObject , cb){ 
+exports.insertInAirports = function(jsonObject , cb){
     var tuple = new Airport(jsonObject);
     tuple.save(function(err){
         if(err)
@@ -186,15 +187,14 @@ exports.insertInAirports = function(jsonObject , cb){
 }
 
 exports.importAirports = function(data,cb){
-
 	data.forEach(function(air){
 		var tuple = new Airport(air);
 		tuple.save(function(err){
 			if (err)
 				cb(err);
-			else cb(null);
 		});
 	});
+	cb();
 }
 
 exports.importAircrafts = function(data,cb){
@@ -204,9 +204,23 @@ exports.importAircrafts = function(data,cb){
 		tuple.save(function(err){
 			if (err)
 				cb(err);
-			else cb(null);
 		});
 	});
+	cb();
+}
+
+exports.importFlights = function(data,cb){
+
+	var i;
+	for(i = 0; i<data.length;i++){
+
+		var tuple = new Flight(data[i]);
+		tuple.save(function(err){
+			if (err)
+				cb(err);
+		});
+	}
+	cb();
 }
 
 exports.searchInFlights = function(jsonObject , cb){

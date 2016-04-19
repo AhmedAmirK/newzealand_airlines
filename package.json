@@ -4,23 +4,29 @@
   "description"  : "Air New ZeaLand airplane reservation system",
   "main"         : "server.js",
   "authors"      : "MEAN Machines",
+  "scripts"      : {
+      "test"     : "mocha tests/testChai.js"
+  },
   "repository": {
     "type": "git",
     "url" : "https://github.com/secourse2016/the-mean-machine"
   },
   "dependencies" : {
-    "express"    : "*",
-    "morgan"     : "*",
-    "body-parser": "*",
-    "mongoose"	 : "*",
-    "mongodb": "*",
-    "mocha" : "*",
-     "chai" : "*",
-     "supertest" : "*",
-     "istanbul" : "*",
-     "dotenv"      : "*",
-    "jsonwebtoken": "*",
-    "underscore"  : "*",
-    "moment"      : "*"
+    "express"    : "^4.13",
+    "morgan"     : "^1.7",
+    "body-parser": "^1.15",
+    "mongoose"	 : "^4.4",
+    "mongodb": "^2.1",
+    "mocha" : "^2.4.5",
+     "chai" : "^3.5",
+     "supertest" : "^1.2",
+     "istanbul" : "^0.4",
+     "dotenv"      : "^2.0",
+    "jsonwebtoken": "^5.7",
+    "underscore"  : "^1.8",
+    "moment"      : "^2.12",
+    "chai-http"   : "^2.0.1",
+    "request": "^2.72",
+    "async": "^2.0.0-rc.3"
     }
 }
