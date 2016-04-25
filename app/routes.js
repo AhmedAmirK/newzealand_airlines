@@ -53,7 +53,7 @@ module.exports = function(app) {
     });
 
     app.get('/api/flights/track/:flightNumber', function(req, res) {
-        var num = req.params.flightNumber;
+        var num = parseInt(req.params.flightNumber);
 
         db.searchInFlights({'flightNumber':num} , function(err,results){
         if(err == null && results.length > 0)
