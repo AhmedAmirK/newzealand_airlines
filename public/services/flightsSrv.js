@@ -13,6 +13,9 @@ App.factory('FlightsSrv', function($http) {
         trackFlight: function(data) {
             return $http.get('/api/flights/track/'+data);
         },
+        findBooking: function(num) {
+            return $http.get('/api/booking/find/'+num);
+        },
         searchFlights: function() {
             var myQuery; 
             if (this.round)
@@ -30,15 +33,18 @@ App.factory('FlightsSrv', function($http) {
                 else return $http.get('/api/otherAirlines/oneWay/'+this.selectedOriginAirport+'/'+this.selectedDestinationAirport+'/'+this.date1+'/'+this.Class);
             });
         },
+        getCurrentBookingRefNum:function(){
+            return $http.get('/api/booking/currentrefnum');
+        },
         setOtherAir:function(value){
             this.Other =value; 
         },
         getOtherAir:function(){
             return this.Other;
         },
-        bookFlight: function(flightNumber, email, TotalPrice,c) {
-            var myQuery = email+'/'+this.date1+'/'+TotalPrice+'/'+flightNumber+'/'+c+'/'+this.Seat;
-            $http.get('/api/booking/'+myQuery);
+        bookFlight: function(flightNumber,email,TotalPrice,c) {
+            var myQuery = email+'/'+TotalPrice+'/'+flightNumber+'/'+c+'/'+this.Seat;
+            $http.post('/api/booking/'+myQuery);
         },
         setSelectedOriginAirport: function(value) {
             this.selectedOriginAirport = value;

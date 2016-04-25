@@ -73,6 +73,7 @@ var airportSchema = new Schema(
         "size": String
     }
 );
+
  var connection = mongoose.createConnection('mongodb://localhost:27017/MyDatabase');
  Flight = connection.model('Flight' , flightSchema);
  Booking = connection.model('Booking' , bookingSchema);
@@ -157,13 +158,14 @@ exports.insertInFlights = function(jsonObject , cb){
 }
 
 exports.insertInBookings = function(jsonObject , cb){
-    var tuple = new Booking(jsonObject);
-    tuple.save(function(err){
+
+    Booking.collection.insert(jsonObject , function(err){
         if(err)
             cb(err);
         else
             cb(null);
     });
+
 }
 
 exports.insertInAircrafts = function(jsonObject , cb){

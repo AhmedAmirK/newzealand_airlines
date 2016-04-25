@@ -26,6 +26,10 @@ App.config(function($routeProvider) {
             templateUrl:'partials/track.html',
             controller: 'trackCtrl'
         })
+        .when('/findBooking',{
+            templateUrl:'partials/findBooking.html',
+            controller: 'findBookingCtrl'
+        })
         .when('/booking',{
             templateUrl:'partials/bookings.html',
             controller:'bookingsCtrl'
