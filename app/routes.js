@@ -323,8 +323,8 @@ async.map(array, httpGet, function (err, res){
     app.get('/api/flights/search/:origin/:destination/:departingDate/:class', function(req, res) {
         var origin = req.params.origin;
         var destination = req.params.destination;
-        var depDate = new Date(moment(req.params.departingDate).format('YYYY-MM-DD'));
-        // var depDate = moment(new Date(req.params.departingDate)).format('YYYY-MM-DD');
+        var depDate = moment(new Date(parseInt(req.params.departingDate))).format('YYYY-MM-DD');
+        var next= moment(depDate).add(1,'day').format('YYYY-MM-DD');
         var Class = req.params.class;
         var result={};
         var outgoingFlightsArr=[];
@@ -332,11 +332,12 @@ async.map(array, httpGet, function (err, res){
         var jsonObject = {
             'origin':origin ,
             'destination':destination,
-            // 'departureDateTime':depDate
+            'departureDateTime':{ "$gte" :depDate, "$lt" : next}
         };
         db.searchInFlights(jsonObject, function(err,results){
             if(err == null){
               for(i=0;i<results.length;i++){
+                  result.flightId=results[i]._id;
                   result.flightNumber=results[i].flightNumber;
                   result.aircraftType=results[i].aircraft;
                   result.aircraftModel=results[i].aircraft;
@@ -369,8 +370,10 @@ async.map(array, httpGet, function (err, res){
         var origin = req.params.origin;
         var destination = req.params.destination;
         var Class = req.params.class;
-        var depDate = new Date(moment(req.params.departingDate).format('YYYY-MM-DD'));
-        var retDate = new Date(moment(req.params.returningDate).format('YYYY-MM-DD'));
+        var depDate = moment(new Date(parseInt(req.params.departingDate))).format('YYYY-MM-DD');
+        var nextDep= moment(depDate).add(1,'day').format('YYYY-MM-DD');
+        var retDate = moment(new Date(parseInt(req.params.returningDate))).format('YYYY-MM-DD');
+        var nextOut= moment(retDate).add(1,'day').format('YYYY-MM-DD');
         var result={};
         var outgoingFlightsArr=[];
         var returningFlightsArr=[];
@@ -378,19 +381,20 @@ async.map(array, httpGet, function (err, res){
         var jsonObject = {
             'origin':origin,
             'destination':destination,
-            // 'departureDateTime':depDate
+            'departureDateTime':{ "$gte" :depDate, "$lt" : nextDep}
         };
 
         var jsonObject2 = {
             'origin':destination,
             'destination':origin,
-            // 'departureDateTime':retDate
+            'departureDateTime':{ "$gte" :retDate, "$lt" : nextOut}
         };
 
         db.searchInFlights(jsonObject , function(err,results){
             if(err == null){
               console.log(results);
               for(i=0;i<results.length;i++){
+                  result.flightId=results[i]._id;
                   result.flightNumber=results[i].flightNumber;
                   result.aircraftType=results[i].aircraft;
                   result.aircraftModel=results[i].aircraft;
@@ -413,6 +417,7 @@ async.map(array, httpGet, function (err, res){
                 if(err2 == null){
                   console.log(results2);
                   for(i=0;i<results2.length;i++){
+                      result.flightId=results2[i]._id;
                       result.flightNumber=results2[i].flightNumber;
                       result.aircraftType=results2[i].aircraft;
                       result.aircraftModel=results2[i].aircraft;

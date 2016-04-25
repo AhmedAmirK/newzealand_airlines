@@ -25,8 +25,10 @@ var token = jwt.sign('payload', jwtSecret,  { algorithm: 'HS256' });
 // }
 // otherAirlines.OneWayFlight();
 console.log(moment("04/30/2016", "MM-DD-YYYY").isValid());
-console.log(moment("04/30/2016", "MM-DD-YYYY").toDate().getTime());
-urli='http://'+"localhost:3000"+'/'+'api/flights/search/'+"CAI"+'/'+"JED"+'/'+moment('2016-05-24T00:00:00.000Z').toDate().getTime()+'/'+"economy";
+console.log(moment("05/24/2016", "MM-DD-YYYY").toDate().getTime());
+// urli='http://'+"localhost:3000"+'/'+'api/flights/search/'+"CAI"+'/'+"JED"+'/'+moment("05/24/2016", "MM-DD-YYYY").toDate().getTime()+'/'+moment("05/27/2016", "MM-DD-YYYY").toDate().getTime()+'/'+"economy";
+urli='http://'+"localhost:3000"+'/'+'api/flights/search/'+"CAI"+'/'+"JED"+'/'+moment("05/24/2016", "MM-DD-YYYY").toDate().getTime()+'/'+"economy";
+
   request({
       url: urli,
       json: true,
