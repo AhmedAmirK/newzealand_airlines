@@ -3,6 +3,80 @@ var mongo = require('mongodb').MongoClient,
 var DB = null;
 var dbURL = 'mongodb://localhost:27017/MyDatabase';
 
+/* ||||||||||||||||| Reference to our schema |||||||||||||||||||||||||||||||
+var flightSchema = new Schema ({
+
+    flightNumber: String,
+    aircraft:{name:String, model:String, type:String},
+    date: { type: Date, default: Date.now },
+    duration: Number,
+    origin: String,
+    destination: String,
+    occupiedSeatsBusiness :
+    [
+            {
+                  type: String,
+                  Number: String,
+                  bookingRefNo: String
+            }
+    ],
+    occupiedSeatsEconomy:
+    [
+            {
+                  type: String,
+                  Number: String,
+                  bookingRefNo: String
+            }
+    ],
+    price:{business: Number , economy: Number , currency:String},
+    capacity:{business:Number , economy:Number}
+});
+
+var bookingSchema = new Schema({
+    email: String,
+    id: String ,
+    firstName: String,
+    lastName: String,
+    passport: String,
+    issueDate: { type: Date, default: Date.now },
+    expiryDate: { type: Date, default: Date.now },
+    TotalPrice: Number,
+    receipt_number: String,
+    flightNumber: String,
+    bookingRefNumber: String,
+    seat:{number: String , class: String , type:String}
+
+});
+
+var aircraftSchema = new Schema({
+
+    name: String,
+    type:String,     //Example : Boeing
+    model:Number,
+    capacity: Number,
+    seatmap:
+    {
+        business : {windowMaximum:Number , aisleMaximum:Number , cabinMaximum:Number},
+        economy : {windowMaximum:Number , aisleMaximum:Number , cabinMaximum:Number}
+    }
+
+});
+
+var airportSchema = new Schema(
+    {
+        "iata": String,
+        "lon": Number,
+        "iso": String,
+        "status": Number,
+        "name": String,
+        "continent": String,
+        "type": String,
+        "lat": Number,
+        "size": String
+    }
+);
+|||||||||||||SCHEMA END||||||||||||||||||||||||||||  */
+
  exports.connect = function(cb) {
      return mongo.connect(dbURL, function(err, db) {
          if (err) return cb(err);

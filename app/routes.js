@@ -388,127 +388,156 @@ async.map(array, httpGet, function (err, res){
 
     });*/
         ////////////////////////////////////// END OF MIDDLEWARE!!!
-
-    app.get('/api/flights/search/:origin/:destination/:departingDate/:class', function(req, res) {
-        var origin = req.params.origin;
-        var destination = req.params.destination;
-        var depDate = new Date(moment(req.params.departingDate).format('YYYY-MM-DD'));
-        // var depDate = moment(new Date(req.params.departingDate)).format('YYYY-MM-DD');
-        var Class = req.params.class;
-        var result={};
-        var outgoingFlightsArr=[];
-        var i=0; var j=0;
-        var jsonObject = {
-            'origin':origin ,
-            'destination':destination,
-            // 'departureDateTime':depDate
-        };
-        db.searchInFlights(jsonObject, function(err,results){
-            if(err == null){
-              for(i=0;i<results.length;i++){
-                  result.flightNumber=results[i].flightNumber;
-                  result.aircraftType=results[i].aircraft;
-                  result.aircraftModel=results[i].aircraft;
-                  result.departureDateTime=results[i].departureDateTime;
-                  result.arrivalDateTime=results[i].arrivalDateTime;
-                  result.origin=results[i].origin;
-                  result.destination=results[i].destination;
-                  if(Class=="economy"){
-                  result.cost=results[i].price.economy;}
-                  else if(Class="business"){
-                  result.cost=results[i].price.business;}
-                  result.currency=results[i].price.currency;
-                  result.class=Class;
-                  result.Airline="AirNewZealand"
-                  outgoingFlightsArr[j]=result;
-                  j++;
-                  result={};
+        //OneWay Flight
+    function handleOneWay(req,res){
+      var origin = req.params.origin;
+      var destination = req.params.destination;
+      var depDate = moment(new Date(parseInt(req.params.departingDate))).format('YYYY-MM-DD');
+      var next= moment(depDate).add(1,'day').format('YYYY-MM-DD');
+      var Class = req.params.class;
+      var seats = (req.params.seats===null||req.params.seats===undefined)? 1 :req.params.seats; //if seat not sent then make it 1
+      console.log(seats);
+      var result={};
+      var outgoingFlightsArr=[];
+      var i=0; var j=0;
+      var jsonObject = {
+          'origin':origin ,
+          'destination':destination,
+          'departureDateTime':{ "$gte" :depDate, "$lt" : next}
+      };
+      db.searchInFlights(jsonObject, function(err,results){
+          if(err == null){
+            for(i=0;i<results.length;i++){
+              if(Class=="economy"){
+                if((results[i].capacity.economy-results[i].occupiedSeatsEconomy.length)-seats<0) continue; //if not enough seats skip this entry
               }
-                res.json({"outgoingFlights":outgoingFlightsArr});
-            }
-
-            else
-                console.log(err);
-        });
-    });
-
-    app.get('/api/flights/search/:origin/:destination/:departingDate/:returningDate/:class', function(req, res) {
-
-
-        var origin = req.params.origin;
-        var destination = req.params.destination;
-        var Class = req.params.class;
-        var depDate = new Date(moment(req.params.departingDate).format('YYYY-MM-DD'));
-        var retDate = new Date(moment(req.params.returningDate).format('YYYY-MM-DD'));
-        var result={};
-        var outgoingFlightsArr=[];
-        var returningFlightsArr=[];
-        var i=0;var k=0; var j=0;
-        var jsonObject = {
-            'origin':origin,
-            'destination':destination,
-            // 'departureDateTime':depDate
-        };
-
-        var jsonObject2 = {
-            'origin':destination,
-            'destination':origin,
-            // 'departureDateTime':retDate
-        };
-
-        db.searchInFlights(jsonObject , function(err,results){
-            if(err == null){
-              console.log(results);
-              for(i=0;i<results.length;i++){
-                  result.flightNumber=results[i].flightNumber;
-                  result.aircraftType=results[i].aircraft;
-                  result.aircraftModel=results[i].aircraft;
-                  result.departureDateTime=results[i].departureDateTime;
-                  result.arrivalDateTime=results[i].arrivalDateTime;
-                  result.origin=results[i].origin;
-                  result.destination=results[i].destination;
-                  if(Class=="economy"){
-                  result.cost=results[i].price.economy;}
-                  else if(Class="business"){
-                  result.cost=results[i].price.business;}
-                  result.currency=results[i].price.currency;
-                  result.class=Class;
-                  result.Airline="AirNewZealand"
-                  outgoingFlightsArr[j]=result;
-                  j++;
-                  result={};
+              else if(Class=="business"){
+                if((results[i].capacity.economy-results[i].occupiedSeatsBusiness.length)-seats<0) continue; //if not enough seats skip this entry
               }
-              db.searchInFlights(jsonObject2 , function(err2,results2){
-                if(err2 == null){
-                  console.log(results2);
-                  for(i=0;i<results2.length;i++){
-                      result.flightNumber=results2[i].flightNumber;
-                      result.aircraftType=results2[i].aircraft;
-                      result.aircraftModel=results2[i].aircraft;
-                      result.departureDateTime=results2[i].departureDateTime;
-                      result.arrivalDateTime=results2[i].arrivalDateTime;
-                      result.origin=results2[i].origin;
-                      result.destination=results2[i].destination;
-                      if(Class=="economy"){
-                      result.cost=results2[i].price.economy;}
-                      else if(Class="business"){
-                      result.cost=results2[i].price.business;}
-                      result.currency=results2[i].price.currency;
-                      result.class=Class;
-                      result.Airline="AirNewZealand";
-                      returningFlightsArr[k]=result;
-                      k++;
-                      result={};
-                  }
-                    res.json({"outgoingFlights":outgoingFlightsArr , "returnFlights":returningFlightsArr});
-                }
-                else
-                    console.log(err);
-              });
+                result.flightId=results[i]._id;
+                result.flightNumber=results[i].flightNumber;
+                result.aircraftType=results[i].aircraft;
+                result.aircraftModel=results[i].aircraft;
+                result.departureDateTime=results[i].departureDateTime;
+                result.arrivalDateTime=results[i].arrivalDateTime;
+                result.origin=results[i].origin;
+                result.destination=results[i].destination;
+                if(Class=="economy"){
+                result.cost=results[i].price.economy;}
+                else if(Class="business"){
+                result.cost=results[i].price.business;}
+                result.currency=results[i].price.currency;
+                result.class=Class;
+                result.Airline="AirNewZealand"
+                outgoingFlightsArr[j]=result;
+                j++;
+                result={};
             }
-            else
-                console.log(err);
-        });
+              res.json({"outgoingFlights":outgoingFlightsArr});
+          }
 
-    });
+          else
+              console.log(err);
+      });
+    }
+    app.get('/api/flights/search/:origin/:destination/:departingDate/:class',handleOneWay);
+    app.get('/api/flights/search/:origin/:destination/:departingDate/:class/:seats', handleOneWay);
+
+    // Two way flight
+    function handleTwoWay(req, res) {
+       var origin = req.params.origin;
+       var destination = req.params.destination;
+       var Class = req.params.class;
+       var depDate = moment(new Date(parseInt(req.params.departingDate))).format('YYYY-MM-DD');
+       var nextDep= moment(depDate).add(1,'day').format('YYYY-MM-DD');
+       var retDate = moment(new Date(parseInt(req.params.returningDate))).format('YYYY-MM-DD');
+       var nextOut= moment(retDate).add(1,'day').format('YYYY-MM-DD');
+       var seats = (req.params.seats===null||req.params.seats===undefined)? 1 :req.params.seats;
+       var result={};
+       var outgoingFlightsArr=[];
+       var returningFlightsArr=[];
+       var i=0;var k=0; var j=0;
+       var jsonObject = {
+           'origin':origin,
+           'destination':destination,
+           'departureDateTime':{ "$gte" :depDate, "$lt" : nextDep}
+       };
+
+       var jsonObject2 = {
+           'origin':destination,
+           'destination':origin,
+           'departureDateTime':{ "$gte" :retDate, "$lt" : nextOut}
+       };
+
+       db.searchInFlights(jsonObject , function(err,results){
+           if(err == null){
+             console.log(results);
+             for(i=0;i<results.length;i++){
+               if(Class=="economy"){
+                 if((results[i].capacity.economy-results[i].occupiedSeatsEconomy.length)-seats<0) continue; //if not enough seats skip this entry
+               }
+               else if(Class=="business"){
+                 if((results[i].capacity.economy-results[i].occupiedSeatsBusiness.length)-seats<0) continue; //if not enough seats skip this entry
+               }
+                 result.flightId=results[i]._id;
+                 result.flightNumber=results[i].flightNumber;
+                 result.aircraftType=results[i].aircraft;
+                 result.aircraftModel=results[i].aircraft;
+                 result.departureDateTime=results[i].departureDateTime;
+                 result.arrivalDateTime=results[i].arrivalDateTime;
+                 result.origin=results[i].origin;
+                 result.destination=results[i].destination;
+                 if(Class=="economy"){
+                 result.cost=results[i].price.economy;}
+                 else if(Class="business"){
+                 result.cost=results[i].price.business;}
+                 result.currency=results[i].price.currency;
+                 result.class=Class;
+                 result.Airline="AirNewZealand"
+                 outgoingFlightsArr[j]=result;
+                 j++;
+                 result={};
+             }
+             db.searchInFlights(jsonObject2 , function(err2,results2){
+               if(err2 == null){
+                 console.log(results2);
+                 for(i=0;i<results2.length;i++){
+                   if(Class=="economy"){
+                     if((results2[i].capacity.economy-results2[i].occupiedSeatsEconomy.length)-seats<0) continue; //if not enough seats skip this entry
+                   }
+                   else if(Class=="business"){
+                     if((results2[i].capacity.economy-results2[i].occupiedSeatsBusiness.length)-seats<0) continue; //if not enough seats skip this entry
+                   }
+                     result.flightId=results2[i]._id;
+                     result.flightNumber=results2[i].flightNumber;
+                     result.aircraftType=results2[i].aircraft;
+                     result.aircraftModel=results2[i].aircraft;
+                     result.departureDateTime=results2[i].departureDateTime;
+                     result.arrivalDateTime=results2[i].arrivalDateTime;
+                     result.origin=results2[i].origin;
+                     result.destination=results2[i].destination;
+                     if(Class=="economy"){
+                     result.cost=results2[i].price.economy;}
+                     else if(Class="business"){
+                     result.cost=results2[i].price.business;}
+                     result.currency=results2[i].price.currency;
+                     result.class=Class;
+                     result.Airline="AirNewZealand";
+                     returningFlightsArr[k]=result;
+                     k++;
+                     result={};
+                 }
+                   res.json({"outgoingFlights":outgoingFlightsArr , "returnFlights":returningFlightsArr});
+               }
+               else
+                   console.log(err);
+             });
+           }
+           else
+               console.log(err2);
+       });
+
+   }
+    app.get('/api/flights/search/:origin/:destination/:departingDate/:returningDate/:class',handleTwoWay);
+    app.get('/api/flights/search/:origin/:destination/:departingDate/:returningDate/:class/:seats',handleTwoWay);
 };
