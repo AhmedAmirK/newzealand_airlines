@@ -22,7 +22,8 @@ var moment = require('moment');
             destination: "DEL" ,
             occupiedSeatsBusiness : [],
             occupiedSeatsEconomy: [],
-            price:{business: 100 , economy: 50 , currency:"USD"}
+            price:{business: 100 , economy: 50 , currency:"USD"},
+            capacity:{business:100 , economy:100}
         }
         Flights.push(Flight);
         now = now + 120*60000;
@@ -39,7 +40,8 @@ var moment = require('moment');
             destination: "JED" ,
             occupiedSeatsBusiness : [],
             occupiedSeatsEconomy: [],
-            price:{business: 100 , economy: 50 , currency:"USD"}
+            price:{business: 100 , economy: 50 , currency:"USD"},
+            capacity:{business:100 , economy:100}
         }
         i++;
         Flights.push(Flight);
@@ -57,7 +59,8 @@ var moment = require('moment');
             destination: "TPE" ,
             occupiedSeatsBusiness : [],
             occupiedSeatsEconomy: [],
-            price:{business: 100 , economy: 50 , currency:"USD"}
+            price:{business: 100 , economy: 50 , currency:"USD"},
+            capacity:{business:100 , economy:100}
         }
         i++;
         Flights.push(Flight);
@@ -75,7 +78,8 @@ var moment = require('moment');
             destination: "CPT" ,
             occupiedSeatsBusiness : [],
             occupiedSeatsEconomy: [],
-            price:{business: 100 , economy: 50 , currency:"USD"}
+            price:{business: 100 , economy: 50 , currency:"USD"},
+            capacity:{business:100 , economy:100}
         }
         i++;
         Flights.push(Flight);
@@ -93,7 +97,8 @@ var moment = require('moment');
             destination: "JED" ,
             occupiedSeatsBusiness : [],
             occupiedSeatsEconomy: [],
-            price:{business: 100 , economy: 50 , currency:"USD"}
+            price:{business: 100 , economy: 50 , currency:"USD"},
+            capacity:{business:100 , economy:100}
         }
         i++;
         Flights.push(Flight);
@@ -111,7 +116,8 @@ var moment = require('moment');
             destination: "JFK" ,
             occupiedSeatsBusiness : [],
             occupiedSeatsEconomy: [],
-            price:{business: 100 , economy: 50 , currency:"USD"}
+            price:{business: 100 , economy: 50 , currency:"USD"},
+            capacity:{business:100 , economy:100}
         }
         i++;
         Flights.push(Flight);
@@ -129,7 +135,8 @@ var moment = require('moment');
             destination: "LAX" ,
             occupiedSeatsBusiness : [],
             occupiedSeatsEconomy: [],
-            price:{business: 100 , economy: 50 , currency:"USD"}
+            price:{business: 100 , economy: 50 , currency:"USD"},
+            capacity:{business:100 , economy:100}
         }
         i++;
         Flights.push(Flight);
@@ -147,7 +154,8 @@ var moment = require('moment');
             destination: "SFO" ,
             occupiedSeatsBusiness : [],
             occupiedSeatsEconomy: [],
-            price:{business: 100 , economy: 50 , currency:"USD"}
+            price:{business: 100 , economy: 50 , currency:"USD"},
+            capacity:{business:100 , economy:100}
         }
         i++;
         Flights.push(Flight);
@@ -165,7 +173,8 @@ var moment = require('moment');
             destination: "TXL" ,
             occupiedSeatsBusiness : [],
             occupiedSeatsEconomy: [],
-            price:{business: 100 , economy: 50 , currency:"USD"}
+            price:{business: 100 , economy: 50 , currency:"USD"},
+            capacity:{business:100 , economy:100}
         }
         i++;
         Flights.push(Flight);
@@ -183,7 +192,8 @@ var moment = require('moment');
             destination: "FCO" ,
             occupiedSeatsBusiness : [],
             occupiedSeatsEconomy: [],
-            price:{business: 100 , economy: 50 , currency:"USD"}
+            price:{business: 100 , economy: 50 , currency:"USD"},
+            capacity:{business:100 , economy:100}
         }
         i++;
         Flights.push(Flight);
@@ -201,7 +211,8 @@ var moment = require('moment');
             destination: "BOM" ,
             occupiedSeatsBusiness : [],
             occupiedSeatsEconomy: [],
-            price:{business: 100 , economy: 50 , currency:"USD"}
+            price:{business: 100 , economy: 50 , currency:"USD"},
+capacity:{business:100 , economy:100}
         }
         i++;
         Flights.push(Flight);
@@ -219,7 +230,8 @@ var moment = require('moment');
             destination: "CAI" ,
             occupiedSeatsBusiness : [],
             occupiedSeatsEconomy: [],
-            price:{business: 100 , economy: 50 , currency:"USD"}
+            price:{business: 100 , economy: 50 , currency:"USD"},
+capacity:{business:100 , economy:100}
         };
         i++;
         Flights.push(Flight);
@@ -237,7 +249,8 @@ var moment = require('moment');
             destination: "HKG" ,
             occupiedSeatsBusiness : [],
             occupiedSeatsEconomy: [],
-            price:{business: 100 , economy: 50 , currency:"USD"}
+            price:{business: 100 , economy: 50 , currency:"USD"},
+capacity:{business:100 , economy:100}
         }
         i++;
         Flights.push(Flight);
@@ -255,7 +268,8 @@ var moment = require('moment');
             destination: "JNB" ,
             occupiedSeatsBusiness : [],
             occupiedSeatsEconomy: [],
-            price:{business: 100 , economy: 50 , currency:"USD"}
+            price:{business: 100 , economy: 50 , currency:"USD"},
+capacity:{business:100 , economy:100}
         }
         i++;
         Flights.push(Flight);
@@ -273,7 +287,8 @@ var moment = require('moment');
             destination: "RUH" ,
             occupiedSeatsBusiness : [],
             occupiedSeatsEconomy: [],
-            price:{business: 100 , economy: 50 , currency:"USD"}
+            price:{business: 100 , economy: 50 , currency:"USD"},
+capacity:{business:100 , economy:100}
         };
         i++;
         Flights.push(Flight);
@@ -291,7 +306,8 @@ var moment = require('moment');
             destination: "LHR" ,
             occupiedSeatsBusiness : [],
             occupiedSeatsEconomy: [],
-            price:{business: 100 , economy: 50 , currency:"USD"}
+            price:{business: 100 , economy: 50 , currency:"USD"},
+capacity:{business:100 , economy:100}
         }
         i++;
         Flights.push(Flight);
@@ -308,7 +324,8 @@ var moment = require('moment');
             destination: "LCF" ,
             occupiedSeatsBusiness : [],
             occupiedSeatsEconomy: [],
-            price:{business: 100 , economy: 50 , currency:"USD"}
+            price:{business: 100 , economy: 50 , currency:"USD"},
+capacity:{business:100 , economy:100}
         }
         i++;
         Flights.push(Flight);
@@ -325,7 +342,8 @@ var moment = require('moment');
             destination: "LAX" ,
             occupiedSeatsBusiness : [],
             occupiedSeatsEconomy: [],
-            price:{business: 100 , economy: 50 , currency:"USD"}
+            price:{business: 100 , economy: 50 , currency:"USD"},
+capacity:{business:100 , economy:100}
         }
         i++;
         Flights.push(Flight);
@@ -343,7 +361,8 @@ var moment = require('moment');
             destination: "FRA" ,
             occupiedSeatsBusiness : [],
             occupiedSeatsEconomy: [],
-            price:{business: 100 , economy: 50 , currency:"USD"}
+            price:{business: 100 , economy: 50 , currency:"USD"},
+capacity:{business:100 , economy:100}
         }
         i++;
         Flights.push(Flight);
@@ -359,7 +378,8 @@ var moment = require('moment');
             destination: "LIN" ,
             occupiedSeatsBusiness : [],
             occupiedSeatsEconomy: [],
-            price:{business: 100 , economy: 50 , currency:"USD"}
+            price:{business: 100 , economy: 50 , currency:"USD"},
+capacity:{business:100 , economy:100}
         }
         i++;
 
