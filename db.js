@@ -13,7 +13,6 @@ var dbURL = 'mongodb://localhost:27017/MyDatabase';
      });
  };
 
-
 exports.getFlights = function(cb) {
     DB.collection('flights').find().toArray(function(err,data) {
         if(err)
@@ -90,6 +89,7 @@ exports.insertInBookings = function(jsonObject , cb){
         else
             cb(null);
     });
+
 }
 
 exports.insertInAircrafts = function(jsonObject , cb){
