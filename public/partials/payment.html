@@ -29,10 +29,10 @@
 
 
      <label> Card Number : </label>
-     <input class="form-control" type="text" placeholder="Enter your card number">
+     <input class="form-control" type="text" ng-model="clientCNum" placeholder="Enter your card number">
 
      <label> Security Number : </label>
-     <input class="form-control" type="text" placeholder="Enter your security number">
+     <input class="form-control" type="text" ng-model="clientSNum" placeholder="Enter your security number">
 
      <label> Email Address :</label>
      <input type="text" class="form-control" ng-model="clientEmail" placeholder="Enter your email">
@@ -50,9 +50,9 @@
        <p class="input-group">
          <input type="text"
                 class="form-control"
-                placeholder="Departure Date"
+                placeholder="Birth Date"
                 uib-datepicker-popup="{{format}}"
-                ng-model="dt"
+                ng-model="clientBDate"
                 is-open="popup1.opened"
                 ng-required="true"
                 close-text="Close"
