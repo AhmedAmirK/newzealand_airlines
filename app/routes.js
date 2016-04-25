@@ -98,17 +98,13 @@ module.exports = function(app) {
         var origin = req.params.origin;
         var destination = req.params.destination;
         var depDate = moment(new Date(req.params.departingDate)).format('YYYY-MM-DD');
+        var next= moment(depDate).add(1,'day').format('YYYY-MM-DD');
 
-        var jsonObject = {};
-        if(origin != undefined){
-          jsonObject['origin'] = origin;
-        }
-        if(destination != undefined){
-          jsonObject['destination'] = destination;
-        }
-        if(depDate != 'Invalid date'){
-          jsonObject['departureDateTime'] = depDate;
-        }
+        var jsonObject = {
+            'origin':origin ,
+            'destination':destination,
+            'departureDateTime':{ "$gte" :depDate, "$lt" : next}
+        };
 
         console.log(jsonObject);
 
@@ -127,29 +123,20 @@ module.exports = function(app) {
         var destination = req.params.destination;
         var depDate = moment(new Date(req.params.departingDate)).format('YYYY-MM-DD');
         var retDate = moment(new Date(req.params.returningDate)).format('YYYY-MM-DD');
+        var nextDep= moment(depDate).add(1,'day').format('YYYY-MM-DD');
+        var nextOut= moment(retDate).add(1,'day').format('YYYY-MM-DD');
 
-        var jsonObject = {};
-        if(origin != undefined){
-          jsonObject['origin'] = origin;
-        }
-        if(destination != undefined){
-          jsonObject['destination'] = destination;
-        }
-        if(depDate != 'Invalid date'){
-          jsonObject['departureDateTime'] = depDate;
-        }
+        var jsonObject = {
+            'origin':origin,
+            'destination':destination,
+            'departureDateTime':{ "$gte" :depDate, "$lt" : nextDep}
+        };
 
-        var jsonObject2 = {};
-        if(destination != undefined){
-          jsonObject['origin'] = destination;
-        }
-        if(origin != undefined){
-          jsonObject['destination'] = origin;
-        }
-        if(retDate != 'Invalid date'){
-          jsonObject['departureDateTime'] = retDate;
-        }
-
+        var jsonObject2 = {
+            'origin':destination,
+            'destination':origin,
+            'departureDateTime':{ "$gte" :retDate, "$lt" : nextOut}
+        };
         db.searchInFlights(jsonObject , function(err,results){
             if(err == null){
               console.log(results);
@@ -163,7 +150,7 @@ module.exports = function(app) {
               });
             }
             else
-                console.log(err);
+                console.log(err2);
         });
 
     });
@@ -320,7 +307,7 @@ async.map(array, httpGet, function (err, res){
     });
         ////////////////////////////////////// END OF MIDDLEWARE!!!
         //OneWay Flight
-    function handleOneWay(req,res){
+    function handleOneWay(req,res,next){
       var origin = req.params.origin;
       var destination = req.params.destination;
       var depDate = moment(new Date(parseInt(req.params.departingDate))).format('YYYY-MM-DD');
@@ -469,6 +456,6 @@ async.map(array, httpGet, function (err, res){
        });
 
    }
-    app.get('/api/flights/search/:origin/:destination/:departingDate/:returningDate/:class',handleTwoWay);
+    // app.get('/api/flights/search/:origin/:destination/:departingDate/:returningDate/:class',handleTwoWay);
     app.get('/api/flights/search/:origin/:destination/:departingDate/:returningDate/:class/:seats',handleTwoWay);
 };
