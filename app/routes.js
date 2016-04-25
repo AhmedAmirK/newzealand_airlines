@@ -74,7 +74,7 @@ module.exports = function(app) {
     });
 
     app.get('/api/booking/currentrefnum',function(req,res){
-      res.json({num : bookingRefNumber});
+       res.json({num:bookingRefNumber});
     });
 
     app.get('/api/data/codes', function(req, res) {
@@ -110,8 +110,6 @@ module.exports = function(app) {
           jsonObject['departureDateTime'] = depDate;
         }
 
-        console.log(jsonObject);
-
         db.searchInFlights(jsonObject, function(err,results){
             if(err == null)
                 res.json({outgoingFlights:results});
@@ -123,10 +121,63 @@ module.exports = function(app) {
 
     app.get('/api/local/flights/search/:origin/:destination/:departingDate/:returningDate', function(req, res) {
 
+
+        var origin = req.params.origin;
+        var destination = req.params.destination;
+
+        var depDate = moment(new Date(req.params.departingDate)).format('YYYY-MM-DD');
+
+        var retDate = moment(new Date(req.params.returningDate)).format('YYYY-MM-DD');
+
+        var jsonObject = {
+            'origin':origin,
+            'destination':destination,
+            'departureDateTime':depDate
+        };
+
+        var jsonObject2 = {
+            'origin':destination,
+            'destination':origin,
+            'departureDateTime':retDate
+        };
+  
+/*        console.log('jsonObject : '+jsonObject);
+        console.log('jsonObject2 : '+jsonObject2);*/
+
+                console.log('origin : ' + origin + 
+                    ' destination : ' + destination + 
+                    ' depDate : ' + depDate +
+                    'retDate : ' + retDate
+                    );
+
+        db.searchInFlights(jsonObject , function(err,results){
+            if(err == null){
+              db.searchInFlights(jsonObject2 , function(err2,results2){
+                if(err2 == null){
+                    res.json({outgoingFlights:results , returnFlights:results2});
+                }
+                else
+                    console.log(err);
+              });
+            }
+            else
+                console.log(err);
+        });
+
+    });
+
+/*    app.get('/api/local/flights/search/:origin/:destination/:departingDate/:returningDate', function(req, res) {
+
         var origin = req.params.origin;
         var destination = req.params.destination;
         var depDate = moment(new Date(req.params.departingDate)).format('YYYY-MM-DD');
         var retDate = moment(new Date(req.params.returningDate)).format('YYYY-MM-DD');
+
+        console.log('origin : ' + origin + 
+                    ' destination : ' + destination + 
+                    ' depDate : ' + depDate +
+                    'retDate : ' + retDate
+                    );
 
         var jsonObject = {};
         if(origin != undefined){
@@ -152,21 +203,19 @@ module.exports = function(app) {
 
         db.searchInFlights(jsonObject , function(err,results){
             if(err == null){
-              console.log(results);
               db.searchInFlights(jsonObject2 , function(err2,results2){
                 if(err2 == null){
-                  console.log(results2);
                     res.json({outgoingFlights:results , returnFlights:results2});
                 }
                 else
-                    console.log(err);
+                    console.log(err2);
               });
             }
             else
                 console.log(err);
         });
 
-    });
+    });*/
 
     app.post('/api/booking/:email/:TotalPrice/:flightNumber/:seatClass/:seatType', function(req, res) {
 
@@ -196,7 +245,7 @@ module.exports = function(app) {
               bookingRefNumber = bookingRefNumber + 1;
               seatNum = seatNum + 1;
               console.log('BOOKINGS NUM : '+bookingRefNumber);
-              // res.sendFile(__dirname + '/public/index.html');
+              res.sendFile(__dirname + '/index.html');
             }
         });
 
@@ -289,7 +338,7 @@ async.map(array, httpGet, function (err, res){
   });
 
     //////TOKEN///////
-    app.get('/api/token',function(request,response){
+/*    app.get('/api/token',function(request,response){
         var jwtSecret = process.env.JWTSECRET;
         var token = jwt.sign('payload', jwtSecret,  { algorithm: 'HS256' });
         response.json({token:token});
@@ -317,7 +366,7 @@ async.map(array, httpGet, function (err, res){
             res.status(403).send("Not Authorized to access!");
           }
 
-    });
+    });*/
         ////////////////////////////////////// END OF MIDDLEWARE!!!
 
     app.get('/api/flights/search/:origin/:destination/:departingDate/:class', function(req, res) {

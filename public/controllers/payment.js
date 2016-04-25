@@ -28,8 +28,13 @@ App.controller('paymentCtrl', function($scope, $location , FlightsSrv,$window){
      FlightsSrv.bookFlight($scope.OutFlight.flightNumber,$scope.clientEmail,$scope.price,$scope.OutClass);
      if(FlightsSrv.getIfRoundTrip())
         FlightsSrv.bookFlight($scope.RetFlight.flightNumber,$scope.clientEmail,$scope.price,$scope.RetClass);
-      var num = (FlightsSrv.getCurrentBookingRefNum()).num;
-  	 $window.alert("Payment Completed Succesfully . Your booking refernce number is " + num + " remember this number to search for your booking later on . Thank You for choosing New Zealand Air !");
+
+     FlightsSrv.getCurrentBookingRefNum().success(function(obj){
+          console.log(obj);
+          var num = obj['num'] - 1;
+          $window.alert("Payment Completed Succesfully . Your booking refernce number is "+ num +" remember this number to search for your booking later on . Thank You for choosing New Zealand Air !");
+     });
+  	 
   }
 
 });
