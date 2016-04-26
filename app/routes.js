@@ -15,6 +15,26 @@ var bookingRefNumber = 0 , seatNum = 0;
 
 module.exports = function(app) {
 
+  app.post('/booking', function (req, res) {
+
+          var stripeToken = req.body.paymentToken;
+
+          stripe.charges.create({
+              amount: req.flight.price.amount,
+              currency: req.flight.price.currency,
+              source: "stripeToken",
+              description: stripeToken.description //optional
+          }, function (err, data) {
+              if (err) {
+                  res.send({ refNum: null, errorMessage: err});
+              }
+              else {
+                  //create reservation in DB here
+              }
+          });
+
+      });
+
     app.get('/db/seed', function(req, res) {
 
         db.importAirports(airports, function(err) {
@@ -183,8 +203,8 @@ module.exports = function(app) {
               bookingRefNumber = bookingRefNumber + 1;
               seatNum = seatNum + 1;
               console.log('BOOKINGS NUM : '+bookingRefNumber);
-              // res.sendFile(__dirname + '/public/index.html');
-            }
+              res.sendFile(__dirname + '/index.html');
+             }
         });
 
     });
