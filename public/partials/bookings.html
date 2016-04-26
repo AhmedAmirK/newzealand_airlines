@@ -5,14 +5,8 @@
 <h3>Flight number:    {{OutFlight.flightNumber}} </h3>
 <h3>Departure time:   {{OutFlight.departureDateTime}} </h3>
 <h3>Arrival time:   {{OutFlight.arrivalDateTime}} </h3>
-<h3>Desired Class: </h3>
-<h3><label class = "price">Price: ${{price}} </label></h3>
-<div class="dropdown">
-    <select class="list" ng-model="selectedClass1" ng-change="selectOutClass()">
-      <option ng-value="First">First Class</option>
-      <option ng-value="Economy" ng-selected="selectedClass==selectedClass">Economy Class</option>
-    </select>
-</div>
+<h3>Desired Class: {{OutFlight.class}}</h3>
+<h3><label class = "price">Price: ${{OutFlight.cost}} </label></h3>
 
 
  <div class = "well">

@@ -19,27 +19,16 @@
 <h3>Flight number:    {{OutFlight.flightNumber}} </h3>
 <h3>Departure time:   {{OutFlight.departureDateTime}} </h3>
 <h3>Arrival time:   {{OutFlight.arrivalDateTime}} </h3>
-<h3>Desired Class: </h3>
-<h3><label class = "price">Price: ${{price}} </label></h3>
-<div class="dropdown">
-    <select class="list" ng-model="selectedClass1" ng-change="selectOutClass()">
-      <option ng-value="First">First Class</option>
-      <option ng-value="Economy" ng-selected="selectedClass==selectedClass">Economy Class</option>
-    </select>
-</div>
+<h3>Desired Class: {{OutFlight.class}}</h3>
+<h3><label class = "price">Price: ${{OutFlight.cost}} </label></h3>
+
 
 <h2><u>Returning</u></h2>
 <h3>Flight number:    {{RetFlight.flightNumber}} </h3>
 <h3>Departure time:   {{RetFlight.departureDateTime}} </h3>
 <h3>Arrival time:   {{RetFlight.arrivalDateTime}} </h3>
-<h3>Desired Class: </h3>
-<h3><label class = "price">Price: ${{price2}} </label></h3>
-<div class="dropdown">
-    <select class="list" ng-model="selectedClass2" ng-change="selectRetClass()">
-      <option ng-value="First">First Class</option>
-      <option ng-value="Economy" ng-selected="selectedClass==selectedClass">Economy Class</option>
-    </select>
-</div>
+<h3>Desired Class: {{RetFlight.class}}</h3>
+<h3><label class = "price">Price: ${{RetFlight.cost}} </label></h3>
 
  <div class = "well">
   <h2 class = "seatpref">Seating Preference</h2>

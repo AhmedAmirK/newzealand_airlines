@@ -115,70 +115,18 @@ module.exports = function(app) {
     });
 
 
-    app.get('/api/local/flights/search/:origin/:destination/:departingDate', function(req, res) {
-        var origin = req.params.origin;
-        var destination = req.params.destination;
-        console.log(req.params.departingDate);
-        var depDate = moment(new Date(req.params.departingDate)).format('YYYY-MM-DD');
-        
-        //var next= moment(depDate).add(1,'day').format('YYYY-MM-DD');
-        var next = moment(depDate, 'YYYY/MM/DD').add('days', 1).format('YYYY-MM-DD');
+    app.get('/api/local/flights/search/:origin/:destination/:departingDate/:class', handleOneWay); 
 
-        var jsonObject = {
-            'origin':origin ,
-            'destination':destination,
-            'departureDateTime':{ "$gte" :depDate, "$lt" : next}
-        };
 
-        db.searchInFlights(jsonObject, function(err,results){
-            if(err == null)
-                res.json({outgoingFlights:results});
+    app.get('/api/local/flights/search/:origin/:destination/:departingDate/:returningDate/:class' ,handleTwoWay);
 
-            else
-                console.log(err);
-        });
-    });
-
-    app.get('/api/local/flights/search/:origin/:destination/:departingDate/:returningDate', function(req, res) {
-
-        var origin = req.params.origin;
-        var destination = req.params.destination;
-        var depDate = moment(new Date(req.params.departingDate)).format('YYYY-MM-DD');
-        var retDate = moment(new Date(req.params.returningDate)).format('YYYY-MM-DD');
-        var nextDep= moment(depDate).add(1,'day').format('YYYY-MM-DD');
-        var nextOut= moment(retDate).add(1,'day').format('YYYY-MM-DD');
-
-        var jsonObject = {
-            'origin':origin,
-            'destination':destination,
-            'departureDateTime':{ "$gte" :depDate, "$lt" : nextDep}
-        };
-
-        var jsonObject2 = {
-            'origin':destination,
-            'destination':origin,
-            'departureDateTime':{ "$gte" :retDate, "$lt" : nextOut}
-        };
-        db.searchInFlights(jsonObject , function(err,results){
-            if(err == null){
-              db.searchInFlights(jsonObject2 , function(err2,results2){
-                if(err2 == null){
-                    res.json({outgoingFlights:results , returnFlights:results2});
-                }
-                else
-                    console.log(err);
-              });
-            }
-            else
-                console.log(err2);
-        });
-
-    });
 
     app.post('/api/booking/:email/:TotalPrice/:flightNumber/:seatClass/:seatType', function(req, res) {
 
         var email = req.params.email;
+        console.log(email);
         var TotalPrice = req.params.TotalPrice;
+        console.log(TotalPrice);
         var flightNumber = req.params.flightNumber;
         var seatClass = req.params.seatClass;
         var seatType = req.params.seatType;
@@ -203,7 +151,7 @@ module.exports = function(app) {
               bookingRefNumber = bookingRefNumber + 1;
               seatNum = seatNum + 1;
               console.log('BOOKINGS NUM : '+bookingRefNumber);
-              res.sendFile(__dirname + '/index.html');
+             // res.sendFile(__dirname + '/index.html');
              }
         });
 
@@ -268,6 +216,7 @@ app.get('/api/otherAirlines/oneWay/:origin/:destination/:departingDate/:class', 
 var origin=req.params.origin;
 var destination=req.params.destination;
 var departingDate=req.params.departingDate;
+departingDate = moment(departingDate).toDate().getTime();
 console.log(departingDate);
 console.log(origin);
 var Class = req.params.class;
@@ -310,9 +259,11 @@ array.forEach(function(entry){ //this needs to be synchronus but works
       if(q[j].outgoingFlights.length!=0 )
       filterArr.push(q[j]);
     }
-    console.log(filterArr);
     console.log(q);
-    // console.log(filterArr[0].outgoingFlights);
+    console.log(q.length);
+    console.log(q[1]);
+    console.log(q[2]);
+    console.log(q[3]);
     res.send(q);
   }));
 });
@@ -354,12 +305,15 @@ array.forEach(function(entry){ //this needs to be synchronus but works
     //OneWay Flight
     function handleOneWay(req,res,next){
       var origin = req.params.origin;
+      console.log(origin);
       var destination = req.params.destination;
-      var depDate = moment(new Date(parseInt(req.params.departingDate))).format('YYYY-MM-DD');
+      console.log(destination);
+      var depDate = moment(req.params.departingDate).format('YYYY-MM-DD');
+      console.log(depDate);
       var next= moment(depDate).add(1,'day').format('YYYY-MM-DD');
       var Class = req.params.class;
+      console.log(Class);
       var seats = (req.params.seats===null||req.params.seats===undefined)? 1 :req.params.seats; //if seat not sent then make it 1
-      console.log(seats);
       var result={};
       var outgoingFlightsArr=[];
       var i=0; var j=0;
@@ -396,6 +350,7 @@ array.forEach(function(entry){ //this needs to be synchronus but works
                 j++;
                 result={};
             }
+            console.log(outgoingFlightsArr);
               res.json({"outgoingFlights":outgoingFlightsArr});
           }
 
@@ -411,9 +366,9 @@ array.forEach(function(entry){ //this needs to be synchronus but works
        var origin = req.params.origin;
        var destination = req.params.destination;
        var Class = req.params.class;
-       var depDate = moment(new Date(parseInt(req.params.departingDate))).format('YYYY-MM-DD');
+       var depDate = moment(req.params.departingDate).format('YYYY-MM-DD');
        var nextDep= moment(depDate).add(1,'day').format('YYYY-MM-DD');
-       var retDate = moment(new Date(parseInt(req.params.returningDate))).format('YYYY-MM-DD');
+       var retDate = moment(req.params.returningDate).format('YYYY-MM-DD');
        var nextOut= moment(retDate).add(1,'day').format('YYYY-MM-DD');
        var seats = (req.params.seats===null||req.params.seats===undefined)? 1 :req.params.seats;
        var result={};

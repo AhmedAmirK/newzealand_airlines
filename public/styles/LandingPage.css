@@ -4,51 +4,66 @@ background: url("https://upload.wikimedia.org/wikipedia/commons/a/a1/ArialViewIg
 background-size: cover;
 }*/
 
-
 .well {
-  box-shadow: 1px 1px 5px rgba(49, 21, 4, 0.4);
-  background-color: hsla(0, 0%, 83%, 0.86);
+    box-shadow: 1px 1px 5px rgba(49, 21, 4, 0.4);
+    background-color: hsla(0, 0%, 83%, 0.86);
+}
+
+.footer {
+    bottom: 0;
+    width: 100%;
+    height: 80px;
+    background-color: #000000;
+    position: fixed;
+}
+
+.list {
+    width: 170px;
+    height: 30px;
+    font-size: 15px;
+    border-radius: 5px;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 
 }
 
-.footer{
-  bottom: 0;
-  width: 100%;
-  height: 80px;
-  background-color:#000000;
-  position: fixed;
-}
+
 /* Carousel Styling */
-.slide1{
-background-image: url('b1.jpg');
-height: 500px;
-background-repeat: no-repeat;
-background-position: center;
-background-size: cover;
+
+.slide1 {
+    background-image: url('b1.jpg');
+    height: 500px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 }
-.slide2{
-background-image: url('b2.jpg');
-height: 500px;
-background-repeat: no-repeat;
-background-position: center;
-background-size: cover;
+
+.slide2 {
+    background-image: url('b2.jpg');
+    height: 500px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 }
-.slide3{
-background-image: url('b3.jpg');
-height: 500px;
-background-repeat: no-repeat;
-background-position: center;
-background-size: cover;
+
+.slide3 {
+    background-image: url('b3.jpg');
+    height: 500px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 }
-.carousel-caption h1{
-font-size: 5.4em;
-font-family: 'Pacifico', cursive;
-padding-bottom: .4em;
+
+.carousel-caption h1 {
+    font-size: 5.4em;
+    font-family: 'Pacifico', cursive;
+    padding-bottom: .4em;
 }
-.carousel-caption p{
-font-size: 2em;
+
+.carousel-caption p {
+    font-size: 2em;
 }
-#main{
-	position: relative;
-	top:100px;
+
+#main {
+    position: relative;
+    top: 100px;
 }

@@ -72,6 +72,12 @@
                     </p>
                   </div>
                 </div>
+                        <div class="dropdown">
+            <select class="list" ng-model="selectedClass" ng-change="selectClass()">
+                <option ng-value="business">Business Class</option>
+                <option ng-value="economy" ng-selected="selectedClass==selectedClass">Economy Class</option>
+            </select>
+        </div>
               <button type="button" class="btn btn-primary col-sm-offset-9 col-lg-offset-9" id='btnSearch' ng-click='SearchFlights()'>Search Flights</button>
 
             </div>

@@ -19,15 +19,15 @@ App.factory('FlightsSrv', function($http) {
         searchFlights: function() {
             var myQuery;
             if (this.round)
-                myQuery = this.selectedOriginAirport + '/' + this.selectedDestinationAirport + '/' + this.date1 + '/' + this.date2;
+                myQuery = this.selectedOriginAirport + '/' + this.selectedDestinationAirport + '/' + this.date1 + '/' + this.date2+'/'+this.Class;
             else
-                myQuery = this.selectedOriginAirport + '/' + this.selectedDestinationAirport + '/' + this.date1;
+                myQuery = this.selectedOriginAirport + '/' + this.selectedDestinationAirport + '/' + this.date1+'/'+this.Class;
             return $http.get('/api/local/flights/search/' + myQuery);
         },
         searchOtherFlights: function() {
             if (this.round)
-                return $http.get('/api/otherAirlines/twoWay/' + this.setSelectedOriginAirport + '/' + this.selectedDestinationAirport + '/' + this.date1 + '/' + this.date2 + '/' + this.Class);
-            else return $http.get('/api/otherAirlines/oneWay/' + this.selectedOriginAirport + '/' + this.selectedDestinationAirport + '/' + this.date1 + '/' + this.Class);
+                return $http.get('/api/otherAirlines/twoWay/' + this.setSelectedOriginAirport + '/' + this.selectedDestinationAirport + '/' + this.date1 + '/' + this.date2 + '/'+this.Class);
+            else return $http.get('/api/otherAirlines/oneWay/' + this.selectedOriginAirport + '/' + this.selectedDestinationAirport + '/' + this.date1 + '/'+this.Class);
 
         },
         getCurrentBookingRefNum: function() {

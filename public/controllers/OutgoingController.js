@@ -1,28 +1,32 @@
-App.controller('outgoingFlightsCtrl', function($scope, FlightsSrv, $location , $window) {
+App.controller('outgoingFlightsCtrl', function($scope, FlightsSrv, $location, $window) {
     $scope.OFlights = [];
+    temp = [];
     if (FlightsSrv.getOtherAir()) {
-        FlightsSrv.searchFlights().success(function(MyFlights) {
-        var res = FlightsSrv.searchOtherFlights(); 
-            if(res != undefined){
-                res.success(function(FlightsOther) {
-                    $scope.OFlights = (MyFlights.outgoingFlights).concat(FlightsOther.outgoingFlights);
-                    if($scope.OFlights.length == 0){
-                        $window.alert('We did not find any results matching your search !');
-                    }
+
+        var res = FlightsSrv.searchOtherFlights();
+        if (res != undefined) {
+            res.success(function(FlightsOther) {
+                FlightsOther.forEach(function(Airline){
+                    temp  = temp.concat(Airline.outgoingFlights);
                 });
-            }
-            else{
-                $scope.OFlights = MyFlights.outgoingFlights;
-                if($scope.OFlights.length == 0){
+                $scope.OFlights = temp;
+                if ($scope.OFlights.length == 0) {
                     $window.alert('We did not find any results matching your search !');
                 }
-            }
-        });
-    } 
-    else {
+            });
+        } else {
+            FlightsSrv.searchFlights().success(function(MyFlights) {
+                $scope.OFlights = MyFlights.outgoingFlights;
+                if ($scope.OFlights.length == 0) {
+                    $window.alert('We did not find any results matching your search !');
+                }
+            });
+        }
+
+    } else {
         FlightsSrv.searchFlights().success(function(MyFlights) {
             $scope.OFlights = MyFlights.outgoingFlights;
-            if($scope.OFlights.length == 0){
+            if ($scope.OFlights.length == 0) {
                 $window.alert('We did not find any results matching your search !');
             }
         });
