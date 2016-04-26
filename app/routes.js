@@ -6,6 +6,7 @@ var flights = require('./Flights.js');
 var moment = require('moment');
 var jwt = require('jsonwebtoken');
 var request = require("request");
+var array =require("../public/data/otherAirlinesURLS.json").serverIP;
 const async = require('async');
 require('dotenv').load();
 
@@ -117,6 +118,7 @@ module.exports = function(app) {
     app.get('/api/local/flights/search/:origin/:destination/:departingDate', function(req, res) {
         var origin = req.params.origin;
         var destination = req.params.destination;
+        console.log(req.params.departingDate);
         var depDate = moment(new Date(req.params.departingDate)).format('YYYY-MM-DD');
         var next= moment(depDate).add(1,'day').format('YYYY-MM-DD');
 
@@ -210,7 +212,7 @@ module.exports = function(app) {
     });
 
     // Two way to query other airlines
-  app.get('/api/otherAirlines/twoWay/:origin/:destination/:departingDate/:returningDate/:class', function(req, response) {
+  app.get('/api/otherAirlines/twoWay/:origin/:destination/:departingDate/:returningDate/:class', function(req, res) {
     var origin=req.params.origin;
     var destination=req.params.destination;
     var departingDate=req.params.departingDate;
@@ -220,77 +222,101 @@ module.exports = function(app) {
     var uri;
     var urli;
     var token = jwt.sign('payload', jwtSecret,  { algorithm: 'HS256' });
-    // array.forEach(function(entry){ //this needs to be synchronus but works
-    //       uri=entry;
-    //   console.log(entry);
-    //   urli='http://'+uri+'/'+'api/flights/search/'+origin+'/'+destination+'/'+departingDate+'/'+returningDate+'/'+Class;
-    //   request({
-    //       url: urli,
-    //       json: true,
-    //       headers: {
-    //          'x-access-token': token
-    //        }
-    //   }, function (error, response, body) {
-    //       if(error) console.log(error);
-    //       // if (!error && response.statusCode === 200) {}
-    //       else    console.log(body);
-    // });
-    // });
 
-function httpGet(url, callback) {
-    urli='http://'+uri+'/'+'api/flights/search/'+origin+'/'+destination+'/'+departingDate+'/'+returningDate+'/'+Class;
-  const options = {
-    url: urli,
-    json: true,
-    headers: {
-       'x-access-token': token
-     }
-  };
-  request(options,
-    function(err, res, body) {
-      callback(err, body);
+    var queue = [];
+    var filterArr=[];
+    var response_count = 0;
+    function addToQueue(callback) {
+      return function(err, res, body) {
+        response_count +=1
+        if (!err||body!= undefined || body !=null) // website not down
+          if(body.outgoingFlights != undefined ||body.returnFlights !=undefined) // returns correct data
+          queue.push(body);
+
+        if (array.length===response_count) {
+            callback(queue);
+        }
+      }
     }
-  );
-}
 
-async.map(array, httpGet, function (err, res){
-  if (err) console.log("err");
-  console.log(res);
-  response.send(res);
+    array.forEach(function(entry){
+          uri=entry;
+      console.log(entry);
+        urli='http://'+uri+'/'+'api/flights/search/'+origin+'/'+destination+'/'+departingDate+'/'+returningDate+'/'+Class;
+      request({
+          url: urli,
+          json: true,
+          timeout:6000,
+          headers: {
+             'x-access-token': token
+           }
+      }, addToQueue(function (q) {
+        // var j=0; //to filter out empty
+        // for(j=0;q.length>j;j++){
+        //   if(q[j].outgoingFlights.length!=0 ||q[j].returnFlights.length!=0 )
+        //   filterArr.push(q[j]);
+        // }
+        // console.log(filterArr);
+        // res.send(filterArr);
+        console.log(q);
+        res.send(q);
+      }));
+    });
+
 });
 
-});
-
+//One way
 app.get('/api/otherAirlines/oneWay/:origin/:destination/:departingDate/:class', function(req, res) {
 var origin=req.params.origin;
 var destination=req.params.destination;
 var departingDate=req.params.departingDate;
-var returningDate= req.params.returningDate;
+console.log(departingDate);
+console.log(origin);
 var Class = req.params.class;
 var jwtSecret = process.env.JWTSECRET;
 var uri;
 var urli;
 var token = jwt.sign('payload', jwtSecret,  { algorithm: 'HS256' });
-function httpGet(url, callback) {
-    urli='http://'+uri+'/'+'api/flights/search/'+origin+'/'+destination+'/'+departingDate+'/'+Class;
-  const options = {
-    url: urli,
-    json: true,
-    headers: {
-       'x-access-token': token
-     }
-  };
-  request(options,
-    function(err, res, body) {
-      callback(err, body);
+
+var queue = [];
+var filterArr=[];
+var response_count = 0;
+function addToQueue(callback) {
+  return function(err, res, body) {
+    response_count +=1
+    if (!err||body!= undefined || body !=null){ // website not down
+      if(body.outgoingFlights != undefined ||body.returnFlights !=undefined){ // returns correct data
+        queue.push(body)
+      }
     }
-  );
+    if (array.length===response_count) {
+      callback(queue);
+    }
+  }
 }
 
-async.map(array, httpGet, function (err, res){
-  if (err) console.log("err");
-  console.log(res);
-  response.send(res);
+array.forEach(function(entry){ //this needs to be synchronus but works
+  uri=entry;
+  console.log(entry);
+  urli='http://'+uri+'/'+'api/flights/search/'+origin+'/'+destination+'/'+departingDate+'/'+Class;
+  request({
+    url: urli,
+    json: true,
+    timeout:6000, //wait 6 seconds only for response
+    headers: {
+      'x-access-token': token
+    }
+  }, addToQueue(function (q) {
+    var j=0; //to filter out empty data
+    for(j=0;q.length>j;j++){
+      if(q[j].outgoingFlights.length!=0 )
+      filterArr.push(q[j]);
+    }
+    console.log(filterArr);
+    console.log(q);
+    // console.log(filterArr[0].outgoingFlights);
+    res.send(q);
+  }));
 });
 
   });

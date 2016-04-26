@@ -29,7 +29,8 @@ var flightSchema = new Schema ({
             }
     ],
     price:{business: Number , economy: Number , currency:String},
-    capacity:{business:Number , economy:Number}
+    capacity:{business:Number , economy:Number},
+    AirLine:{ type: String, default:'AirNewZealand'}
 });
 
 var bookingSchema = new Schema({
