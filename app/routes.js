@@ -74,8 +74,8 @@ module.exports = function(app) {
         var num = parseInt(req.params.flightNumber);
 
         db.searchInFlights({'flightNumber':num} , function(err,results){
-        if(err == null && results.length > 0)
-            res.json(results[0]);
+        if(err == null)
+            res.json(results);
         else
             console.log(err);
 
@@ -87,8 +87,8 @@ module.exports = function(app) {
         var num = parseInt(req.params.bookingRefNumber);
 
         db.searchInBookings({'bookingRefNumber':num} , function(err,results){
-        if(err == null && results.length > 0)
-            res.json(results[0]);
+        if(err == null)
+            res.json(results);
         else
             console.log(err);
         });
@@ -120,15 +120,15 @@ module.exports = function(app) {
         var destination = req.params.destination;
         console.log(req.params.departingDate);
         var depDate = moment(new Date(req.params.departingDate)).format('YYYY-MM-DD');
-        var next= moment(depDate).add(1,'day').format('YYYY-MM-DD');
+        
+        //var next= moment(depDate).add(1,'day').format('YYYY-MM-DD');
+        var next = moment(depDate, 'YYYY/MM/DD').add('days', 1).format('YYYY-MM-DD');
 
         var jsonObject = {
             'origin':origin ,
             'destination':destination,
             'departureDateTime':{ "$gte" :depDate, "$lt" : next}
         };
-
-        console.log(jsonObject);
 
         db.searchInFlights(jsonObject, function(err,results){
             if(err == null)
@@ -161,10 +161,8 @@ module.exports = function(app) {
         };
         db.searchInFlights(jsonObject , function(err,results){
             if(err == null){
-              console.log(results);
               db.searchInFlights(jsonObject2 , function(err2,results2){
                 if(err2 == null){
-                  console.log(results2);
                     res.json({outgoingFlights:results , returnFlights:results2});
                 }
                 else
@@ -328,7 +326,7 @@ array.forEach(function(entry){ //this needs to be synchronus but works
         response.json({token:token});
     });
 
-    ////////////////////////////////////////////MIDDELE WARRREE!!!!
+    ////////////////////////////////////////////START OF MIDDELEWARE
     app.use(function(req, res, next) {
           var token = req.body.wt || req.query.wt || req.headers['x-access-token'];
 
@@ -351,8 +349,9 @@ array.forEach(function(entry){ //this needs to be synchronus but works
           }
 
     });
-        ////////////////////////////////////// END OF MIDDLEWARE!!!
-        //OneWay Flight
+    ////////////////////////////////////// END OF MIDDLEWARE!!!
+    
+    //OneWay Flight
     function handleOneWay(req,res,next){
       var origin = req.params.origin;
       var destination = req.params.destination;

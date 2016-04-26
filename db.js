@@ -131,19 +131,19 @@ cb();
 };
 
 exports.clearBookings = function(cb){
-  DB.collection('bookings').removeMany(function(){console.log('Successfully cleared Flights');
+  DB.collection('bookings').removeMany(function(){console.log('Successfully cleared Bookings');
 cb();
 });
 };
 
 exports.clearAircrafts = function(cb){
-  DB.collection('aircrafts').removeMany(function(){console.log('Successfully cleared Flights');
+  DB.collection('aircrafts').removeMany(function(){console.log('Successfully cleared Aircrafts');
 cb();
 });
 };
 
 exports.clearAirports = function(cb){
-  DB.collection('airports').removeMany(function(){console.log('Successfully cleared Flights');
+  DB.collection('airports').removeMany(function(){console.log('Successfully cleared Airports');
 cb();
 });
 };

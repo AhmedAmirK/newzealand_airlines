@@ -1,6 +1,14 @@
   
 App.controller('paymentCtrl', function($scope, $location , FlightsSrv,$window){
 
+  $scope.open1 = function() {
+  $scope.popup1.opened = true;
+  };
+
+  $scope.popup1 = {
+    opened: false
+  };
+
   $scope.OutFlight= FlightsSrv.getOutFlight();
   $scope.Seat = FlightsSrv.getSeat();
   $scope.OutClass = FlightsSrv.getOutClass();
@@ -25,15 +33,29 @@ App.controller('paymentCtrl', function($scope, $location , FlightsSrv,$window){
     }
 
   $scope.confirm = function(){
+
      FlightsSrv.bookFlight($scope.OutFlight.flightNumber,$scope.clientEmail,$scope.price,$scope.OutClass);
-     if(FlightsSrv.getIfRoundTrip())
+
+     if(FlightsSrv.getIfRoundTrip()){
+
         FlightsSrv.bookFlight($scope.RetFlight.flightNumber,$scope.clientEmail,$scope.price,$scope.RetClass);
 
-     FlightsSrv.getCurrentBookingRefNum().success(function(obj){
-          console.log(obj);
+        FlightsSrv.getCurrentBookingRefNum().success(function(obj){
+          var ret = obj['num'] - 1 , out = ret - 1;
+          $window.alert("Payment Completed Succesfully . Your outgoing booking reference number is "+ out +
+                        " and your returning booking reference number is " + ret +
+                        " remember these numbers to search for your bookings later on . Thank You for choosing New Zealand Air");
+        });
+
+     }
+     
+     else{
+        FlightsSrv.getCurrentBookingRefNum().success(function(obj){
           var num = obj['num'] - 1;
-          $window.alert("Payment Completed Succesfully . Your booking refernce number is "+ num +" remember this number to search for your booking later on . Thank You for choosing New Zealand Air !");
-     });
+          $window.alert("Payment Completed Succesfully . Your booking reference number is "+ num +
+                        " remember this number to search for your booking later on . Thank You for choosing New Zealand Air");
+        });
+     }
   	 
   }
 
