@@ -24,7 +24,8 @@ var moment = require('moment');
             occupiedSeatsBusiness : [],
             occupiedSeatsEconomy: [],
             price:{business: 100 , economy: 50 , currency:"USD"},
-            capacity:{business:100 , economy:100}
+            capacity:{business:100 , economy:100},
+            AirLine:"AirNewZealand"
         }
         Flights.push(Flight);
         i++;
@@ -47,7 +48,8 @@ var moment = require('moment');
             occupiedSeatsBusiness : [],
             occupiedSeatsEconomy: [],
             price:{business: 100 , economy: 50 , currency:"USD"},
-            capacity:{business:100 , economy:100}
+            capacity:{business:100 , economy:100},
+            AirLine:"AirNewZealand"
         }
         Flights.push(Flight);
         i++;
@@ -70,7 +72,8 @@ var moment = require('moment');
             occupiedSeatsBusiness : [],
             occupiedSeatsEconomy: [],
             price:{business: 100 , economy: 50 , currency:"USD"},
-            capacity:{business:100 , economy:100}
+            capacity:{business:100 , economy:100},
+            AirLine:"AirNewZealand"
         }
         Flights.push(Flight);
         i++;
@@ -93,7 +96,8 @@ var moment = require('moment');
             occupiedSeatsBusiness : [],
             occupiedSeatsEconomy: [],
             price:{business: 100 , economy: 50 , currency:"USD"},
-            capacity:{business:100 , economy:100}
+            capacity:{business:100 , economy:100},
+            AirLine:"AirNewZealand"
         }
         Flights.push(Flight);
         i++;
@@ -116,7 +120,8 @@ var moment = require('moment');
             occupiedSeatsBusiness : [],
             occupiedSeatsEconomy: [],
             price:{business: 100 , economy: 50 , currency:"USD"},
-            capacity:{business:100 , economy:100}
+            capacity:{business:100 , economy:100},
+            AirLine:"AirNewZealand"
         }
         Flights.push(Flight);
         i++;
@@ -139,7 +144,8 @@ var moment = require('moment');
             occupiedSeatsBusiness : [],
             occupiedSeatsEconomy: [],
             price:{business: 100 , economy: 50 , currency:"USD"},
-            capacity:{business:100 , economy:100}
+            capacity:{business:100 , economy:100},
+            AirLine:"AirNewZealand"
         }
         Flights.push(Flight);
         i++;
@@ -162,7 +168,8 @@ var moment = require('moment');
             occupiedSeatsBusiness : [],
             occupiedSeatsEconomy: [],
             price:{business: 100 , economy: 50 , currency:"USD"},
-            capacity:{business:100 , economy:100}
+            capacity:{business:100 , economy:100},
+            AirLine:"AirNewZealand"
         }
         Flights.push(Flight);
         i++;
@@ -185,7 +192,8 @@ var moment = require('moment');
             occupiedSeatsBusiness : [],
             occupiedSeatsEconomy: [],
             price:{business: 100 , economy: 50 , currency:"USD"},
-            capacity:{business:100 , economy:100}
+            capacity:{business:100 , economy:100},
+            AirLine:"AirNewZealand"
         }
         Flights.push(Flight);
         i++;
@@ -208,7 +216,8 @@ var moment = require('moment');
             occupiedSeatsBusiness : [],
             occupiedSeatsEconomy: [],
             price:{business: 100 , economy: 50 , currency:"USD"},
-            capacity:{business:100 , economy:100}
+            capacity:{business:100 , economy:100},
+            AirLine:"AirNewZealand"
         }
         Flights.push(Flight);
         i++;
@@ -231,7 +240,8 @@ var moment = require('moment');
             occupiedSeatsBusiness : [],
             occupiedSeatsEconomy: [],
             price:{business: 100 , economy: 50 , currency:"USD"},
-            capacity:{business:100 , economy:100}
+            capacity:{business:100 , economy:100},
+            AirLine:"AirNewZealand"
         }
         Flights.push(Flight);
         i++;
@@ -254,7 +264,8 @@ var moment = require('moment');
             occupiedSeatsBusiness : [],
             occupiedSeatsEconomy: [],
             price:{business: 100 , economy: 50 , currency:"USD"},
-            capacity:{business:100 , economy:100}
+            capacity:{business:100 , economy:100},
+            AirLine:"AirNewZealand"
         }
         Flights.push(Flight);
         i++;
@@ -277,7 +288,8 @@ var moment = require('moment');
             occupiedSeatsBusiness : [],
             occupiedSeatsEconomy: [],
             price:{business: 100 , economy: 50 , currency:"USD"},
-            capacity:{business:100 , economy:100}
+            capacity:{business:100 , economy:100},
+            AirLine:"AirNewZealand"
         }
         Flights.push(Flight);
         i++;
@@ -300,7 +312,8 @@ var moment = require('moment');
             occupiedSeatsBusiness : [],
             occupiedSeatsEconomy: [],
             price:{business: 100 , economy: 50 , currency:"USD"},
-            capacity:{business:100 , economy:100}
+            capacity:{business:100 , economy:100},
+            AirLine:"AirNewZealand"
         }
         Flights.push(Flight);
         i++;
@@ -323,7 +336,8 @@ var moment = require('moment');
             occupiedSeatsBusiness : [],
             occupiedSeatsEconomy: [],
             price:{business: 100 , economy: 50 , currency:"USD"},
-            capacity:{business:100 , economy:100}
+            capacity:{business:100 , economy:100},
+            AirLine:"AirNewZealand"
         }
         Flights.push(Flight);
         i++;
@@ -346,7 +360,8 @@ var moment = require('moment');
             occupiedSeatsBusiness : [],
             occupiedSeatsEconomy: [],
             price:{business: 100 , economy: 50 , currency:"USD"},
-            capacity:{business:100 , economy:100}
+            capacity:{business:100 , economy:100},
+            AirLine:"AirNewZealand"
         }
         Flights.push(Flight);
         i++;
@@ -369,7 +384,8 @@ var moment = require('moment');
             occupiedSeatsBusiness : [],
             occupiedSeatsEconomy: [],
             price:{business: 100 , economy: 50 , currency:"USD"},
-            capacity:{business:100 , economy:100}
+            capacity:{business:100 , economy:100},
+            AirLine:"AirNewZealand"
         }
         Flights.push(Flight);
         i++;
@@ -392,7 +408,8 @@ var moment = require('moment');
             occupiedSeatsBusiness : [],
             occupiedSeatsEconomy: [],
             price:{business: 100 , economy: 50 , currency:"USD"},
-            capacity:{business:100 , economy:100}
+            capacity:{business:100 , economy:100},
+            AirLine:"AirNewZealand"
         }
         Flights.push(Flight);
         i++;
@@ -415,7 +432,8 @@ var moment = require('moment');
             occupiedSeatsBusiness : [],
             occupiedSeatsEconomy: [],
             price:{business: 100 , economy: 50 , currency:"USD"},
-            capacity:{business:100 , economy:100}
+            capacity:{business:100 , economy:100},
+            AirLine:"AirNewZealand"
         }
         Flights.push(Flight);
         i++;
@@ -438,7 +456,8 @@ var moment = require('moment');
             occupiedSeatsBusiness : [],
             occupiedSeatsEconomy: [],
             price:{business: 100 , economy: 50 , currency:"USD"},
-            capacity:{business:100 , economy:100}
+            capacity:{business:100 , economy:100},
+            AirLine:"AirNewZealand"
         }
         Flights.push(Flight);
         i++;
@@ -461,7 +480,8 @@ var moment = require('moment');
             occupiedSeatsBusiness : [],
             occupiedSeatsEconomy: [],
             price:{business: 100 , economy: 50 , currency:"USD"},
-            capacity:{business:100 , economy:100}
+            capacity:{business:100 , economy:100},
+            AirLine:"AirNewZealand"
         }
         Flights.push(Flight);
         i++;
