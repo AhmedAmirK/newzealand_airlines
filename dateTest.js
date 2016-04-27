@@ -10,5 +10,5 @@ console.log(moment(new Date(curr)).format('YYYY-MM-DD')); //moment takes date no
 console.log(moment(new Date(curr)).format('YYYY-MM-DD HH:mm'));
 curr=moment(curr).add(1,'day');
 console.log(moment(new Date(curr)).format('YYYY-MM-DD HH:mm'));
-
+console.log(moment(curr).toDate().getTime());
 // console.log(moment(new Date(weirdDate)).toDate().getTime());

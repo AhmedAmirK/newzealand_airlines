@@ -1,7 +1,6 @@
 var db = require('../db.js');
 var airports = require('../public/data/airports.json');
 var aircrafts = require('../public/data/aircrafts.json');
-var mongoose = require('mongoose');
 var flights = require('./Flights.js');
 var moment = require('moment');
 var jwt = require('jsonwebtoken');
@@ -115,10 +114,10 @@ module.exports = function(app) {
     });
 
 
-    app.get('/api/local/flights/search/:origin/:destination/:departingDate/:class', handleOneWay); 
+    app.get('/api/local/flights/search/:local/:origin/:destination/:departingDate/:class', handleOneWay);
 
 
-    app.get('/api/local/flights/search/:origin/:destination/:departingDate/:returningDate/:class' ,handleTwoWay);
+    app.get('/api/local/flights/search/:local/:origin/:destination/:departingDate/:returningDate/:class' ,handleTwoWay);
 
 
     app.post('/api/booking/:email/:TotalPrice/:flightNumber/:seatClass/:seatType', function(req, res) {
@@ -162,7 +161,9 @@ module.exports = function(app) {
     var origin=req.params.origin;
     var destination=req.params.destination;
     var departingDate=req.params.departingDate;
+    departingDate = moment(departingDate).toDate().getTime();
     var returningDate= req.params.returningDate;
+    returningDate = moment(returningDate).toDate().getTime();
     var Class = req.params.class;
     var jwtSecret = process.env.JWTSECRET;
     var uri;
@@ -197,15 +198,27 @@ module.exports = function(app) {
              'x-access-token': token
            }
       }, addToQueue(function (q) {
-        // var j=0; //to filter out empty
-        // for(j=0;q.length>j;j++){
-        //   if(q[j].outgoingFlights.length!=0 ||q[j].returnFlights.length!=0 )
-        //   filterArr.push(q[j]);
-        // }
-        // console.log(filterArr);
-        // res.send(filterArr);
         console.log(q);
-        res.send(q);
+        var j=0; //to filter out empty
+        for(j=0;q.length>j;j++){
+          if(q[j].outgoingFlights.length!=0 ){
+          for(k=0;q[j].outgoingFlights.length>k;k++){
+          q[j].outgoingFlights[k].departureDateTime= moment(new Date(q[j].outgoingFlights[k].departureDateTime)).format('YYYY-MM-DD hh:mm A');
+          q[j].outgoingFlights[k].arrivalDateTime= moment(new Date(q[j].outgoingFlights[k].arrivalDateTime)).format('YYYY-MM-DD hh:mm A');
+              }
+          if(q[j].returnFlights.length!=0){
+            for(k=0;q[j].returnFlights.length>k;k++){
+            q[j].returnFlights[k].departureDateTime= moment(new Date(q[j].returnFlights[k].departureDateTime)).format('YYYY-MM-DD hh:mm A');
+            q[j].returnFlights[k].arrivalDateTime= moment(new Date(q[j].returnFlights[k].arrivalDateTime)).format('YYYY-MM-DD hh:mm A');
+                }
+          }
+          filterArr.push(q[j]);
+        }
+        }
+        console.log(filterArr);
+        res.send(filterArr);
+        // console.log(q);
+        // res.send(q);
       }));
     });
 
@@ -242,7 +255,7 @@ function addToQueue(callback) {
   }
 }
 
-array.forEach(function(entry){ //this needs to be synchronus but works
+array.forEach(function(entry){
   uri=entry;
   console.log(entry);
   urli='http://'+uri+'/'+'api/flights/search/'+origin+'/'+destination+'/'+departingDate+'/'+Class;
@@ -255,16 +268,21 @@ array.forEach(function(entry){ //this needs to be synchronus but works
     }
   }, addToQueue(function (q) {
     var j=0; //to filter out empty data
+    var k=0;
     for(j=0;q.length>j;j++){
-      if(q[j].outgoingFlights.length!=0 )
+      if(q[j].outgoingFlights.length!=0 ){
+      for(k=0;q[j].outgoingFlights.length>k;k++){
+      q[j].outgoingFlights[k].departureDateTime= moment(new Date(q[j].outgoingFlights[k].departureDateTime)).format('YYYY-MM-DD hh:mm A');
+      q[j].outgoingFlights[k].arrivalDateTime= moment(new Date(q[j].outgoingFlights[k].arrivalDateTime)).format('YYYY-MM-DD hh:mm A');
+      }
       filterArr.push(q[j]);
+      }
     }
-    console.log(q);
-    console.log(q.length);
-    console.log(q[1]);
-    console.log(q[2]);
-    console.log(q[3]);
-    res.send(q);
+    // console.log(q);
+    // console.log(q.length);
+    // console.log(filterArr);
+    // console.log(filterArr.length);
+    res.send(filterArr);
   }));
 });
 
@@ -301,18 +319,14 @@ array.forEach(function(entry){ //this needs to be synchronus but works
 
     });
     ////////////////////////////////////// END OF MIDDLEWARE!!!
-    
+
     //OneWay Flight
     function handleOneWay(req,res,next){
       var origin = req.params.origin;
-      console.log(origin);
       var destination = req.params.destination;
-      console.log(destination);
-      var depDate = moment(req.params.departingDate).format('YYYY-MM-DD');
-      console.log(depDate);
+      var depDate=(req.params.local ===undefined)? moment(new Date(parseInt(req.params.departingDate))).format('YYYY-MM-DD'): moment(req.params.departingDate).format('YYYY-MM-DD');// cuz date sent differently from local
       var next= moment(depDate).add(1,'day').format('YYYY-MM-DD');
       var Class = req.params.class;
-      console.log(Class);
       var seats = (req.params.seats===null||req.params.seats===undefined)? 1 :req.params.seats; //if seat not sent then make it 1
       var result={};
       var outgoingFlightsArr=[];
@@ -335,8 +349,8 @@ array.forEach(function(entry){ //this needs to be synchronus but works
                 result.flightNumber=results[i].flightNumber;
                 result.aircraftType=results[i].aircraft;
                 result.aircraftModel=results[i].aircraft;
-                result.departureDateTime=results[i].departureDateTime;
-                result.arrivalDateTime=results[i].arrivalDateTime;
+                result.departureDateTime=(req.params.local ===undefined)?moment(results[i].departureDateTime).toDate().getTime():results[i].departureDateTime;
+                result.arrivalDateTime=(req.params.local ===undefined)?moment(results[i].arrivalDateTime).toDate().getTime():results[i].arrivalDateTime;
                 result.origin=results[i].origin;
                 result.destination=results[i].destination;
                 if(Class=="economy"){
@@ -366,9 +380,9 @@ array.forEach(function(entry){ //this needs to be synchronus but works
        var origin = req.params.origin;
        var destination = req.params.destination;
        var Class = req.params.class;
-       var depDate = moment(req.params.departingDate).format('YYYY-MM-DD');
+       var depDate =(req.params.local ===undefined)?moment(new Date(parseInt(req.params.departingDate))).format('YYYY-MM-DD'):moment(req.params.departingDate).format('YYYY-MM-DD'); // cuz date sent differently from local
        var nextDep= moment(depDate).add(1,'day').format('YYYY-MM-DD');
-       var retDate = moment(req.params.returningDate).format('YYYY-MM-DD');
+       var retDate =(req.params.local ===undefined)?moment(new Date(parseInt(req.params.returningDate))).format('YYYY-MM-DD'):moment(req.params.returningDate).format('YYYY-MM-DD'); // cuz date sent differently from local
        var nextOut= moment(retDate).add(1,'day').format('YYYY-MM-DD');
        var seats = (req.params.seats===null||req.params.seats===undefined)? 1 :req.params.seats;
        var result={};
@@ -401,8 +415,8 @@ array.forEach(function(entry){ //this needs to be synchronus but works
                  result.flightNumber=results[i].flightNumber;
                  result.aircraftType=results[i].aircraft;
                  result.aircraftModel=results[i].aircraft;
-                 result.departureDateTime=results[i].departureDateTime;
-                 result.arrivalDateTime=results[i].arrivalDateTime;
+                 result.departureDateTime=(req.params.local ===undefined)?moment(results[i].departureDateTime).toDate().getTime():results[i].departureDateTime;
+                 result.arrivalDateTime=(req.params.local ===undefined)?moment(results[i].arrivalDateTime).toDate().getTime():results[i].arrivalDateTime;
                  result.origin=results[i].origin;
                  result.destination=results[i].destination;
                  if(Class=="economy"){
@@ -430,8 +444,8 @@ array.forEach(function(entry){ //this needs to be synchronus but works
                      result.flightNumber=results2[i].flightNumber;
                      result.aircraftType=results2[i].aircraft;
                      result.aircraftModel=results2[i].aircraft;
-                     result.departureDateTime=results2[i].departureDateTime;
-                     result.arrivalDateTime=results2[i].arrivalDateTime;
+                     result.departureDateTime=(req.params.local ===undefined)?moment(results2[i].departureDateTime).toDate().getTime():results2[i].departureDateTime;
+                     result.arrivalDateTime=(req.params.local ===undefined)?moment(results2[i].arrivalDateTime).toDate().getTime():results2[i].arrivalDateTime;
                      result.origin=results2[i].origin;
                      result.destination=results2[i].destination;
                      if(Class=="economy"){

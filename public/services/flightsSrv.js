@@ -22,7 +22,7 @@ App.factory('FlightsSrv', function($http) {
                 myQuery = this.selectedOriginAirport + '/' + this.selectedDestinationAirport + '/' + this.date1 + '/' + this.date2+'/'+this.Class;
             else
                 myQuery = this.selectedOriginAirport + '/' + this.selectedDestinationAirport + '/' + this.date1+'/'+this.Class;
-            return $http.get('/api/local/flights/search/' + myQuery);
+            return $http.get('/api/local/flights/search/1/' + myQuery);
         },
         searchOtherFlights: function() {
             if (this.round)
