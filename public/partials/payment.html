@@ -7,9 +7,9 @@
       <div class="num"> <h3> Flight Number: {{OutFlight.flightNumber}} </h3> </div>
       <div class="dep"> <h3> Departure Time: {{OutFlight.departureDateTime}} </h3> </div>
       <div class="arr"> <h3> Arrival Time: {{OutFlight.arrivalDateTime}} </h3> </div>
-      <div class="class"> <h3> Class: {{OutClass}}</h3> </div>
+      <div class="class"> <h3> Class: {{OutFlight.class}}</h3> </div>
       <div class="seat"> <h3> Seat Type: {{Seat}}</h3> </div>
-      <div class="price"> <h3> Price : ${{price}}  </h3> </div>
+      <div class="price"> <h3> Price : ${{OutFlight.cost}}  </h3> </div>
 
   </div>
 
@@ -29,20 +29,48 @@
 
 
      <label> Card Number : </label>
-     <input class="form-control" type="text">
-
-
-
+     <input class="form-control" type="text" ng-model="clientCNum" placeholder="Enter your card number">
 
      <label> Security Number : </label>
-     <input class="form-control" type="text">
+     <input class="form-control" type="text" ng-model="clientSNum" placeholder="Enter your security number">
 
-     <label>Email Address :</label>
-     <input class="form-control" type="email" ng-model"email"></input>
+     <label> Email Address :</label>
+     <input type="text" class="form-control" ng-model="clientEmail" placeholder="Enter your email">
 
+     <label> First Name :</label>
+     <input type="text" class="form-control" ng-model="clientFName" placeholder="Enter your First Name">
+
+     <label> Last Name :</label>
+     <input type="text" class="form-control" ng-model="clientLName" placeholder="Enter your Last Name">
+
+     <label> Passport Number :</label>
+     <input type="text" class="form-control" ng-model="clientPNum" placeholder="Enter your Passport Number">
+
+
+     <div class="col-md-8">
+        <p class="input-group" id="cal">
+          <input type="text"
+                 class="form-control"
+                 placeholder="Enter your birth date"
+                 uib-datepicker-popup="{{format}}"
+                 ng-model="clientBDate"
+                 is-open="popup1.opened"
+                 ng-required="true"
+                 close-text="Close"
+                 alt-input-formats="altInputFormats" />
+          <span class="input-group-btn">
+            <button type="button"
+                    class="btn btn-default"
+                    ng-click="open1()">
+                    <i class="glyphicon glyphicon-calendar"></i>
+           </button>
+          </span>
+        </p>
+    </div>
 
 
    </div>
-       <a type="button" href="#/"ng-click="confirm()"class="btn btn-primary">Confirm</a>
+       <a type="button" ng-click="confirm()"class="btn btn-primary">Confirm</a>
   </form>
+
 </div>

@@ -10,6 +10,7 @@
         <th>To</th>
         <th>Departure Time</th>
         <th>Arrival Time</th>
+        <th>Airline</th>
         <th>Price</th>
       </tr>
     </thead>
@@ -19,8 +20,9 @@
         <td>{{OFlight.origin}}</td>
         <td>{{OFlight.destination}}</td>
         <td>{{OFlight.departureDateTime}}</td>
-        <td>{{OFlight.arrivalDatetime}}</td>
-        <td>${{OFlight.price.economy}}</td>
+        <td>{{OFlight.arrivalDateTime}}</td>
+        <td>{{OFlight.Airline}}</td>
+        <td>${{OFlight.cost}}</td>
 </tr>
 </tbody>
 </table>

@@ -3,6 +3,8 @@
 App.controller('mainCtrl', function($scope, FlightsSrv, $location) {
 
   $scope.format = 'shortDate';
+  $scope.selectedClass = "economy";
+  FlightsSrv.setOutClass("economy");
 
   $scope.open1 = function() {
     $scope.popup1.opened = true;
@@ -48,6 +50,10 @@ App.controller('mainCtrl', function($scope, FlightsSrv, $location) {
 
   $scope.setRoundTrip = function() {
     FlightsSrv.setIfRoundTrip($scope.Round);
+  };
+
+  $scope.selectClass = function(){
+    FlightsSrv.setOutClass($scope.selectedClass);
   };
 
 

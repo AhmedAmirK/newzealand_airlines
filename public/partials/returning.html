@@ -10,6 +10,7 @@
         <th>To</th>
         <th>Departure Time</th>
         <th>Arrival Time</th>
+        <th>Airline</th>
         <th>Price</th>
       </tr>
     </thead>
@@ -20,7 +21,8 @@
         <td>{{RFlight.destination}}</td>
         <td>{{RFlight.departureDateTime}}</td>
         <td>{{RFlight.arrivalDateTime}}</td>
-        <td>${{RFlight.price.economy}}</td>
+        <td>{{RFlight.Airline}}</td>
+        <td>${{RFlight.cost}}</td>
 </tr>
 </tbody>
 </table>

@@ -1,15 +1,15 @@
+var mongo = require('mongodb').MongoClient,
+ Logger = require('mongodb').Logger;
+var DB = null;
+var dbURL = 'mongodb://localhost:27017/MyDatabase';
 
-var mongoose = require('mongoose');
-//mongoose.set('debug',true);
-var Schema = mongoose.Schema;
-var Flight , Booking , Aircraft , Airport;
-
+/* ||||||||||||||||| Reference to our schema |||||||||||||||||||||||||||||||
 var flightSchema = new Schema ({
 
-    flightNumber: Number,
-    aircraft:String,
-    departureDateTime: Date,
-    arrivalDateTime:Date,
+    flightNumber: String,
+    aircraft:{name:String, model:String, type:String},
+    date: { type: Date, default: Date.now },
+    duration: Number,
     origin: String,
     destination: String,
     occupiedSeatsBusiness :
@@ -29,20 +29,23 @@ var flightSchema = new Schema ({
             }
     ],
     price:{business: Number , economy: Number , currency:String},
+    capacity:{business:Number , economy:Number},
     AirLine:{ type: String, default:'AirNewZealand'}
 });
 
 var bookingSchema = new Schema({
-
     email: String,
-    TotalPrice: String,
+    id: String ,
+    firstName: String,
+    lastName: String,
+    passport: String,
+    issueDate: { type: Date, default: Date.now },
+    expiryDate: { type: Date, default: Date.now },
+    TotalPrice: Number,
+    receipt_number: String,
     flightNumber: String,
-    bookingRefNumber: Number,
-    seat : {
-        number: Number ,
-        class: String ,
-        type:String
-    }
+    bookingRefNumber: String,
+    seat:{number: String , class: String , type:String}
 
 });
 
@@ -73,25 +76,20 @@ var airportSchema = new Schema(
         "size": String
     }
 );
- var connection = mongoose.createConnection('mongodb://localhost:27017/MyDatabase');
- Flight = connection.model('Flight' , flightSchema);
- Booking = connection.model('Booking' , bookingSchema);
- Aircraft = connection.model('Aircraft' , aircraftSchema);
- Airport = connection.model('Airport', airportSchema);
+|||||||||||||SCHEMA END||||||||||||||||||||||||||||  */
 
-exports.connect = function(cb){
-    var connection = mongoose.createConnection('mongodb://localhost:27017/MyDatabase');
-    connection.on('error', function(){
-        console.log('Error connecting to the database');
-    });
-    connection.once('open', function() {
-        console.log('Successfully connected to the database');
-        cb();
-    });
-};
+ exports.connect = function(cb) {
+     return mongo.connect(dbURL, function(err, db) {
+         if (err) return cb(err);
+         Logger.setLevel('info');
+         console.log('connected to db');
+         DB = db;
+         cb(null, db);
+     });
+ };
 
 exports.getFlights = function(cb) {
-    Flight.find(function(err,data) {
+    DB.collection('flights').find().toArray(function(err,data) {
         if(err)
             cb(err,null);
         else
@@ -100,55 +98,58 @@ exports.getFlights = function(cb) {
 };
 
 exports.getBookings = function(cb) {
-    Booking.find(function(err,data) {
-        if(err)
-            cb(err,null);
-        else
-            cb(null,data);
-    });
+  DB.collection('bookings').find().toArray(function(err,data) {
+      if(err)
+          cb(err,null);
+      else
+          cb(null,data);
+  });
 };
 
 exports.getAircrafts = function(cb) {
-    Aircraft.find(function(err,data) {
-        if(err)
-            cb(err,null);
-        else
-            cb(null,data);
-    });
+  DB.collection('aircrafts').find().toArray(function(err,data) {
+      if(err)
+          cb(err,null);
+      else
+          cb(null,data);
+  });
 };
 
 exports.getAirports = function(cb) {
-    Airport.find(function(err,data) {
-        if(err)
-            cb(err,null);
-        else
-            cb(null,data);
-    });
+  DB.collection('airports').find().toArray(function(err,data) {
+      if(err)
+          cb(err,null);
+      else
+          cb(null,data);
+  });
 };
 
 exports.clearFlights = function(cb){
-    Flight.remove(function(){console.log('Successfully cleared Flights')});
-    cb();
+    DB.collection('flights').removeMany(function(){console.log('Successfully cleared Flights');
+cb();
+  });
 };
 
 exports.clearBookings = function(cb){
-    Booking.remove(function(){console.log('Successfully cleared Bookings')});
-    cb();
+  DB.collection('bookings').removeMany(function(){console.log('Successfully cleared Bookings');
+cb();
+});
 };
 
 exports.clearAircrafts = function(cb){
-    Aircraft.remove(function(){console.log('Successfully cleared Aircrafts')});
-    cb();
+  DB.collection('aircrafts').removeMany(function(){console.log('Successfully cleared Aircrafts');
+cb();
+});
 };
 
 exports.clearAirports = function(cb){
-    Airport.remove(function(){console.log('Successfully cleared Airports')});
-    cb();
+  DB.collection('airports').removeMany(function(){console.log('Successfully cleared Airports');
+cb();
+});
 };
 
 exports.insertInFlights = function(jsonObject , cb){
-    var tuple = new Flight(jsonObject);
-    tuple.save(function(err){
+    DB.collection('flights').insertOne(jsonObject,function(err){
         if(err)
             cb(err);
         else
@@ -157,18 +158,17 @@ exports.insertInFlights = function(jsonObject , cb){
 }
 
 exports.insertInBookings = function(jsonObject , cb){
-    var tuple = new Booking(jsonObject);
-    tuple.save(function(err){
+    DB.collection('bookings').insertOne(jsonObject,function(err){
         if(err)
             cb(err);
         else
             cb(null);
     });
+
 }
 
 exports.insertInAircrafts = function(jsonObject , cb){
-    var tuple = new Aircraft(jsonObject);
-    tuple.save(function(err){
+    DB.collection('aircrafts').insertOne(jsonObject,function(err){
         if(err)
             cb(err);
         else
@@ -177,8 +177,7 @@ exports.insertInAircrafts = function(jsonObject , cb){
 }
 
 exports.insertInAirports = function(jsonObject , cb){
-    var tuple = new Airport(jsonObject);
-    tuple.save(function(err){
+    DB.collection('airports').insertOne(jsonObject,function(err){
         if(err)
             cb(err);
         else
@@ -187,78 +186,64 @@ exports.insertInAirports = function(jsonObject , cb){
 }
 
 exports.importAirports = function(data,cb){
-	data.forEach(function(air){
-		var tuple = new Airport(air);
-		tuple.save(function(err){
-			if (err)
-				cb(err);
-		});
-	});
-	cb();
+  DB.collection('airports').insertMany(data,function(err){
+      if(err)
+          cb(err);
+      else
+          cb(null);
+  });
 }
 
 exports.importAircrafts = function(data,cb){
-
-	data.forEach(function(air){
-		var tuple = new Aircraft(air);
-		tuple.save(function(err){
-			if (err)
-				cb(err);
-		});
-	});
-	cb();
+  DB.collection('aircrafts').insertMany(data,function(err){
+      if(err)
+          cb(err);
+      else
+          cb(null);
+  });
 }
 
 exports.importFlights = function(data,cb){
-
-	var i;
-	for(i = 0; i<data.length;i++){
-
-		var tuple = new Flight(data[i]);
-		tuple.save(function(err){
-			if (err)
-				cb(err);
-		});
-	}
-	cb();
+  DB.collection('flights').insertMany(data,function(err){
+      if(err)
+          cb(err);
+      else
+          cb(null);
+  });
 }
 
 exports.searchInFlights = function(jsonObject , cb){
-    var query = Flight.find(jsonObject);
-    query.exec(function (err, results) {
-        if(err)
-            cb(err,null);
-        else
-            cb(null,results);
-    });
+  DB.collection('flights').find(jsonObject).toArray(function(err,data) {
+      if(err)
+          cb(err,null);
+      else
+          cb(null,data);
+  });
 }
 
 exports.searchInBookings = function(jsonObject , cb){
-    var query = Booking.find(jsonObject);
-    query.exec(function (err, results) {
-        if(err)
-            cb(err,null);
-        else
-            cb(null,results);
-    });
+  DB.collection('bookings').find(jsonObject).toArray(function(err,data) {
+      if(err)
+          cb(err,null);
+      else
+          cb(null,data);
+  });
 }
 
 exports.searchInAircrafts = function(jsonObject , cb){
-    var query = Aircraft.find(jsonObject);
-    query.exec(function (err, results) {
-        if(err)
-            cb(err,null);
-        else
-            cb(null,results);
-    });
+  DB.collection('aircrafts').find(jsonObject).toArray(function(err,data) {
+      if(err)
+          cb(err,null);
+      else
+          cb(null,data);
+  });
 }
 
 exports.searchInAirports = function(jsonObject , cb){
-    var query = Airport.find(jsonObject);
-    query.exec(function (err, results) {
-        if(err)
-            cb(err,null);
-        else
-            cb(null,results);
-    });
+  DB.collection('airports').find(jsonObject).toArray(function(err,data) {
+      if(err)
+          cb(err,null);
+      else
+          cb(null,data);
+  });
 }

@@ -8,9 +8,9 @@
       <div class="num"> <h3> Flight Number: {{OutFlight.flightNumber}} </h3> </div>
       <div class="dep"> <h3> Departure Time: {{OutFlight.departureDateTime}} </h3> </div>
       <div class="arr"> <h3> Arrival Time: {{OutFlight.arrivalDateTime}} </h3> </div>
-      <div class="class"> <h3> Class: {{OutClass}}</h3> </div>
+      <div class="class"> <h3> Class: {{OutFlight.class}}</h3> </div>
       <div class="seat"> <h3> Seat Type: {{Seat}}</h3> </div>
-      <div class="price"> <h3> Price : ${{price}}  </h3> </div>
+      <div class="price"> <h3> Price : ${{OutFlight.cost}}  </h3> </div>
   </div>
   </div>
 
@@ -21,9 +21,9 @@
       <div class="num"> <h3> Flight Number: {{RetFlight.flightNumber}} </h3> </div>
       <div class="dep"> <h3> Departure Time: {{RetFlight.departureDateTime}} </h3> </div>
       <div class="arr"> <h3> Arrival Time: {{RetFlight.arrivalDateTime}} </h3> </div>
-      <div class="class"> <h3> Class: {{RetClass}}</h3> </div>
+      <div class="class"> <h3> Class: {{RetFlight.class}}</h3> </div>
       <div class="seat"> <h3> Seat Type: {{Seat}}</h3> </div>
-      <div class="price"> <h3> Price : ${{price2}}  </h3> </div>
+      <div class="price"> <h3> Price : ${{RetFlight.cost}}  </h3> </div>
   </div>
   </div>
 
@@ -41,15 +41,48 @@
         </select>
       </div>
 
-     <label> Card Number : </label>
-     <input class="form-control col-lg-9" type="text">
+      <label> Card Number : </label>
+      <input class="form-control" type="text" ng-model="clientCNum" placeholder="Enter your card number">
 
-     <label> Security Number : </label>
-     <input class="form-control col-lg-9" type="text">
-     <label>Email Address :</label>
-     <input class="form-control col-lg-9" type="email" ></input>
+      <label> Security Number : </label>
+      <input class="form-control" type="text" ng-model="clientSNum" placeholder="Enter your security number">
+
+      <label> Email Address :</label>
+      <input type="text" class="form-control" ng-model="clientEmail" placeholder="Enter your email">
+
+      <label> First Name :</label>
+      <input type="text" class="form-control" ng-model="clientFName" placeholder="Enter your First Name">
+
+      <label> Last Name :</label>
+      <input type="text" class="form-control" ng-model="clientLName" placeholder="Enter your Last Name">
+
+      <label> Passport Number :</label>
+      <input type="text" class="form-control" ng-model="clientPNum" placeholder="Enter your Passport Number">
+
+      <div class="col-md-8">
+        <p class="input-group">
+          <input type="text"
+                 class="form-control"
+                 placeholder="Birth Date"
+                 uib-datepicker-popup="{{format}}"
+                 ng-model="clientBDate"
+                 is-open="popup1.opened"
+                 ng-required="true"
+                 close-text="Close"
+                 alt-input-formats="altInputFormats" />
+          <span class="input-group-btn">
+            <button type="button"
+                    class="btn btn-default"
+                    ng-click="open1()">
+                    <i class="glyphicon glyphicon-calendar"></i>
+           </button>
+          </span>
+        </p>
+      </div>
+
+    </div>
    </div>
-       <a type="button" href="#/"ng-click="confirm()"class="btn btn-primary col-lg-offset-10">Confirm</a>
+       <a type="button" ng-click="confirm()"class="btn btn-primary col-lg-offset-10">Confirm</a>
   </form>
   <div class="well col-lg-offset-2 col-lg-7">
     <div class="Totalprice"> <h3>Total Price : ${{TotalPrice}}  </h3> </div>
