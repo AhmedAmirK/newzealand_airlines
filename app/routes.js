@@ -123,9 +123,9 @@ module.exports = function(app) {
     app.post('/api/booking/:email/:TotalPrice/:flightNumber/:seatClass/:seatType', function(req, res) {
 
         var email = req.params.email;
-        console.log(email);
+        //console.log(email);
         var TotalPrice = req.params.TotalPrice;
-        console.log(TotalPrice);
+        //console.log(TotalPrice);
         var flightNumber = req.params.flightNumber;
         var seatClass = req.params.seatClass;
         var seatType = req.params.seatType;
@@ -149,7 +149,7 @@ module.exports = function(app) {
             else{
               bookingRefNumber = bookingRefNumber + 1;
               seatNum = seatNum + 1;
-              console.log('BOOKINGS NUM : '+bookingRefNumber);
+              //console.log('BOOKINGS NUM : '+bookingRefNumber);
              // res.sendFile(__dirname + '/index.html');
              }
         });
@@ -188,7 +188,7 @@ module.exports = function(app) {
 
     array.forEach(function(entry){
           uri=entry;
-      console.log(entry);
+      //console.log(entry);
         urli='http://'+uri+'/'+'api/flights/search/'+origin+'/'+destination+'/'+departingDate+'/'+returningDate+'/'+Class;
       request({
           url: urli,
@@ -198,7 +198,7 @@ module.exports = function(app) {
              'x-access-token': token
            }
       }, addToQueue(function (q) {
-        console.log(q);
+        //console.log(q);
         var j=0; //to filter out empty
         for(j=0;q.length>j;j++){
           if(q[j].outgoingFlights.length!=0 ){
@@ -215,7 +215,7 @@ module.exports = function(app) {
           filterArr.push(q[j]);
         }
         }
-        console.log(filterArr);
+       // console.log(filterArr);
         res.send(filterArr);
         // console.log(q);
         // res.send(q);
@@ -230,8 +230,8 @@ var origin=req.params.origin;
 var destination=req.params.destination;
 var departingDate=req.params.departingDate;
 departingDate = moment(departingDate).toDate().getTime();
-console.log(departingDate);
-console.log(origin);
+//console.log(departingDate);
+//console.log(origin);
 var Class = req.params.class;
 var jwtSecret = process.env.JWTSECRET;
 var uri;
@@ -257,7 +257,7 @@ function addToQueue(callback) {
 
 array.forEach(function(entry){
   uri=entry;
-  console.log(entry);
+  //console.log(entry);
   urli='http://'+uri+'/'+'api/flights/search/'+origin+'/'+destination+'/'+departingDate+'/'+Class;
   request({
     url: urli,
@@ -364,7 +364,7 @@ array.forEach(function(entry){
                 j++;
                 result={};
             }
-            console.log(outgoingFlightsArr);
+            //console.log(outgoingFlightsArr);
               res.json({"outgoingFlights":outgoingFlightsArr});
           }
 
@@ -403,7 +403,7 @@ array.forEach(function(entry){
 
        db.searchInFlights(jsonObject , function(err,results){
            if(err == null){
-             console.log(results);
+             //console.log(results);
              for(i=0;i<results.length;i++){
                if(Class=="economy"){
                  if((results[i].capacity.economy-results[i].occupiedSeatsEconomy.length)-seats<0) continue; //if not enough seats skip this entry
@@ -432,7 +432,7 @@ array.forEach(function(entry){
              }
              db.searchInFlights(jsonObject2 , function(err2,results2){
                if(err2 == null){
-                 console.log(results2);
+                 //console.log(results2);
                  for(i=0;i<results2.length;i++){
                    if(Class=="economy"){
                      if((results2[i].capacity.economy-results2[i].occupiedSeatsEconomy.length)-seats<0) continue; //if not enough seats skip this entry
