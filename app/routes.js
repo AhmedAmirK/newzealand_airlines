@@ -6,6 +6,7 @@ var moment = require('moment');
 var jwt = require('jsonwebtoken');
 var request = require("request");
 var array =require("../public/data/otherAirlinesURLS.json").serverIP;
+var nameUrls =require("../public/data/AirlineNamesURL.json");
 const stripe = require("stripe")(process.env.STRIPESK);
 var ObjectId = require('mongodb').ObjectID;
 
@@ -485,7 +486,28 @@ array.forEach(function(entry){
     app.get('/stripe/pubkey', function(err,res){
       res.json(process.env.STRIPEPK);
     });
+// Servers other airlines public key for our angular-stripe
+app.get('/stripe/pubkey/:airline', function(err,res){
+  if(nameUrls[req.params.airline] ===undefined || nameUrls[req.params.airline] ===null)
+  console.log("Can't find that airline name in the list !"); return;
 
+  urli='http://'+nameUrls[req.params.airline] +'/stripe/pubkey/';
+  //
+    request({
+        url: urli,
+        json: true,
+        headers: {
+           'x-access-token': token
+         }
+       },
+function (error, response, body) {
+        if(error) console.log(error);
+        // if (!error && response.statusCode === 200) {}
+        else     { console.log(body)
+          res.json(body); //returning should be in form {refNum: String, errorMessage: String}
+        }
+  });
+});
 // BOOKING FOR OTHER AIRLINES TO BOOK AND ALSO FOR OURS IF WE MODIFY FRONT END FOR IT
     app.post('/booking', function(req, res) {
     // retrieve the token
@@ -535,6 +557,33 @@ array.forEach(function(entry){
      };
    });
  });
-//
+// used to send booking to other airlines
+  app.post('otherAirlines/booking/:airline',function(req,res){
+    if(nameUrls[req.params.airline] ===undefined || nameUrls[req.params.airline] ===null)
+    console.log("Can't find that airline name in the list !"); return;
+
+    urli='http://'+nameUrls[req.params.airline] +'/'+'booking';
+    //
+      request({
+          url: urli,
+          method: 'POST',
+          json: true,
+          headers: {
+             'x-access-token': token
+           },
+           body:{
+             passengerDetails:req.body.passengerDetails,
+            class: req.body.class,
+            cost: req.body.cost,
+            outgoingFlightId: req.body.outgoingFlightId,
+            returnFlightId: req.body.returnFlightId,
+            paymentToken: req.body.paymentToken // stripe generated token from angular stripe publishable key (MUST call stripe/pubkey/:airline first)
+           }
+      }, function (error, response, body) {
+          if(error) console.log(error);
+          // if (!error && response.statusCode === 200) {}
+          else    res.json(body);
+    });
+  })
 
 };
