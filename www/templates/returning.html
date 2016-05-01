@@ -1,30 +1,14 @@
-<link rel="stylesheet" href="../styles/returning.css">
-<div class="container">
-<h2>Current Returning Flights</h2>
+<ion-view title="Returning Flights">
 
-<table class="table table-striped">
-<thead>
-      <tr>
-        <th>Flight Number</th>
-        <th>From</th>
-        <th>To</th>
-        <th>Departure Time</th>
-        <th>Arrival Time</th>
-        <th>Airline</th>
-        <th>Price</th>
-      </tr>
-    </thead>
-<tbody>
-<tr ng-repeat="RFlight in RFlights">
-        <td> <a href ng-click="setFlight(RFlight)">{{RFlight.flightNumber}}</a></td>
-        <td>{{RFlight.origin}}</td>
-        <td>{{RFlight.destination}}</td>
-        <td>{{RFlight.departureDateTime}}</td>
-        <td>{{RFlight.arrivalDateTime}}</td>
-        <td>{{RFlight.Airline}}</td>
-        <td>${{RFlight.cost}}</td>
-</tr>
-</tbody>
-</table>
+    <ion-content class="has-header has-subheader">
+        <ion-list>
+            <ion-item type="item-text-wrap" class="item-avatar" ng-repeat="RFlight in RFlights"
+                      href="#">
+                {{RFlight.origin}} - {{RFlight.destination}}
+                <p>{{RFlight.flightNumber}} {{RFlight.departureDateTime}} - {{RFlight.arrivalDateTime}}</p>
+                <p>{{RFLight.Airline}}    {{RFlight.cost}}</p>
+            </ion-item>
+        </ion-list>
+    </ion-content>
 
-</div>
+</ion-view>

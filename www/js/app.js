@@ -45,7 +45,7 @@ var App = angular.module('starter', ['ionic', 'starter.controllers'])
       url: '/track',
       views: {
         'menuContent': {
-          templateUrl: 'templates/track.html',
+          templateUrl: 'templates/outgoing.html',
           controller:'trackCtrl'
         }
       }
