@@ -50,6 +50,15 @@ var App = angular.module('starter', ['ionic', 'starter.controllers'])
         }
       }
     })
+        .state('app.return', {
+      url: '/return',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/returning.html',
+          controller:'returningFlightsCtrl'
+        }
+      }
+    })
 
   .state('app.track', {
       url: '/track',
@@ -65,7 +74,8 @@ var App = angular.module('starter', ['ionic', 'starter.controllers'])
       url: '/mybookings',
       views: {
         'menuContent': {
-          templateUrl: 'templates/mybookings.html'
+          templateUrl: 'templates/mybookings.html',
+          controller: 'findBookingCtrl'
         }
       }
     })
@@ -74,7 +84,8 @@ var App = angular.module('starter', ['ionic', 'starter.controllers'])
       url: '/bookings',
       views: {
         'menuContent': {
-          templateUrl: 'templates/bookings.html'
+          templateUrl: 'templates/bookings.html',
+          controller: 'bookingsCtrl'
         }
       }
     })
@@ -83,7 +94,8 @@ var App = angular.module('starter', ['ionic', 'starter.controllers'])
       url: '/twowaybookings',
       views: {
         'menuContent': {
-          templateUrl: 'templates/twowaybookings.html'
+          templateUrl: 'templates/twowaybookings.html',
+          controller: 'bookingsCtrl'
         }
       }
     })
@@ -92,7 +104,8 @@ var App = angular.module('starter', ['ionic', 'starter.controllers'])
       url: '/payment',
       views: {
         'menuContent': {
-          templateUrl: 'templates/payment.html'
+          templateUrl: 'templates/payment.html',
+          controller:'paymentCtrl'
         }
       }
     })
@@ -101,7 +114,8 @@ var App = angular.module('starter', ['ionic', 'starter.controllers'])
       url: '/twowaypayment',
       views: {
         'menuContent': {
-          templateUrl: 'templates/twowaypayment.html'
+          templateUrl: 'templates/twowaypayment.html',
+          controller: 'paymentCtrl'
         }
       }
     });

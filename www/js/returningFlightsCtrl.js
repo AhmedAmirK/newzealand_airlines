@@ -1,4 +1,4 @@
-App.controller('returningFlightsCtrl', function ($scope , FlightsSrv,$location,$window) {
+App.controller('returningFlightsCtrl', function ($scope , FlightsSrv,$state,$window) {
 
     FlightsSrv.searchFlights().success(function(Flights) {
          $scope.RFlights = Flights.returnFlights;
@@ -10,7 +10,7 @@ App.controller('returningFlightsCtrl', function ($scope , FlightsSrv,$location,$
 
     $scope.setFlight = function(value){
     		FlightsSrv.setRetFlight(value);
-    		$location.url('/bookingboth');
+    		$state.go('app.twowaybookings');
    };
     
 });

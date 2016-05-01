@@ -1,5 +1,5 @@
   
-App.controller('paymentCtrl', function($scope, $location , FlightsSrv,$window){
+App.controller('paymentCtrl', function($scope, $state , FlightsSrv,$window){
 
   $scope.open1 = function() {
   $scope.popup1.opened = true;
@@ -9,9 +9,10 @@ App.controller('paymentCtrl', function($scope, $location , FlightsSrv,$window){
     opened: false
   };
 
+
   $scope.OutFlight= FlightsSrv.getOutFlight();
   $scope.Seat = FlightsSrv.getSeat();
-
+  $scope.input={};
 
   if(FlightsSrv.getIfRoundTrip()){
 
@@ -24,16 +25,16 @@ App.controller('paymentCtrl', function($scope, $location , FlightsSrv,$window){
 
   $scope.confirm = function(){
 
-    if($scope.clientEmail==undefined || $scope.clientFName==undefined || $scope.clientLName==undefined || $scope.clientCNum==undefined || $scope.clientPNum==undefined || $scope.clientSNum==undefined){
+    if($scope.input.emailAddress==undefined || $scope.input.firstName==undefined || $scope.input.lastName==undefined || $scope.input.cardNumber==undefined || $scope.input.passportNumber==undefined || $scope.input.securityNumber==undefined){
       $window.alert("Please Fill out all fields!");
       
     }
 else{
-     FlightsSrv.bookFlight($scope.OutFlight.flightNumber,$scope.clientEmail,$scope.OutFlight.cost,$scope.OutFlight.class);
+     FlightsSrv.bookFlight($scope.OutFlight.flightNumber,$scope.input.clientEmail,$scope.OutFlight.cost,$scope.OutFlight.class);
 
      if(FlightsSrv.getIfRoundTrip()){
 
-        FlightsSrv.bookFlight($scope.RetFlight.flightNumber,$scope.clientEmail,$scope.RetFlight.cost,$scope.RetFlight.class);
+        FlightsSrv.bookFlight($scope.RetFlight.flightNumber,$scope.input.clientEmail,$scope.RetFlight.cost,$scope.RetFlight.class);
 
         FlightsSrv.getCurrentBookingRefNum().success(function(obj){
           var ret = obj['num'] - 1 , out = ret - 1;
@@ -52,7 +53,7 @@ else{
         });
      }
 
-     $location.url('/');
+     $state.go('app');
   	} 
   };
 

@@ -1,21 +1,21 @@
-App.controller('bookingsCtrl', function($scope, $location , FlightsSrv){
+App.controller('bookingsCtrl', function($scope, $state , FlightsSrv){
 
     $scope.OutFlight= FlightsSrv.getOutFlight();
     $scope.RetFlight=FlightsSrv.getRetFlight();
     $scope.selectedSeat = "Window";
     FlightsSrv.setSeat($scope.selectedSeat);
 
-
+    $scope.input={}
    $scope.selectSeat= function(){
-   	FlightsSrv.setSeat($scope.selectedSeat);
+   	FlightsSrv.setSeat($scope.input.selectedSeat);
    	
-   }
+   };
  
 
    $scope.bookFlights= function(){
     if(FlightsSrv.getIfRoundTrip())
-      $location.url('/paymentTwoWay');
-    else $location.url('/payment');
-   }
+      $state.go('app.twowaypayment');
+    else $state.go('app.payment');
+   };
 
 });

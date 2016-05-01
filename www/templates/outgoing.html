@@ -3,9 +3,10 @@
     <ion-content class="has-header has-subheader">
         <ion-list>
             <ion-item type="item-text-wrap" class="item-avatar" ng-repeat="OFlight in OFlights"
-                      href="#/app/return">
+                      ng-click="setFlight(OFlight)">
+                      {{OFlight.flightNumber}}
                 {{OFlight.origin}} - {{OFlight.destination}}
-                <p>{{OFlight.flightNumber}} {{OFlight.departureDateTime}} - {{OFlight.arrivalDateTime}}</p>
+                <p> {{OFlight.departureDateTime}} - {{OFlight.arrivalDateTime}}</p>
                 <p>{{OFLight.Airline}}    {{OFlight.cost}}</p>
             </ion-item>
         </ion-list>

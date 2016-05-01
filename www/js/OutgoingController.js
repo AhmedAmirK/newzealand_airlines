@@ -1,4 +1,4 @@
-App.controller('outgoingFlightsCtrl', function($scope, FlightsSrv, $location, $window) {
+App.controller('outgoingFlightsCtrl', function($scope, FlightsSrv, $state, $window) {
     $scope.OFlights = [];
     temp = [];
     if (FlightsSrv.getOtherAir()) {
@@ -35,9 +35,9 @@ App.controller('outgoingFlightsCtrl', function($scope, FlightsSrv, $location, $w
     $scope.setFlight = function(num) {
         FlightsSrv.setOutFlight(num);
         if (FlightsSrv.getIfRoundTrip()) {
-            $location.url('/return');
+            $state.go('app.return');
         } else
-            $location.url('/booking');
+            $state.go('app.bookings');
     }
 
 });

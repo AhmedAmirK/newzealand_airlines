@@ -52,46 +52,46 @@
 
            <label class="item item-input item-stacked-label">
                 <span class="input-label">Card Number : </span>
-                <input type="text" placeholder="Enter your card number" ng-model="cardNumber">
+                <input type="text" placeholder="Enter your card number" ng-model="input.cardNumber">
            </label>
 
 
            <label class="item item-input item-stacked-label">
                 <span class="input-label">Security Number : </span>
-                <input type="text" placeholder="Enter your security number" ng-model="securityNumber">
+                <input type="text" placeholder="Enter your security number" ng-model="input.securityNumber">
            </label>
 
 
            <label class="item item-input item-stacked-label">
                 <span class="input-label">Email Address : </span>
-                <input type="text" placeholder="Enter your email address" ng-model="emailAddress">
+                <input type="text" placeholder="Enter your email address" ng-model="input.emailAddress">
            </label>
 
            <label class="item item-input item-stacked-label">
                 <span class="input-label">First Name : </span>
-                <input type="text" placeholder="Enter your first name" ng-model="firstName">
+                <input type="text" placeholder="Enter your first name" ng-model="input.firstName">
            </label>
 
            <label class="item item-input item-stacked-label">
                 <span class="input-label">Last Name : </span>
-                <input type="text" placeholder="Enter your last name" ng-model="lastName">
+                <input type="text" placeholder="Enter your last name" ng-model="input.lastName">
            </label>
 
            <label class="item item-input item-stacked-label">
                 <span class="input-label">Passport Number : </span>
-                <input type="text" placeholder="Enter your passport number" ng-model="passportNumber">
+                <input type="text" placeholder="Enter your passport number" ng-model="input.passportNumber">
            </label>
 
            <label class="item item-input item-stacked-label">
                 <span class="input-label">Birth Date : </span>
-                <input type="date" placeholder="Enter your birth date" ng-model="birthDate">
+                <input type="date" placeholder="Enter your birth date" ng-model="input.birthDate">
            </label>
 
         </div>
 
         <br>
 
-        <button class="button button-block button-calm">Confirm</button> 
+        <button class="button button-block button-calm" ng-click="confirm()">Confirm</button> 
 
     </ion-content>
 
