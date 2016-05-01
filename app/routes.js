@@ -6,34 +6,20 @@ var moment = require('moment');
 var jwt = require('jsonwebtoken');
 var request = require("request");
 var array =require("../public/data/otherAirlinesURLS.json").serverIP;
-const async = require('async');
+var nameUrls =require("../public/data/AirlineNamesURL.json");
+const stripe = require("stripe")(process.env.STRIPESK);
+var ObjectId = require('mongodb').ObjectID;
+
 require('dotenv').load();
 
 var bookingRefNumber = 0 , seatNum = 0;
-
+// exports.initBookingSeatnNum= function(booking,seat){
+//   bookingRefNumber=booking;
+//   seatNum=seat;
+// }
 //App routes :
 
 module.exports = function(app) {
-
-  app.post('/booking', function (req, res) {
-
-          var stripeToken = req.body.paymentToken;
-
-          stripe.charges.create({
-              amount: req.flight.price.amount,
-              currency: req.flight.price.currency,
-              source: "stripeToken",
-              description: stripeToken.description //optional
-          }, function (err, data) {
-              if (err) {
-                  res.send({ refNum: null, errorMessage: err});
-              }
-              else {
-                  //create reservation in DB here
-              }
-          });
-
-      });
 
     app.get('/db/seed', function(req, res) {
 
@@ -118,13 +104,13 @@ module.exports = function(app) {
 
     app.get('/api/local/flights/search/:local/:origin/:destination/:departingDate/:returningDate/:class' ,handleTwoWay);
 
-
+// SHould be decrepiated once we use the /booking route
     app.post('/api/booking/:email/:TotalPrice/:flightNumber/:seatClass/:seatType', function(req, res) {
 
         var email = req.params.email;
-        //console.log(email);
-        var TotalPrice = req.params.TotalPrice;
-        //console.log(TotalPrice);
+        console.log(email);
+        var TotalPrice = req.params.TotalPrice *100; //cuz stripe sees them in cents
+        console.log(TotalPrice);
         var flightNumber = req.params.flightNumber;
         var seatClass = req.params.seatClass;
         var seatType = req.params.seatType;
@@ -140,19 +126,42 @@ module.exports = function(app) {
             'type': seatType
           }
         };
-
-        db.insertInBookings(jsonObject, function(err) {
-            if (err != null) {
-                console.log(err);
-            }
-            else{
-              bookingRefNumber = bookingRefNumber + 1;
-              seatNum = seatNum + 1;
-              //console.log('BOOKINGS NUM : '+bookingRefNumber);
-             // res.sendFile(__dirname + '/index.html');
+        var stripeToken; //create Token first then use it for card or alternative is to send token with angular to this api
+        stripe.tokens.create({card:{
+               number: '4242424242424242', //replace these values from real cards gotten from angular or send a token here instead of this
+               cvc: '123',
+               exp_month: 12,
+               exp_year: 2017,
              }
+            }, function(err, token) {
+         if(err) throw err
+         stripeToken=token.id;
+         console.log(stripeToken);
+         stripe.charges.create({
+             amount: TotalPrice,
+             currency: "USD",
+             source: stripeToken,
+             description:"Booking from flight refNum:"+bookingRefNumber //optional
+         }, function (err, data) {
+             if (err) {
+                 res.send({ refNum: null, errorMessage: err});
+             }
+             else {
+                 //create reservation in DB here
+                 db.insertInBookings(jsonObject, function(err) {
+                     if (err != null) {
+                       res.send({ refNum: null, errorMessage: err});
+                     }
+                     else{
+                       bookingRefNumber = bookingRefNumber + 1;
+                       seatNum = seatNum + 1;
+                       console.log('BOOKINGS NUM : '+bookingRefNumber);
+                      // res.sendFile(__dirname + '/index.html');
+                      }
+                 });
+             }
+         });
         });
-
     });
 
     // Two way to query other airlines
@@ -187,8 +196,8 @@ module.exports = function(app) {
 
     array.forEach(function(entry){
           uri=entry;
-      //console.log(entry);
-        urli='http://'+uri+'/'+'api/flights/search/'+origin+'/'+destination+'/'+departingDate+'/'+returningDate+'/'+Class;
+      console.log(entry);
+        urli='http://'+uri+'/'+'api/flights/search/'+origin+'/'+destination+'/'+departingDate+'/'+returningDate+'/'+Class +'/1';
       request({
           url: urli,
           json: true,
@@ -256,8 +265,8 @@ function addToQueue(callback) {
 
 array.forEach(function(entry){
   uri=entry;
-  //console.log(entry);
-  urli='http://'+uri+'/'+'api/flights/search/'+origin+'/'+destination+'/'+departingDate+'/'+Class;
+  console.log(entry);
+  urli='http://'+uri+'/'+'api/flights/search/'+origin+'/'+destination+'/'+departingDate+'/'+Class+'/1';
   request({
     url: urli,
     json: true,
@@ -471,4 +480,109 @@ array.forEach(function(entry){
    }
     // app.get('/api/flights/search/:origin/:destination/:departingDate/:returningDate/:class',handleTwoWay);
     app.get('/api/flights/search/:origin/:destination/:departingDate/:returningDate/:class/:seats',handleTwoWay);
+
+// serves our stripe public key
+    app.get('/stripe/pubkey', function(err,res){
+      res.json(process.env.STRIPEPK);
+    });
+// Servers other airlines public key for our angular-stripe
+app.get('/stripe/pubkey/:airline', function(err,res){
+  if(nameUrls[req.params.airline] ===undefined || nameUrls[req.params.airline] ===null)
+  console.log("Can't find that airline name in the list !"); return;
+
+  urli='http://'+nameUrls[req.params.airline] +'/stripe/pubkey/';
+  //
+    request({
+        url: urli,
+        json: true,
+        headers: {
+           'x-access-token': token
+         }
+       },
+function (error, response, body) {
+        if(error) console.log(error);
+        // if (!error && response.statusCode === 200) {}
+        else     { console.log(body)
+          res.json(body); //returning should be in form {refNum: String, errorMessage: String}
+        }
+  });
+});
+// BOOKING FOR OTHER AIRLINES TO BOOK AND ALSO FOR OURS IF WE MODIFY FRONT END FOR IT
+    app.post('/booking', function(req, res) {
+    // retrieve the token
+    var stripeToken = req.body.paymentToken; //send the stripe token here from angular
+    var flightCost  = req.body.cost *100;
+    db.searchInFlights({'_id':new ObjectId(req.body.outgoingFlightId)} , function(err,results){
+      if (err) res.send({ refNum: null, errorMessage: err});
+    else if(results.length==0) res.send({ refNum: null, errorMessage: "err: FlightID not found in DB"}); //flight ID not found in DB
+    else {
+      var jsonObject = {
+        'passengerDetails':req.body.passengerDetails, // has firstName , Lname passport Number
+        'class': req.body.class,
+        'outgoingFlightId': req.body.outgoingFlightId,
+        'returnFlightId': req.body.returnFlightId,
+        'bookingRefNumber':bookingRefNumber,
+        'flightNumber':results[0].flightNumber,
+        'email':req.body.passengerDetails[0].email,
+        'TotalPrice': flightCost,
+        'seat' : {
+          'number': seatNum ,
+          'class': req.body.class
+        }
+    }
+
+    // attempt to create a charge using token
+    stripe.charges.create({
+      amount: flightCost,
+      currency: "usd",
+      source: stripeToken,
+      description: "test"
+    }, function(err, data) {
+    if (err) res.send({ refNum: null, errorMessage: err});
+    else
+       // payment successful
+       // create reservation in database
+       db.insertInBookings(jsonObject, function(err) {
+           if (err != null) {
+             res.send({ refNum: null, errorMessage: err});
+           }
+           else{
+             bookingRefNumber = bookingRefNumber + 1;
+             seatNum = seatNum + 1;
+             res.send({ refNum: bookingRefNumber-1, errorMessage: err});
+           }
+         });
+       });
+     };
+   });
+ });
+// used to send booking to other airlines
+  app.post('otherAirlines/booking/:airline',function(req,res){
+    if(nameUrls[req.params.airline] ===undefined || nameUrls[req.params.airline] ===null)
+    console.log("Can't find that airline name in the list !"); return;
+
+    urli='http://'+nameUrls[req.params.airline] +'/'+'booking';
+    //
+      request({
+          url: urli,
+          method: 'POST',
+          json: true,
+          headers: {
+             'x-access-token': token
+           },
+           body:{
+             passengerDetails:req.body.passengerDetails,
+            class: req.body.class,
+            cost: req.body.cost,
+            outgoingFlightId: req.body.outgoingFlightId,
+            returnFlightId: req.body.returnFlightId,
+            paymentToken: req.body.paymentToken // stripe generated token from angular stripe publishable key (MUST call stripe/pubkey/:airline first)
+           }
+      }, function (error, response, body) {
+          if(error) console.log(error);
+          // if (!error && response.statusCode === 200) {}
+          else    res.json(body);
+    });
+  })
+
 };
