@@ -36,16 +36,26 @@ var App = angular.module('starter', ['ionic', 'starter.controllers'])
     url: '/search',
     views: {
       'menuContent': {
-        templateUrl: 'templates/search.html'
+        templateUrl: 'templates/search.html',
+        controller:'mainCtrl'
       }
     }
   })
+    .state('app.outgoing', {
+      url: '/out',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/outgoing.html',
+          controller:'outgoingFlightsCtrl'
+        }
+      }
+    })
 
   .state('app.track', {
       url: '/track',
       views: {
         'menuContent': {
-          templateUrl: 'templates/outgoing.html',
+          templateUrl: 'templates/track.html',
           controller:'trackCtrl'
         }
       }
