@@ -77,9 +77,9 @@ $scope.showBooking = function(){
         else{
           var Booking = results[0];
           $scope.Booking = Booking;
-      $scope.seatNumber = Booking.seat.number;
-      $scope.seatClass = Booking.seat.class;
-      $scope.seatType = Booking.seat.type;
+          $scope.seatNumber = Booking.seat.number;
+          $scope.seatClass = Booking.seat.class;
+          $scope.seatType = Booking.seat.type;
         }
 
   });

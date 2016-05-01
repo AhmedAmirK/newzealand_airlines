@@ -105,28 +105,47 @@ module.exports = function(app) {
     app.get('/api/local/flights/search/:local/:origin/:destination/:departingDate/:returningDate/:class' ,handleTwoWay);
 
 // SHould be decrepiated once we use the /booking route
-    app.post('/api/booking/:email/:TotalPrice/:flightNumber/:seatClass/:seatType', function(req, res) {
+    app.post('/api/booking/:flightNumber/:TotalPrice/:email/:fname/:lname/:cardNumber/:passportNumber/:securityNumber/:seatClass/:seatType', function(req, res) {
 
         var email = req.params.email;
-        console.log(email);
-        var TotalPrice = req.params.TotalPrice *100; //cuz stripe sees them in cents
-        console.log(TotalPrice);
+        var TotalPrice = req.params.TotalPrice * 100; //cuz stripe sees them in cents
         var flightNumber = req.params.flightNumber;
         var seatClass = req.params.seatClass;
         var seatType = req.params.seatType;
+        var fname = req.params.fname;
+        var lname = req.params.lname;
+        var passportNum = req.params.passportNumber;
 
         var jsonObject = {
-          'email':email,
-          'TotalPrice': TotalPrice,
-          'flightNumber': flightNumber,
-          'bookingRefNumber': bookingRefNumber,
-          'seat' : {
-            'number': seatNum ,
-            'class': seatClass ,
-            'type': seatType
-          }
-        };
-        var stripeToken; //create Token first then use it for card or alternative is to send token with angular to this api
+            'bookingRefNumber': bookingRefNumber,
+            'firstName': fname, 
+            'lastName':  lname,
+            'passportNum': passportNum, 
+            'email': email,
+            'seat' : {
+                'number': seatNum ,
+                'class': seatClass ,
+                'type': seatType
+            },
+            class: seatClass,
+            cost: TotalPrice,
+            flightNumber: flightNumber 
+        }
+
+       //create reservation in DB here
+       db.insertInBookings(jsonObject, function(err) {
+           if (err != null) {
+             res.json({ refNum: null, errorMessage: err});
+           }
+           else{
+             bookingRefNumber = bookingRefNumber + 1;
+             seatNum = seatNum + 1;
+             console.log('BOOKINGS NUM : '+bookingRefNumber);
+             res.sendFile(__dirname + '/index.html');
+            }
+       });
+
+/*        var stripeToken; //create Token first then use it for card or alternative is to send token with angular to this api
         stripe.tokens.create({card:{
                number: '4242424242424242', //replace these values from real cards gotten from angular or send a token here instead of this
                cvc: '123',
@@ -144,24 +163,24 @@ module.exports = function(app) {
              description:"Booking from flight refNum:"+bookingRefNumber //optional
          }, function (err, data) {
              if (err) {
-                 res.send({ refNum: null, errorMessage: err});
+                 res.json({ refNum: null, errorMessage: err});
              }
              else {
                  //create reservation in DB here
                  db.insertInBookings(jsonObject, function(err) {
                      if (err != null) {
-                       res.send({ refNum: null, errorMessage: err});
+                       res.json({ refNum: null, errorMessage: err});
                      }
                      else{
                        bookingRefNumber = bookingRefNumber + 1;
                        seatNum = seatNum + 1;
                        console.log('BOOKINGS NUM : '+bookingRefNumber);
-                      // res.sendFile(__dirname + '/index.html');
+                       res.sendFile(__dirname + '/index.html');
                       }
                  });
              }
          });
-        });
+        });*/
     });
 
     // Two way to query other airlines
@@ -516,6 +535,7 @@ function (error, response, body) {
       if (err) res.send({ refNum: null, errorMessage: err});
     else if(results.length==0) res.send({ refNum: null, errorMessage: "err: FlightID not found in DB"}); //flight ID not found in DB
     else {
+
       var jsonObject = {
         'passengerDetails':req.body.passengerDetails, // has firstName , Lname passport Number
         'class': req.body.class,

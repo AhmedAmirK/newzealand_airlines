@@ -26,11 +26,20 @@ App.controller('paymentCtrl', function($scope, $state , FlightsSrv,$window){
   $scope.confirm = function(){
 
     if($scope.input.emailAddress==undefined || $scope.input.firstName==undefined || $scope.input.lastName==undefined || $scope.input.cardNumber==undefined || $scope.input.passportNumber==undefined || $scope.input.securityNumber==undefined){
-      $window.alert("Please Fill out all fields!");
+      $window.alert("Please fill out all the fields");
       
     }
 else{
-     FlightsSrv.bookFlight($scope.OutFlight.flightNumber,$scope.input.clientEmail,$scope.OutFlight.cost,$scope.OutFlight.class);
+     FlightsSrv.bookFlight($scope.OutFlight.flightNumber,
+                           $scope.OutFlight.cost,
+                           $scope.OutFlight.class,
+                           $scope.input.emailAddress,
+                           $scope.input.firstName,
+                           $scope.input.lastName,
+                           $scope.input.cardNumber,
+                           $scope.input.passportNumber,
+                           $scope.input.securityNumber
+                          );
 
      if(FlightsSrv.getIfRoundTrip()){
 
@@ -54,6 +63,7 @@ else{
      }
 
      $state.go('app');
+
   	} 
   };
 

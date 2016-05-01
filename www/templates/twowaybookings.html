@@ -29,19 +29,6 @@
                <h3><label class = "price">Price: ${{OutFlight.cost}} </label></h3>
          </label>
 
-         <h1> <u> Seating Preference </u> </h1>
-
-         <label class="item item-input item-select">
-            <div class="input-label">
-                &nbsp;
-            </div>
-            <select ng-model="input.selectedSeat" ng-change="selectSeat()">
-                <option selected ng-value="Window">Window Seat</option>
-                <option ng-value="Aisle">Aisle Seat</option>
-                <option ng-value="Cabin">Cabin Seat</option>
-            </select>
-        </label>
-
       </div>
 
     <div class="list list-inset">
@@ -69,6 +56,19 @@
        </label>
 
     </div>
+
+    <h1> <u> Seating Preference </u> </h1>
+
+     <label class="item item-input item-select">
+        <div class="input-label">
+            &nbsp;
+        </div>
+        <select ng-model="input.selectedSeat" ng-change="selectSeat()">
+            <option selected ng-value="Window">Window Seat</option>
+            <option ng-value="Aisle">Aisle Seat</option>
+            <option ng-value="Cabin">Cabin Seat</option>
+        </select>
+    </label>
 
     <button class="button button-block button-calm" ng-click="bookFlights()">Book Flight</button> 
 

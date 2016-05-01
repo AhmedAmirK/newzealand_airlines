@@ -40,9 +40,21 @@ App.factory('FlightsSrv', function($http) {
         getOtherAir: function() {
             return this.Other;
         },
-        bookFlight: function(flightNumber, email, TotalPrice, c) {
-            var myQuery = email + '/' + TotalPrice + '/' + flightNumber + '/' + c + '/' + this.Seat;
+        bookFlight : function(flightNumber , TotalPrice , seatClass , email , fname , lname , cardNumber , passportNumber , securityNumber) {
+
+            var myQuery = flightNumber + '/' + 
+                          TotalPrice + '/' + 
+                          email + '/' + 
+                          fname + '/' +
+                          lname + '/' + 
+                          cardNumber + '/' +
+                          passportNumber + '/' +
+                          securityNumber + '/' +
+                          seatClass + '/' + 
+                          this.Seat;
+
             $http.post('/api/booking/' + myQuery);
+
         },
         setSelectedOriginAirport: function(value) {
             this.selectedOriginAirport = value;
