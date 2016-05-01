@@ -57,7 +57,6 @@ module.exports = function(app) {
 
     app.get('/api/flights/track/:flightNumber', function(req, res) {
         var num = parseInt(req.params.flightNumber);
-
         db.searchInFlights({'flightNumber':num} , function(err,results){
         if(err == null)
             res.json(results);
@@ -129,7 +128,7 @@ module.exports = function(app) {
         };
         var stripeToken; //create Token first then use it for card or alternative is to send token with angular to this api
         stripe.tokens.create({card:{
-               number: '4242424242424242', //replace these values from real cards gotten from angular or send a token here
+               number: '4242424242424242', //replace these values from real cards gotten from angular or send a token here instead of this
                cvc: '123',
                exp_month: 12,
                exp_year: 2017,
@@ -207,7 +206,7 @@ module.exports = function(app) {
              'x-access-token': token
            }
       }, addToQueue(function (q) {
-        console.log(q);
+        //console.log(q);
         var j=0; //to filter out empty
         for(j=0;q.length>j;j++){
           if(q[j].outgoingFlights.length!=0 ){
@@ -224,7 +223,7 @@ module.exports = function(app) {
           filterArr.push(q[j]);
         }
         }
-        console.log(filterArr);
+       // console.log(filterArr);
         res.send(filterArr);
         // console.log(q);
         // res.send(q);
@@ -239,8 +238,8 @@ var origin=req.params.origin;
 var destination=req.params.destination;
 var departingDate=req.params.departingDate;
 departingDate = moment(departingDate).toDate().getTime();
-console.log(departingDate);
-console.log(origin);
+//console.log(departingDate);
+//console.log(origin);
 var Class = req.params.class;
 var jwtSecret = process.env.JWTSECRET;
 var uri;
@@ -373,7 +372,7 @@ array.forEach(function(entry){
                 j++;
                 result={};
             }
-            console.log(outgoingFlightsArr);
+            //console.log(outgoingFlightsArr);
               res.json({"outgoingFlights":outgoingFlightsArr});
           }
 
@@ -412,7 +411,7 @@ array.forEach(function(entry){
 
        db.searchInFlights(jsonObject , function(err,results){
            if(err == null){
-             console.log(results);
+             //console.log(results);
              for(i=0;i<results.length;i++){
                if(Class=="economy"){
                  if((results[i].capacity.economy-results[i].occupiedSeatsEconomy.length)-seats<0) continue; //if not enough seats skip this entry
@@ -441,7 +440,7 @@ array.forEach(function(entry){
              }
              db.searchInFlights(jsonObject2 , function(err2,results2){
                if(err2 == null){
-                 console.log(results2);
+                 //console.log(results2);
                  for(i=0;i<results2.length;i++){
                    if(Class=="economy"){
                      if((results2[i].capacity.economy-results2[i].occupiedSeatsEconomy.length)-seats<0) continue; //if not enough seats skip this entry

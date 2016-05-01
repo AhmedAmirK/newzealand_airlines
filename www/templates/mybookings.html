@@ -1,0 +1,48 @@
+
+<ion-view title="New Zealand Airlines">
+
+    <ion-content class="has-header has-subheader">
+
+	   <label class="item item-input item-stacked-label">
+		    <span class="input-label">Enter the booking number </span>
+		    <input type="text" placeholder="Enter the booking reference number" ng-model="input.bookingRefNumber">
+       </label>
+
+        <button class="button button-block button-calm" ng-click="showBooking()">Find Booking</button> 
+
+        <div class="list list-inset">
+	        	
+	        <div class="item item-input item-stacked-label">            
+	                <h3>Booking Reference Number : {{Booking.bookingRefNumber}}</h3>
+	        </div>
+
+	        <div class="item item-input item-stacked-label">            
+	                <h3>Email : {{Booking.email}}</h3>
+	        </div>
+
+	        <div class="item item-input item-stacked-label">            
+	                <h3>Total Price : {{Booking.TotalPrice}}</h3>
+	        </div>
+
+	        <div class="item item-input item-stacked-label">            
+	                <h3>Flight Number : {{Booking.flightNumber}}</h3>
+	        </div>
+
+	        <div class="item item-input item-stacked-label">            
+	                <h3>Seat Number : {{seatNumber}}</h3>
+	        </div>
+
+	        <div class="item item-input item-stacked-label">            
+	                <h3>Seat Class : {{seatClass}}</h3>
+	        </div>
+
+	        <div class="item item-input item-stacked-label">            
+	                <h3>Seat Type : {{seatType}}</h3>
+	        </div>
+
+        </div> 
+
+    </ion-content>
+
+</ion-view>
+

@@ -1,0 +1,77 @@
+
+<ion-view title="New Zealand Airlines">
+
+  <ion-content class="has-header has-subheader">
+
+      <div class="list list-inset">
+
+         <h1><u>Flight Details</u></h1>
+
+         <h2><u>Outgoing</u></h2>
+
+         <label class="item item-input item-stacked-label">
+               <h3>Flight number:    {{OutFlight.flightNumber}} </h3>
+         </label>
+
+         <label class="item item-input item-stacked-label">
+               <h3>Departure time:   {{OutFlight.departureDateTime}} </h3>
+         </label>
+
+         <label class="item item-input item-stacked-label">
+               <h3>Arrival time:   {{OutFlight.arrivalDateTime}} </h3>
+         </label>
+
+         <label class="item item-input item-stacked-label">
+               <h3>Desired Class: {{OutFlight.class}}</h3>
+         </label>
+
+         <label class="item item-input item-stacked-label">
+               <h3><label class = "price">Price: ${{OutFlight.cost}} </label></h3>
+         </label>
+
+         <h1> <u> Seating Preference </u> </h1>
+
+         <label class="item item-input item-select">
+            <div class="input-label">
+                &nbsp;
+            </div>
+            <select ng-model="input.selectedSeat" ng-change="selectSeat()">
+                <option selected ng-value="Window">Window Seat</option>
+                <option ng-value="Aisle">Aisle Seat</option>
+                <option ng-value="Cabin">Cabin Seat</option>
+            </select>
+        </label>
+
+      </div>
+
+    <div class="list list-inset">
+
+      <h2><u>Return</u></h2>
+
+       <label class="item item-input item-stacked-label">
+             <h3>Flight number:    {{RetFlight.flightNumber}} </h3>
+       </label>
+
+       <label class="item item-input item-stacked-label">
+             <h3>Departure time:   {{RetFlight.departureDateTime}} </h3>
+       </label>
+
+       <label class="item item-input item-stacked-label">
+             <h3>Arrival time:   {{RetFlight.arrivalDateTime}} </h3>
+       </label>
+
+       <label class="item item-input item-stacked-label">
+             <h3>Desired Class: {{RetFlight.class}}</h3>
+       </label>
+
+       <label class="item item-input item-stacked-label">
+             <h3><label class = "price">Price: ${{RetFlight.cost}} </label></h3>
+       </label>
+
+    </div>
+
+    <button class="button button-block button-calm" ng-click="bookFlights()">Book Flight</button> 
+
+</ion-content>
+
+</ion-view>

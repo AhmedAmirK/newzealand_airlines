@@ -1,0 +1,43 @@
+
+<ion-view title="New Zealand Airlines">
+
+    <ion-content class="has-header has-subheader">
+
+        <div class="list list-inset">
+
+        <label class="item item-input item-stacked-label">
+            <span class="input-label">Enter the flight number </span>
+            <input type="text" placeholder="Enter the flight number" ng-model="input.flightNumber">
+        </label>
+
+        <button class="button button-block button-calm" ng-click="showData()">Track</button> 
+	        	
+	        <div class="item item-input item-stacked-label">            
+	                <h3>Flight number : {{Flight.flightNumber}}</h3>
+	        </div>
+
+	        <div class="item item-input item-stacked-label">            
+	                <h3>From : {{Flight.origin}}</h3>
+	        </div>
+
+	        <div class="item item-input item-stacked-label">            
+	                <h3>To : {{Flight.destination}}</h3>
+	        </div>
+
+	        <div class="item item-input item-stacked-label">            
+	                <h3>Arrival time : {{Flight.arrivalDateTime}}</h3>
+	        </div>
+
+	        <div class="item item-input item-stacked-label">            
+	                <h3>Current State : Unavailable </h3>
+	        </div>
+
+	        <div class="item item-input item-stacked-label">            
+	                <h3>ETA : N/A</h3>
+	        </div>
+
+        </div> 
+
+    </ion-content>
+
+</ion-view>
