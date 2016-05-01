@@ -41,29 +41,16 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('PlaylistsCtrl', function($scope) {
-  $scope.playlists = [
-    { title: 'Reggae', id: 1 },
-    { title: 'Chill', id: 2 },
-    { title: 'Dubstep', id: 3 },
-    { title: 'Indie', id: 4 },
-    { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 }
-  ];
-})
-
-.controller('PlaylistCtrl', function($scope, $stateParams) {
-})
-
-/*.controller('trackCtrl',function($scope,FlightsSrv,$window){
+.controller('trackCtrl',function($scope,FlightsSrv,$window){
 
     $scope.Flight= {};
+    $scope.input = {};
 
     $scope.showData = function(){
    
-      FlightsSrv.trackFlight($scope.num).success(function(results){
+      FlightsSrv.trackFlight($scope.input.flightNumber).success(function(results){
         if(results.length == 0){
-              $window.alert('No flight matches this number !');
+              $window.alert('No flight matches this number !' + $scope.input.flightNumber);
             }
             else{
               $scope.Flight = results[0];
@@ -72,4 +59,4 @@ angular.module('starter.controllers', [])
 
     };
 
-});*/
+});

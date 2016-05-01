@@ -11,6 +11,7 @@ App.factory('FlightsSrv', function($http) {
             return $http.get('/db/seed');
         },
         trackFlight: function(data) {
+            console.log("heerrre!!");
             return $http.get('/api/flights/track/' + data);
         },
         findBooking: function(num) {

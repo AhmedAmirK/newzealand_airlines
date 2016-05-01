@@ -7,10 +7,10 @@
 
         <label class="item item-input item-stacked-label">
             <span class="input-label">Enter the flight number </span>
-            <input type="text" placeholder="Enter the flight number" ng-model="flightNumber">
+            <input type="text" placeholder="Enter the flight number" ng-model="input.flightNumber">
         </label>
 
-        <button class="button button-block button-calm">Track</button> 
+        <button class="button button-block button-calm" ng-click="showData()">Track</button> 
 	        	
 	        <div class="item item-input item-stacked-label">            
 	                <h3>Flight number : {{Flight.flightNumber}}</h3>
