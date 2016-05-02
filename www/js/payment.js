@@ -25,7 +25,7 @@ App.controller('paymentCtrl', function($scope, $state , FlightsSrv,$window){
 
   $scope.confirm = function(){
 
-    if($scope.input.emailAddress==undefined || $scope.input.firstName==undefined || $scope.input.lastName==undefined || $scope.input.cardNumber==undefined || $scope.input.passportNumber==undefined || $scope.input.securityNumber==undefined){
+    if($scope.input.emailAddress==undefined || $scope.input.firstName==undefined || $scope.input.lastName==undefined || $scope.input.cardNumber==undefined || $scope.input.passportNumber==undefined || $scope.input.securityNumber==undefined || $scope.input.clientExpMonth==undefined || $scope.input.clientExpYear==undefined || $scope.input.birthDate==undefined){
       $window.alert("Please fill out all the fields");
       
     }
@@ -36,14 +36,17 @@ else{
                            $scope.input.emailAddress,
                            $scope.input.firstName,
                            $scope.input.lastName,
+                           $scope.input.birthDate,
                            $scope.input.cardNumber,
                            $scope.input.passportNumber,
-                           $scope.input.securityNumber
+                           $scope.input.securityNumber,
+                           $scope.input.clientExpMonth,
+                           $scope.input.clientExpYear
                           );
 
      if(FlightsSrv.getIfRoundTrip()){
 
-        FlightsSrv.bookFlight($scope.RetFlight.flightNumber,$scope.input.clientEmail,$scope.RetFlight.cost,$scope.RetFlight.class);
+        FlightsSrv.bookFlight($scope.RetFlight.flightNumber,$scope.RetFlight.cost,$scope.RetFlight.class,$scope.input.emailAddress,$scope.input.firstName,$scope.input.lastName,$scope.input.birthDate,$scope.input.cardNumber,$scope.input.passportNumber,$scope.input.securityNumber,$scope.input.clientExpMonth,$scope.input.clientExpYear);
 
         FlightsSrv.getCurrentBookingRefNum().success(function(obj){
           var ret = obj['num'] - 1 , out = ret - 1;
@@ -62,7 +65,7 @@ else{
         });
      }
 
-     $state.go('app');
+     $state.go('app/search');
 
   	} 
   };

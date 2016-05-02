@@ -579,7 +579,7 @@ function (error, response, body) {
 // used to send booking to other airlines
   app.post('otherAirlines/booking/:airline',function(req,res){
     if(nameUrls[req.params.airline] ===undefined || nameUrls[req.params.airline] ===null)
-    console.log("Can't find that airline name in the list !"); return;
+    {console.log("Can't find that airline name in the list !"); return;}
 
     urli='http://'+nameUrls[req.params.airline] +'/'+'booking';
     //

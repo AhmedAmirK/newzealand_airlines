@@ -1,16 +1,17 @@
 <!doctype html>
-
 <html ng-app="WebApp">
-  <head>
-    <title>New Zealand Airlines</title>
 
+<head>
+    <title>New Zealand Airlines</title>
     <script src="/js/jquery-2.2.0.min.js"></script>
     <script src="/js/angular.min.js"></script>
     <script src="/js/angular-route.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/ui-bootstrap-tpls-1.2.5.min.js"></script>
+
     <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
-    <script type="text/javascript"> Stripe.setPublishableKey('pk_test_iODlRTJ5yPofXCcpJZH8cXSD'); </script>
+        <script type="text/javascript" src="js/angular-stripe.js" ></script>
+    
     <script src="core.js"></script>
     <script src="/controllers/mainCtrl.js"></script>
     <script src="/controllers/returningFlightsCtrl.js"></script>
@@ -22,31 +23,28 @@
     <script src="/services/flightsSrv.js"></script>
     <link rel="stylesheet" href="/styles/bootstrap.min.css">
     <style type="text/css">
-        body {
-            background: url("./assets/background.jpg") no-repeat center center fixed;
-            background-size: cover;
-        }
-
+    body {
+        background: url("./assets/background.jpg") no-repeat center center fixed;
+        background-size: cover;
+    }
     </style>
-  </head>
-    <body>
+</head>
 
+<body>
     <!-- TOP NAVBAR -->
     <nav class="navbar navbar-inverse">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="/#/">New ZeaLand AirLines</a>
-                </div>
-
-                <ul class="nav navbar-nav ">
-                    <li><a href="/#/">Home</a></li>
-                    <li><a href="#track">Track Flight</a></li>
-                    <li><a href="#findBooking">My bookings</a></li>
-                </ul>
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/#/">New ZeaLand AirLines</a>
             </div>
-            </nav>
-
+            <ul class="nav navbar-nav ">
+                <li><a href="/#/">Home</a></li>
+                <li><a href="#track">Track Flight</a></li>
+                <li><a href="#findBooking">My bookings</a></li>
+            </ul>
+        </div>
+    </nav>
     <div ng-view></div>
+</body>
 
-    </body>
 </html>
