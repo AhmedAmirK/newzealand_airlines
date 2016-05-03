@@ -68,8 +68,8 @@ App.factory('FlightsSrv', function($http) {
                                 }],
                                 class: seatClass,
                                 cost: TotalPrice,
-                                outgoingFlightId: this.flightID,
-                                returnFlightId: this.retFlightID,
+                                outgoingFlightId: flightID,
+                                returnFlightId: retflightID,
                                 paymentToken: response.id
 
                             });
@@ -96,8 +96,8 @@ App.factory('FlightsSrv', function($http) {
                                 }],
                                 class: seatClass,
                                 cost: TotalPrice,
-                                outgoingFlightId: this.flightID,
-                                returnFlightId: this.retFlightID,
+                                outgoingFlightId: flightID,
+                                returnFlightId: retflightID,
                                 paymentToken: response.id
                         });
                     });

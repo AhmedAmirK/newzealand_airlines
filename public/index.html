@@ -22,14 +22,28 @@
     <script src="/controllers/findBookingCtrl.js"></script>
     <script src="/services/flightsSrv.js"></script>
     <link rel="stylesheet" href="/styles/bootstrap.min.css">
-    <style type="text/css">
-    body {
-        background: url("./assets/background.jpg") no-repeat center center fixed;
-        background-size: cover;
-    }
-    </style>
-</head>
-
+    <link rel="stylesheet" type="text/css" href="/styles/background.css">
+   <div id="Fader">
+    <img class="bgfade" src="/assets/background.jpg">
+    <img class="bgfade" src="/assets/background2.jpg">
+    <img class="bgfade" src="/assets/background3.jpg">
+     <script type="text/javascript">
+    $(window).load(function(){
+$('img.bgfade').hide();
+var dg_H = $(window).height();
+var dg_W = $(window).width();
+$('#Fader').css({'height':dg_H,'width':dg_W});
+function anim() {
+    $("#Fader img.bgfade").first().appendTo('#Fader').fadeOut(1500);
+    $("#Fader img").first().fadeIn(1500);
+    setTimeout(anim, 3000);
+}
+anim();})
+$(window).resize(function(){window.location.href=window.location.href})
+   </script>
+   </div>
+  
+  </head>
 <body>
     <!-- TOP NAVBAR -->
     <nav class="navbar navbar-inverse">
