@@ -13,9 +13,11 @@ App.controller('bookingsCtrl', function($scope, $state , FlightsSrv){
  
 
    $scope.bookFlights= function(){
-    FlightsSrv.setOutFlightID($scope.OutFlight._id);
+
+    FlightsSrv.setOutFlightID($scope.OutFlight.flightId);
+
     if ($scope.RetFlight != undefined)
-        FlightsSrv.setRetFlightID($scope.RetFlight._id);
+        FlightsSrv.setRetFlightID($scope.RetFlight.flightId);
 
     if(FlightsSrv.getIfRoundTrip())
       $state.go('app.twowaypayment');

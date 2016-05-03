@@ -13,9 +13,9 @@ App.controller('bookingsCtrl', function($scope, $location, FlightsSrv) {
 
 
     $scope.bookFlights = function() {
-        FlightsSrv.setOutFlightID($scope.OutFlight._id);
+    FlightsSrv.setOutFlightID($scope.OutFlight.flightId);
         if ($scope.RetFlight != undefined)
-            FlightsSrv.setRetFlightID($scope.RetFlight._id);
+        FlightsSrv.setRetFlightID($scope.RetFlight.flightId);
         if (FlightsSrv.getIfRoundTrip())
             $location.url('/paymentTwoWay');
         else $location.url('/payment');
