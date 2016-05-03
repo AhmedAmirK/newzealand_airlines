@@ -11,7 +11,6 @@ App.factory('FlightsSrv', function($http) {
             return $http.get('/db/seed');
         },
         trackFlight: function(data) {
-            console.log("heerrre!!");
             return $http.get('/api/flights/track/' + data);
         },
         findBooking: function(num) {
@@ -40,20 +39,74 @@ App.factory('FlightsSrv', function($http) {
         getOtherAir: function() {
             return this.Other;
         },
-        bookFlight : function(flightNumber , TotalPrice , seatClass , email , fname , lname , cardNumber , passportNumber , securityNumber) {
+         bookFlight: function(flightNumber, TotalPrice, seatClass, email, fname, lname, dateOfBirth, cardNumber, passportNumber, securityNumber, expMonth, expYear) {
 
-            var myQuery = flightNumber + '/' + 
-                          TotalPrice + '/' + 
-                          email + '/' + 
-                          fname + '/' +
-                          lname + '/' + 
-                          cardNumber + '/' +
-                          passportNumber + '/' +
-                          securityNumber + '/' +
-                          seatClass + '/' + 
-                          this.Seat;
+            $http.get('/api/token').success(function(token) {
 
-            $http.post('/api/booking/' + myQuery);
+                if (this.Other) {
+                    $http.get('/stripe/pubkey/' + this.FlightNo.Airline, {
+                        "headers": { 'x-access-token': token.token }
+                    }).success(function(pubkey) {
+
+                        Stripe.setPublishableKey(pubkey);
+                        Stripe.card.createToken({
+                            number: cardNumber,
+                            cvc: securityNumber,
+                            exp_month: expMonth,
+                            exp_year: expYear
+                        }, function(status,response) {
+                            
+                            console.log(this.flightID);
+                            $http.post('otherAirlines/booking/' + this.FlightNo.Airline, {
+                                "wt": token.token,
+                                passengerDetails: [{
+                                    firstName: fname,
+                                    lastName: lname,
+                                    passportNum: passportNumber,
+                                    passportExpiryDate: "" + expMonth + "/" + expYear,
+                                    dateOfBirth: dateOfBirth,
+                                    email: email
+                                }],
+                                class: seatClass,
+                                cost: TotalPrice,
+                                outgoingFlightId: this.flightID,
+                                returnFlightId: this.retflightID,
+                                paymentToken: response.id
+
+                            });
+                            Stripe.setPublishableKey('pk_test_iODlRTJ5yPofXCcpJZH8cXSD');
+                        });
+                    });
+                } else {
+
+                    Stripe.card.createToken({
+                        number: cardNumber,
+                            cvc: securityNumber,
+                            exp_month: expMonth,
+                            exp_year: expYear
+                    },function(status,response){
+                        $http.post('/booking',{
+                             "wt": token.token,
+                                passengerDetails: [{
+                                    firstName: fname,
+                                    lastName: lname,
+                                    passportNum: passportNumber,
+                                    passportExpiryDate: "" + expMonth + "/" + expYear,
+                                    dateOfBirth: dateOfBirth,
+                                    email: email
+                                }],
+                                class: seatClass,
+                                cost: TotalPrice,
+                                outgoingFlightId: this.flightID,
+                                returnFlightId: this.retflightID,
+                                paymentToken: response.id
+                        });
+                    });
+
+                }
+
+            });
+
 
         },
         setSelectedOriginAirport: function(value) {
@@ -91,6 +144,12 @@ App.factory('FlightsSrv', function($http) {
         },
         getOutFlight: function() {
             return this.FlightNo;
+        },
+        setOutFlightID: function(id) {
+            this.flightID = id;
+        },
+        setRetFlightID: function(id) {
+            this.retflightID = id;
         },
         setRetFlight: function(value) {
             this.retFlightNo = value;

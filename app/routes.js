@@ -502,6 +502,7 @@ array.forEach(function(entry){
 
 // serves our stripe public key
     app.get('/stripe/pubkey', function(err,res){
+      console.log(res);
       res.json(process.env.STRIPEPK);
     });
 // Servers other airlines public key for our angular-stripe
@@ -579,7 +580,7 @@ function (error, response, body) {
 // used to send booking to other airlines
   app.post('otherAirlines/booking/:airline',function(req,res){
     if(nameUrls[req.params.airline] ===undefined || nameUrls[req.params.airline] ===null)
-    console.log("Can't find that airline name in the list !"); return;
+    {console.log("Can't find that airline name in the list !"); return;}
 
     urli='http://'+nameUrls[req.params.airline] +'/'+'booking';
     //
