@@ -39,10 +39,10 @@ App.factory('FlightsSrv', function($http) {
         getOtherAir: function() {
             return this.Other;
         },
-         bookFlight: function(flightNumber, TotalPrice, seatClass, email, fname, lname, dateOfBirth, cardNumber, passportNumber, securityNumber, expMonth, expYear) {
+         bookFlight: function(flightID,retflightID, TotalPrice, seatClass, email, fname, lname, dateOfBirth, cardNumber, passportNumber, securityNumber, expMonth, expYear) {
 
             $http.get('/api/token').success(function(token) {
-
+                console.log(flightID);
                 if (this.Other) {
                     $http.get('/stripe/pubkey/' + this.FlightNo.Airline, {
                         "headers": { 'x-access-token': token.token }
@@ -56,7 +56,6 @@ App.factory('FlightsSrv', function($http) {
                             exp_year: expYear
                         }, function(status,response) {
                             
-                            console.log(this.flightID);
                             $http.post('otherAirlines/booking/' + this.FlightNo.Airline, {
                                 "wt": token.token,
                                 passengerDetails: [{
@@ -70,7 +69,7 @@ App.factory('FlightsSrv', function($http) {
                                 class: seatClass,
                                 cost: TotalPrice,
                                 outgoingFlightId: this.flightID,
-                                returnFlightId: this.retflightID,
+                                returnFlightId: this.retFlightID,
                                 paymentToken: response.id
 
                             });
@@ -98,7 +97,7 @@ App.factory('FlightsSrv', function($http) {
                                 class: seatClass,
                                 cost: TotalPrice,
                                 outgoingFlightId: this.flightID,
-                                returnFlightId: this.retflightID,
+                                returnFlightId: this.retFlightID,
                                 paymentToken: response.id
                         });
                     });
@@ -144,12 +143,6 @@ App.factory('FlightsSrv', function($http) {
         },
         getOutFlight: function() {
             return this.FlightNo;
-        },
-        setOutFlightID: function(id) {
-            this.flightID = id;
-        },
-        setRetFlightID: function(id) {
-            this.retflightID = id;
         },
         setRetFlight: function(value) {
             this.retFlightNo = value;

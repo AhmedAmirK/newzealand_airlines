@@ -532,11 +532,13 @@ function (error, response, body) {
     // retrieve the token
     var stripeToken = req.body.paymentToken; //send the stripe token here from angular
     var flightCost  = req.body.cost *100;
-    db.searchInFlights({'_id':new ObjectId(req.body.outgoingFlightId)} , function(err,results){
+    console.log(req.body.outgoingFlightId);
+    db.searchInFlights({'_id': ObjectId(req.body.outgoingFlightId)} , function(err,results){
+console.log(results);
       if (err) res.send({ refNum: null, errorMessage: err});
     else if(results.length==0) res.send({ refNum: null, errorMessage: "err: FlightID not found in DB"}); //flight ID not found in DB
     else {
-
+console.log('here');
       var jsonObject = {
         'passengerDetails':req.body.passengerDetails, // has firstName , Lname passport Number
         'class': req.body.class,
@@ -551,19 +553,9 @@ function (error, response, body) {
           'class': req.body.class
         }
     }
-
+console.log(jsonObject);
     // attempt to create a charge using token
-    stripe.charges.create({
-      amount: flightCost,
-      currency: "usd",
-      source: stripeToken,
-      description: "test"
-    }, function(err, data) {
-    if (err) res.send({ refNum: null, errorMessage: err});
-    else
-       // payment successful
-       // create reservation in database
-       db.insertInBookings(jsonObject, function(err) {
+           db.insertInBookings(jsonObject, function(err) {
            if (err != null) {
              res.send({ refNum: null, errorMessage: err});
            }
@@ -573,6 +565,17 @@ function (error, response, body) {
              res.send({ refNum: bookingRefNumber-1, errorMessage: err});
            }
          });
+    stripe.charges.create({
+      amount: flightCost,
+      currency: "usd",
+      source: stripeToken,
+      description: "test"
+    }, function(err, data) {
+    if (err) res.send({ refNum: null, errorMessage: err});
+
+       // payment successful
+       // create reservation in database
+
        });
      };
    });

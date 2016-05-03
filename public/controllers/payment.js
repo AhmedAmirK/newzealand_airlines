@@ -29,7 +29,8 @@ App.controller('paymentCtrl', function($scope, $location , FlightsSrv,$window){
       
     }
 else{
-          FlightsSrv.bookFlight($scope.OutFlight.flightNumber,
+          FlightsSrv.bookFlight($scope.OutFlight.flightId,
+                            undefined,
                            $scope.OutFlight.cost,
                            $scope.OutFlight.class,
                            $scope.clientEmail,
@@ -45,7 +46,7 @@ else{
 
      if(FlightsSrv.getIfRoundTrip()){
 
-        FlightsSrv.bookFlight($scope.RetFlight.flightNumber,$scope.RetFlight.cost,$scope.RetFlight.class,$scope.clientEmail,$scope.clientFName,$scope.clientLName,$scope.clientBDate,$scope.clientCNum,$scope.clientPNum,$scope.clientSNum,$scope.clientExpMonth,$scope.clientExpYear);
+        FlightsSrv.bookFlight($scope.OutFlight.flightId,$scope.RetFlight.flightId,$scope.RetFlight.cost,$scope.RetFlight.class,$scope.clientEmail,$scope.clientFName,$scope.clientLName,$scope.clientBDate,$scope.clientCNum,$scope.clientPNum,$scope.clientSNum,$scope.clientExpMonth,$scope.clientExpYear);
 
         FlightsSrv.getCurrentBookingRefNum().success(function(obj){
           var ret = obj['num'] - 1 , out = ret - 1;
