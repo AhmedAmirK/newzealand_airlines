@@ -65,7 +65,7 @@ else{
         });
      }
 
-     $state.go('app/search');
+     $state.go('app.search');
 
   	} 
   };

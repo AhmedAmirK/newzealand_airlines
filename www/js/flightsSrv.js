@@ -55,7 +55,8 @@ App.factory('FlightsSrv', function($http) {
                             exp_month: expMonth,
                             exp_year: expYear
                         }, function(status,response) {
-
+                            
+                            console.log(this.flightID);
                             $http.post('otherAirlines/booking/' + this.FlightNo.Airline, {
                                 "wt": token.token,
                                 passengerDetails: [{
@@ -68,8 +69,7 @@ App.factory('FlightsSrv', function($http) {
                                 }],
                                 class: seatClass,
                                 cost: TotalPrice,
-                                outgoingFlightId: this.FlightNo._id,
-                                returnFlightId: this.retFlightNo._id,
+                                outgoingFlightId: this.flightID,
                                 paymentToken: response.id
 
                             });
@@ -96,8 +96,8 @@ App.factory('FlightsSrv', function($http) {
                                 }],
                                 class: seatClass,
                                 cost: TotalPrice,
-                                outgoingFlightId: this.FlightNo._id,
-                                returnFlightId: this.retFlightNo._id,
+                                outgoingFlightId: this.flightID,
+                                //returnFlightId: this.retFlightNo._id,
                                 paymentToken: response.id
                         });
                     });
@@ -143,6 +143,9 @@ App.factory('FlightsSrv', function($http) {
         },
         getOutFlight: function() {
             return this.FlightNo;
+        },
+        setOutFlightID: function(id) {
+            this.flightID = id;
         },
         setRetFlight: function(value) {
             this.retFlightNo = value;

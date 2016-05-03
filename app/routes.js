@@ -502,6 +502,7 @@ array.forEach(function(entry){
 
 // serves our stripe public key
     app.get('/stripe/pubkey', function(err,res){
+      console.log(res);
       res.json(process.env.STRIPEPK);
     });
 // Servers other airlines public key for our angular-stripe
