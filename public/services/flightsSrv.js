@@ -4,9 +4,7 @@
 
 App.factory('FlightsSrv', function($http) {
     return {
-        getStripeToken: function(){
-            return  'pk_test_iODlRTJ5yPofXCcpJZH8cXSD';
-        },
+
         getAirportCodes: function() {
             return $http.get('/api/data/codes');
         },
@@ -58,7 +56,8 @@ App.factory('FlightsSrv', function($http) {
                             exp_month: expMonth,
                             exp_year: expYear
                         }, function(status,response) {
-
+                            
+                            console.log(this.flightID);
                             $http.post('otherAirlines/booking/' + this.FlightNo.Airline, {
                                 "wt": token.token,
                                 passengerDetails: [{
@@ -71,12 +70,12 @@ App.factory('FlightsSrv', function($http) {
                                 }],
                                 class: seatClass,
                                 cost: TotalPrice,
-                                outgoingFlightId: this.FlightNo._id,
-                                returnFlightId: this.retFlightNo._id,
+                                outgoingFlightId: this.flightID,
+                                returnFlightId: this.retflightID,
                                 paymentToken: response.id
 
                             });
-                            Stripe.setPublishableKey(this.getStripeToken());
+                            Stripe.setPublishableKey('pk_test_iODlRTJ5yPofXCcpJZH8cXSD');
                         });
                     });
                 } else {
@@ -99,8 +98,8 @@ App.factory('FlightsSrv', function($http) {
                                 }],
                                 class: seatClass,
                                 cost: TotalPrice,
-                                outgoingFlightId: this.FlightNo._id,
-                                returnFlightId: this.retFlightNo._id,
+                                outgoingFlightId: this.flightID,
+                                returnFlightId: this.retflightID,
                                 paymentToken: response.id
                         });
                     });

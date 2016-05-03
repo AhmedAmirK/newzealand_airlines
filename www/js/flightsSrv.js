@@ -70,10 +70,11 @@ App.factory('FlightsSrv', function($http) {
                                 class: seatClass,
                                 cost: TotalPrice,
                                 outgoingFlightId: this.flightID,
+                                returnFlightId: this.retflightID,
                                 paymentToken: response.id
 
                             });
-                            Stripe.setPublishableKey(this.getStripeToken());
+                            Stripe.setPublishableKey('pk_test_iODlRTJ5yPofXCcpJZH8cXSD');
                         });
                     });
                 } else {
@@ -97,7 +98,7 @@ App.factory('FlightsSrv', function($http) {
                                 class: seatClass,
                                 cost: TotalPrice,
                                 outgoingFlightId: this.flightID,
-                                //returnFlightId: this.retFlightNo._id,
+                                returnFlightId: this.retflightID,
                                 paymentToken: response.id
                         });
                     });
@@ -146,6 +147,9 @@ App.factory('FlightsSrv', function($http) {
         },
         setOutFlightID: function(id) {
             this.flightID = id;
+        },
+        setRetFlightID: function(id) {
+            this.retflightID = id;
         },
         setRetFlight: function(value) {
             this.retFlightNo = value;
