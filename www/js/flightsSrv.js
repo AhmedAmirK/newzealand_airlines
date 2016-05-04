@@ -84,7 +84,7 @@ App.factory('FlightsSrv', function($http) {
                             exp_month: expMonth,
                             exp_year: expYear
                     },function(status,response){
-                        $http.post('/booking',{
+                       $http.post('/booking',{
                              "wt": token.token,
                                 passengerDetails: [{
                                     firstName: fname,

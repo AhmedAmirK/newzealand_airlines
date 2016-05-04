@@ -30,8 +30,10 @@ App.controller('paymentCtrl', function($scope, $state , FlightsSrv,$window){
       
     }
 else{
-     FlightsSrv.bookFlight($scope.OutFlight.flightId,
-                            undefined,
+     if(FlightsSrv.getIfRoundTrip()){
+             FlightsSrv.bookFlight(
+                           $scope.OutFlight.flightId,
+                           $scope.RetFlight.flightId,  
                            $scope.OutFlight.cost,
                            $scope.OutFlight.class,
                            $scope.input.emailAddress,
@@ -44,27 +46,29 @@ else{
                            $scope.input.clientExpMonth,
                            $scope.input.clientExpYear
                           );
-
-     if(FlightsSrv.getIfRoundTrip()){
-
-        FlightsSrv.bookFlight($scope.OutFlight.flightId,$scope.RetFlight.flightId,$scope.RetFlight.cost,$scope.RetFlight.class,$scope.input.emailAddress,$scope.input.firstName,$scope.input.lastName,$scope.input.birthDate,$scope.input.cardNumber,$scope.input.passportNumber,$scope.input.securityNumber,$scope.input.clientExpMonth,$scope.input.clientExpYear);
-
-        FlightsSrv.getCurrentBookingRefNum().success(function(obj){
-          var ret = obj['num'] - 1 , out = ret - 1;
-          $window.alert("Payment Completed Succesfully . Your outgoing booking reference number is "+ out +
-                        " and your returning booking reference number is " + ret +
-                        " remember these numbers to search for your bookings later on . Thank You for choosing New Zealand Air");
-        });
-
      }
-     
      else{
-        FlightsSrv.getCurrentBookingRefNum().success(function(obj){
-          var num = obj['num'] - 1;
-          $window.alert("Payment Completed Succesfully . Your booking reference number is "+ num +
-                        " remember this number to search for your booking later on . Thank You for choosing New Zealand Air");
-        });
+               FlightsSrv.bookFlight($scope.OutFlight.flightId,
+                           undefined,
+                           $scope.OutFlight.cost,
+                           $scope.OutFlight.class,
+                           $scope.input.emailAddress,
+                           $scope.input.firstName,
+                           $scope.input.lastName,
+                           $scope.input.birthDate,
+                           $scope.input.cardNumber,
+                           $scope.input.passportNumber,
+                           $scope.input.securityNumber,
+                           $scope.input.clientExpMonth,
+                           $scope.input.clientExpYear
+                          );
      }
+
+      FlightsSrv.getCurrentBookingRefNum().success(function(obj){
+      var num = obj['num'];
+      $window.alert("Payment Completed Succesfully . Your booking reference number is "+ num +
+                    " remember this number to search for your booking later on . Thank You for choosing New Zealand Air");
+    });
 
      $state.go('app.search');
 

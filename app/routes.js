@@ -14,7 +14,7 @@ var token = jwt.sign('payload', jwtSecret,  { algorithm: 'HS256' });
 
 require('dotenv').load();
 
-var bookingRefNumber = 0 , seatNum = 0;
+var bookingRefNumber = -1 , seatNum = -1;
 // exports.initBookingSeatnNum= function(booking,seat){
 //   bookingRefNumber=booking;
 //   seatNum=seat;
@@ -73,6 +73,7 @@ module.exports = function(app) {
         var num = parseInt(req.params.bookingRefNumber);
 
         db.searchInBookings({'bookingRefNumber':num} , function(err,results){
+         //console.log('ZZZZZZZZZZZZ ' + results); 
         if(err == null)
             res.json(results);
         else
@@ -81,7 +82,18 @@ module.exports = function(app) {
     });
 
     app.get('/api/booking/currentrefnum',function(req,res){
-      res.json({num : bookingRefNumber});
+      db.getBookings(function(err,array){
+        if(err == null){
+          if(array.length > 0)
+             res.json({num : (array[array.length-1].bookingRefNumber) + 1});
+           else
+             res.json({num : 0});
+        }
+        else{
+          console.log(err);
+        }
+      });
+      
     });
 
     app.get('/api/data/codes', function(req, res) {
@@ -536,10 +548,11 @@ function (error, response, body) {
     var flightCost  = req.body.cost *100;
     console.log(req.body.outgoingFlightId);
     db.searchInFlights({'_id': ObjectId(req.body.outgoingFlightId)} , function(err,results){
-console.log(results);
       if (err) res.send({ refNum: null, errorMessage: err});
     else if(results.length==0) res.send({ refNum: null, errorMessage: "err: FlightID not found in DB"}); //flight ID not found in DB
     else {
+      bookingRefNumber = bookingRefNumber + 1;
+      seatNum = seatNum + 1;
       var jsonObject = {
         'passengerDetails':req.body.passengerDetails, // has firstName , Lname passport Number
         'class': req.body.class,
@@ -554,8 +567,16 @@ console.log(results);
           'class': req.body.class
         }
     }
-console.log(jsonObject);
-    // attempt to create a charge using token
+
+
+   db.insertInBookings(jsonObject, function(err) {
+   if (err != null) {
+     res.send({ refNum: null, errorMessage: err});
+   }
+   else{
+     res.send({ refNum: bookingRefNumber-1, errorMessage: err});
+   }
+   });
 
     stripe.charges.create({
       amount: flightCost,
@@ -564,21 +585,8 @@ console.log(jsonObject);
       description: "test"
     }, function(err, data) {
     if (err) res.send({ refNum: null, errorMessage: err});
-
-       // payment successful
-       // create reservation in database
-       console.log(err);
-       console.log('payment done');
-       db.insertInBookings(jsonObject, function(err) {
-       if (err != null) {
-         res.send({ refNum: null, errorMessage: err});
-       }
-       else{
-         bookingRefNumber = bookingRefNumber + 1;
-         seatNum = seatNum + 1;
-         res.send({ refNum: bookingRefNumber-1, errorMessage: err});
-       }
-     });
+          if(!err)
+            console.log('payment done');
        });
      };
    });

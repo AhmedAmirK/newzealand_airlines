@@ -31,8 +31,7 @@ var App = angular.module('starter', ['ionic', 'starter.controllers','angular-str
     .state('app', {
     url: '/app',
     abstract: true,
-    templateUrl: 'templates/menu.html',
-    controller: 'AppCtrl'
+    templateUrl: 'templates/menu.html'
   })
 
   .state('app.search', {
