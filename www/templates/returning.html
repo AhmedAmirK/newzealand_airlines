@@ -1,0 +1,15 @@
+<ion-view title="Returning Flights">
+
+    <ion-content class="has-header has-subheader">
+        <ion-list>
+            <ion-item type="item-text-wrap" class="item-avatar" ng-repeat="RFlight in RFlights"
+                      ng-click="setFlight(RFlight)">
+                      {{RFlight.flightNumber}} 
+                {{RFlight.origin}} - {{RFlight.destination}}
+                <p>{{RFlight.departureDateTime}} - {{RFlight.arrivalDateTime}}</p>
+                <p>{{RFLight.Airline}}    {{RFlight.cost}}</p>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+
+</ion-view>

@@ -24,16 +24,29 @@ App.controller('paymentCtrl', function($scope, $location , FlightsSrv,$window){
 
   $scope.confirm = function(){
 
-    if($scope.clientEmail==undefined || $scope.clientFName==undefined || $scope.clientLName==undefined || $scope.clientCNum==undefined || $scope.clientPNum==undefined || $scope.clientSNum==undefined){
+    if($scope.clientEmail==undefined || $scope.clientFName==undefined || $scope.clientLName==undefined || $scope.clientCNum==undefined || $scope.clientPNum==undefined || $scope.clientSNum==undefined || $scope.clientExpMonth==undefined || $scope.clientExpYear==undefined|| $scope.clientBDate==undefined){
       $window.alert("Please Fill out all fields!");
       
     }
 else{
-     FlightsSrv.bookFlight($scope.OutFlight.flightNumber,$scope.clientEmail,$scope.OutFlight.cost,$scope.OutFlight.class);
+          FlightsSrv.bookFlight($scope.OutFlight.flightId,
+                            undefined,
+                           $scope.OutFlight.cost,
+                           $scope.OutFlight.class,
+                           $scope.clientEmail,
+                           $scope.clientFName,
+                           $scope.clientLName,
+                           $scope.clientBDate,
+                           $scope.clientCNum,
+                           $scope.clientPNum,
+                           $scope.clientSNum,
+                           $scope.clientExpMonth,
+                           $scope.clientExpYear
+                          );
 
      if(FlightsSrv.getIfRoundTrip()){
 
-        FlightsSrv.bookFlight($scope.RetFlight.flightNumber,$scope.clientEmail,$scope.RetFlight.cost,$scope.RetFlight.class);
+        FlightsSrv.bookFlight($scope.OutFlight.flightId,$scope.RetFlight.flightId,$scope.RetFlight.cost,$scope.RetFlight.class,$scope.clientEmail,$scope.clientFName,$scope.clientLName,$scope.clientBDate,$scope.clientCNum,$scope.clientPNum,$scope.clientSNum,$scope.clientExpMonth,$scope.clientExpYear);
 
         FlightsSrv.getCurrentBookingRefNum().success(function(obj){
           var ret = obj['num'] - 1 , out = ret - 1;

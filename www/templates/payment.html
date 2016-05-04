@@ -1,0 +1,106 @@
+
+<ion-view>
+
+    <ion-content class="has-header has-subheader">
+
+        <div class="list list-inset">
+
+           <h1>  <u>Flight Details Confirmation</u> </h1>
+
+           <label class="item item-input item-stacked-label">
+                 <h3> Flight Number: {{OutFlight.flightNumber}} </h3>
+           </label>
+
+           <label class="item item-input item-stacked-label">
+                 <h3> Departure Time: {{OutFlight.departureDateTime}} </h3>
+           </label>
+
+           <label class="item item-input item-stacked-label">
+                 <h3> Arrival Time: {{OutFlight.arrivalDateTime}} </h3>
+           </label>
+
+           <label class="item item-input item-stacked-label">
+                 <h3> Class: {{OutFlight.class}}</h3>
+           </label>
+
+           <label class="item item-input item-stacked-label">
+                 <h3> <h3> Seat Type: {{Seat}}</h3> </h3>
+           </label>
+
+           <label class="item item-input item-stacked-label">
+                 <h3> Price : ${{OutFlight.cost}}  </h3>
+           </label>
+
+        </div>
+
+        <div>
+          
+           <h2 id="Info">Credit Card Information</h2>
+           <h3 id="Info">Card Type</h3>
+           <label class="item item-input item-select">
+              <div class="input-label">
+                  &nbsp;
+              </div>
+              <select>
+                  <option selected>Visa</option>
+                  <option>Paypal</option>
+                  <option>Master Card</option>
+              </select>
+           </label>
+
+           <label class="item item-input item-stacked-label">
+                <span class="input-label">Card Number : </span>
+                <input type="text" placeholder="Enter your card number" ng-model="input.cardNumber">
+           </label>
+
+
+           <label class="item item-input item-stacked-label">
+                <span class="input-label">Security Number : </span>
+                <input type="text" placeholder="Enter your security number" ng-model="input.securityNumber">
+           </label>
+
+           <label class="item item-input item-stacked-label">
+                <span class="input-label">Expiration Month : </span>
+                <input type="text" placeholder="Enter your cards Expiry Month eg.12" ng-model="input.clientExpMonth">
+           </label>
+
+           <label class="item item-input item-stacked-label">
+                <span class="input-label">Expiration Year : </span>
+                <input type="text" placeholder="Enter your cards Expiry Year eg.2017" ng-model="input.clientExpYear">
+           </label>
+
+           <label class="item item-input item-stacked-label">
+                <span class="input-label">Email Address : </span>
+                <input type="text" placeholder="Enter your email address" ng-model="input.emailAddress">
+           </label>
+
+           <label class="item item-input item-stacked-label">
+                <span class="input-label">First Name : </span>
+                <input type="text" placeholder="Enter your first name" ng-model="input.firstName">
+           </label>
+
+           <label class="item item-input item-stacked-label">
+                <span class="input-label">Last Name : </span>
+                <input type="text" placeholder="Enter your last name" ng-model="input.lastName">
+           </label>
+
+           <label class="item item-input item-stacked-label">
+                <span class="input-label">Passport Number : </span>
+                <input type="text" placeholder="Enter your passport number" ng-model="input.passportNumber">
+           </label>
+
+           <label class="item item-input item-stacked-label">
+                <span class="input-label">Birth Date : </span>
+                <input type="date" placeholder="Enter your birth date" ng-model="input.birthDate">
+           </label>
+
+        </div>
+
+        <br>
+
+        <button class="button button-block button-calm" ng-click="confirm()">Confirm</button> 
+
+    </ion-content>
+
+</ion-view>
+
