@@ -9,6 +9,8 @@ var array =require("../public/data/otherAirlinesURLS.json").serverIP;
 var nameUrls =require("../public/data/AirlineNamesURL.json");
 const stripe = require("stripe")(process.env.STRIPESK);
 var ObjectId = require('mongodb').ObjectID;
+var jwtSecret = process.env.JWTSECRET;
+var token = jwt.sign('payload', jwtSecret,  { algorithm: 'HS256' });
 
 require('dotenv').load();
 
@@ -105,83 +107,83 @@ module.exports = function(app) {
     app.get('/api/local/flights/search/:local/:origin/:destination/:departingDate/:returningDate/:class' ,handleTwoWay);
 
 // SHould be decrepiated once we use the /booking route
-    app.post('/api/booking/:flightNumber/:TotalPrice/:email/:fname/:lname/:cardNumber/:passportNumber/:securityNumber/:seatClass/:seatType', function(req, res) {
-
-        var email = req.params.email;
-        var TotalPrice = req.params.TotalPrice * 100; //cuz stripe sees them in cents
-        var flightNumber = req.params.flightNumber;
-        var seatClass = req.params.seatClass;
-        var seatType = req.params.seatType;
-        var fname = req.params.fname;
-        var lname = req.params.lname;
-        var passportNum = req.params.passportNumber;
-
-        var jsonObject = {
-            'bookingRefNumber': bookingRefNumber,
-            'firstName': fname, 
-            'lastName':  lname,
-            'passportNum': passportNum, 
-            'email': email,
-            'seat' : {
-                'number': seatNum ,
-                'class': seatClass ,
-                'type': seatType
-            },
-            class: seatClass,
-            cost: TotalPrice,
-            flightNumber: flightNumber 
-        }
-
-       //create reservation in DB here
-       db.insertInBookings(jsonObject, function(err) {
-           if (err != null) {
-             res.json({ refNum: null, errorMessage: err});
-           }
-           else{
-             bookingRefNumber = bookingRefNumber + 1;
-             seatNum = seatNum + 1;
-             console.log('BOOKINGS NUM : '+bookingRefNumber);
-             res.sendFile(__dirname + '/index.html');
-            }
-       });
-
-/*        var stripeToken; //create Token first then use it for card or alternative is to send token with angular to this api
-        stripe.tokens.create({card:{
-               number: '4242424242424242', //replace these values from real cards gotten from angular or send a token here instead of this
-               cvc: '123',
-               exp_month: 12,
-               exp_year: 2017,
-             }
-            }, function(err, token) {
-         if(err) throw err
-         stripeToken=token.id;
-         console.log(stripeToken);
-         stripe.charges.create({
-             amount: TotalPrice,
-             currency: "USD",
-             source: stripeToken,
-             description:"Booking from flight refNum:"+bookingRefNumber //optional
-         }, function (err, data) {
-             if (err) {
-                 res.json({ refNum: null, errorMessage: err});
-             }
-             else {
-                 //create reservation in DB here
-                 db.insertInBookings(jsonObject, function(err) {
-                     if (err != null) {
-                       res.json({ refNum: null, errorMessage: err});
-                     }
-                     else{
-                       bookingRefNumber = bookingRefNumber + 1;
-                       seatNum = seatNum + 1;
-                       console.log('BOOKINGS NUM : '+bookingRefNumber);
-                       res.sendFile(__dirname + '/index.html');
-                      }
-                 });
-             }
-         });
-        });*/
-    });
+//     app.post('/api/booking/:flightNumber/:TotalPrice/:email/:fname/:lname/:cardNumber/:passportNumber/:securityNumber/:seatClass/:seatType', function(req, res) {
+//
+//         var email = req.params.email;
+//         var TotalPrice = req.params.TotalPrice * 100; //cuz stripe sees them in cents
+//         var flightNumber = req.params.flightNumber;
+//         var seatClass = req.params.seatClass;
+//         var seatType = req.params.seatType;
+//         var fname = req.params.fname;
+//         var lname = req.params.lname;
+//         var passportNum = req.params.passportNumber;
+//
+//         var jsonObject = {
+//             'bookingRefNumber': bookingRefNumber,
+//             'firstName': fname,
+//             'lastName':  lname,
+//             'passportNum': passportNum,
+//             'email': email,
+//             'seat' : {
+//                 'number': seatNum ,
+//                 'class': seatClass ,
+//                 'type': seatType
+//             },
+//             class: seatClass,
+//             cost: TotalPrice,
+//             flightNumber: flightNumber
+//         }
+//
+//        //create reservation in DB here
+//        db.insertInBookings(jsonObject, function(err) {
+//            if (err != null) {
+//              res.json({ refNum: null, errorMessage: err});
+//            }
+//            else{
+//              bookingRefNumber = bookingRefNumber + 1;
+//              seatNum = seatNum + 1;
+//              console.log('BOOKINGS NUM : '+bookingRefNumber);
+//              res.sendFile(__dirname + '/index.html');
+//             }
+//        });
+//
+// /*        var stripeToken; //create Token first then use it for card or alternative is to send token with angular to this api
+//         stripe.tokens.create({card:{
+//                number: '4242424242424242', //replace these values from real cards gotten from angular or send a token here instead of this
+//                cvc: '123',
+//                exp_month: 12,
+//                exp_year: 2017,
+//              }
+//             }, function(err, token) {
+//          if(err) throw err
+//          stripeToken=token.id;
+//          console.log(stripeToken);
+//          stripe.charges.create({
+//              amount: TotalPrice,
+//              currency: "USD",
+//              source: stripeToken,
+//              description:"Booking from flight refNum:"+bookingRefNumber //optional
+//          }, function (err, data) {
+//              if (err) {
+//                  res.json({ refNum: null, errorMessage: err});
+//              }
+//              else {
+//                  //create reservation in DB here
+//                  db.insertInBookings(jsonObject, function(err) {
+//                      if (err != null) {
+//                        res.json({ refNum: null, errorMessage: err});
+//                      }
+//                      else{
+//                        bookingRefNumber = bookingRefNumber + 1;
+//                        seatNum = seatNum + 1;
+//                        console.log('BOOKINGS NUM : '+bookingRefNumber);
+//                        res.sendFile(__dirname + '/index.html');
+//                       }
+//                  });
+//              }
+//          });
+//         });*/
+//     });
 
     // Two way to query other airlines
   app.get('/api/otherAirlines/twoWay/:origin/:destination/:departingDate/:returningDate/:class', function(req, res) {
@@ -538,7 +540,6 @@ console.log(results);
       if (err) res.send({ refNum: null, errorMessage: err});
     else if(results.length==0) res.send({ refNum: null, errorMessage: "err: FlightID not found in DB"}); //flight ID not found in DB
     else {
-console.log('here');
       var jsonObject = {
         'passengerDetails':req.body.passengerDetails, // has firstName , Lname passport Number
         'class': req.body.class,
@@ -555,16 +556,7 @@ console.log('here');
     }
 console.log(jsonObject);
     // attempt to create a charge using token
-           db.insertInBookings(jsonObject, function(err) {
-           if (err != null) {
-             res.send({ refNum: null, errorMessage: err});
-           }
-           else{
-             bookingRefNumber = bookingRefNumber + 1;
-             seatNum = seatNum + 1;
-             res.send({ refNum: bookingRefNumber-1, errorMessage: err});
-           }
-         });
+
     stripe.charges.create({
       amount: flightCost,
       currency: "usd",
@@ -575,7 +567,18 @@ console.log(jsonObject);
 
        // payment successful
        // create reservation in database
-
+       console.log(err);
+       console.log('payment done');
+       db.insertInBookings(jsonObject, function(err) {
+       if (err != null) {
+         res.send({ refNum: null, errorMessage: err});
+       }
+       else{
+         bookingRefNumber = bookingRefNumber + 1;
+         seatNum = seatNum + 1;
+         res.send({ refNum: bookingRefNumber-1, errorMessage: err});
+       }
+     });
        });
      };
    });
