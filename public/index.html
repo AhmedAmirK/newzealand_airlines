@@ -1,14 +1,17 @@
 <!doctype html>
-
 <html ng-app="WebApp">
-  <head>
-    <title>New Zealand Airlines</title>
 
+<head>
+    <title>New Zealand Airlines</title>
     <script src="/js/jquery-2.2.0.min.js"></script>
     <script src="/js/angular.min.js"></script>
     <script src="/js/angular-route.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/ui-bootstrap-tpls-1.2.5.min.js"></script>
+
+    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+        <script type="text/javascript" src="js/angular-stripe.js" ></script>
+    
     <script src="core.js"></script>
     <script src="/controllers/mainCtrl.js"></script>
     <script src="/controllers/returningFlightsCtrl.js"></script>
@@ -18,34 +21,44 @@
     <script src="/controllers/payment.js"></script>
     <script src="/controllers/findBookingCtrl.js"></script>
     <script src="/services/flightsSrv.js"></script>
-
     <link rel="stylesheet" href="/styles/bootstrap.min.css">
-    <style type="text/css">
-        body {
-            background: url("./assets/greenery.JPG") no-repeat center center fixed;
-            background-size: cover;
-        }
-
-    </style>
+    <link rel="stylesheet" type="text/css" href="/styles/background.css">
+   <div id="Fader">
+    <img class="bgfade" src="/assets/background.jpg">
+    <img class="bgfade" src="/assets/background2.jpg">
+    <img class="bgfade" src="/assets/background3.jpg">
+     <script type="text/javascript">
+    $(window).load(function(){
+$('img.bgfade').hide();
+var dg_H = $(window).height();
+var dg_W = $(window).width();
+$('#Fader').css({'height':dg_H,'width':dg_W});
+function anim() {
+    $("#Fader img.bgfade").first().appendTo('#Fader').fadeOut(1500);
+    $("#Fader img").first().fadeIn(1500);
+    setTimeout(anim, 3000);
+}
+anim();})
+$(window).resize(function(){window.location.href=window.location.href})
+   </script>
+   </div>
+  
   </head>
-    <body>
-
+<body>
     <!-- TOP NAVBAR -->
     <nav class="navbar navbar-inverse">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="/#/">New ZeaLand AirLines</a>
-                </div>
-
-                <ul class="nav navbar-nav ">
-                    <li><a href="/#/">Home</a></li>
-                    <li><a href="#track">Track Flight</a></li>
-                    <li><a href="#findBooking">My bookings</a></li>
-                </ul>
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/#/">New ZeaLand AirLines</a>
             </div>
-            </nav>
-
+            <ul class="nav navbar-nav ">
+                <li><a href="/#/">Home</a></li>
+                <li><a href="#track">Track Flight</a></li>
+                <li><a href="#findBooking">My bookings</a></li>
+            </ul>
+        </div>
+    </nav>
     <div ng-view></div>
+</body>
 
-    </body>
 </html>

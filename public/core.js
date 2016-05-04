@@ -1,8 +1,9 @@
 
-var App = angular.module('WebApp', ['ui.bootstrap', 'ngRoute']);
+var App = angular.module('WebApp', ['ui.bootstrap', 'ngRoute','angular-stripe']);
 
 
 App.config(function($routeProvider) {
+
     $routeProvider
 
         // route for the home page
@@ -46,4 +47,9 @@ App.config(function($routeProvider) {
             templateUrl:'partials/paymentTwoWay.html' ,
             controller:'paymentCtrl'
         });
+});
+
+
+App.config(function(stripeProvider){
+    stripeProvider.setPublishableKey('pk_test_iODlRTJ5yPofXCcpJZH8cXSD');
 });

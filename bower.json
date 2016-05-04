@@ -1,0 +1,13 @@
+{
+  "name": "the-mean-machine",
+  "description": "Air New ZeaLand airplane reservation system",
+  "main": "server.js",
+  "authors": [
+    "Ahmed Amir <ahmedkhalaf24@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/secourse2016/the-mean-machine",
+  "dependencies": {
+    "angular-payments": "*"
+  }
+}

@@ -1,7 +1,7 @@
 .jumbotron{
  position: relative;
  top: 80px;
- height: 700px;
+ height: 800px;
  left: 120px;
  width: 1200px;
  border: none;
@@ -46,7 +46,7 @@ div.well {
  box-shadow: 1px 1px 5px rgba(49, 21, 4, 0.4);
  width: 600px;
  padding: 100px;
- height: 600px;
+ height: 700px;
  border: 10px #A9A9A9;
  margin: 100px;
  position: relative;
