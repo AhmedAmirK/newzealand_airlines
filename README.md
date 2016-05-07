@@ -1,8 +1,13 @@
 # The-Mean-Machine--AirNewZealand <br>
-
 A Software Engineering project to create a functional website with the MEAN technology Stack. <br>
 <br>
-<b><u>Read me before pushing and pulling !</u></b><br><br>
+# Notes for when Grading and running <br>
+1) The search must contain the date field <br>
+2) In the ionic app on the mobile there are no search results appearing for some reason but when trying the ionic locally it works and there are search results so please try it from the browser. <br>
+
+<br>
+
+#<b><u>Read me before pushing and pulling !</u></b><br><br>
 1) Clone the repo to your directory<br>
 2) Any new feature please create a new branch for it (don't touch Dev or Master branch)<br>
 3) After finishing a/the feature <u>PULL</u> the Dev branch with your local repo and merge then resolve conflicts locally.<br>
