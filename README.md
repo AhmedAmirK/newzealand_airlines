@@ -4,6 +4,8 @@ A Software Engineering project to create a functional website with the MEAN tech
 # Notes for when Grading and running <br>
 1) The search must contain the date field <br>
 2) The evaluation should be done on the browser for ionic <br>
+<br>
+<b><u>On a side note for Sprint 1: </u></b> We request a review of our grade for the 1st sprint since we felt that we had accomplished all that was required.<br> Additionally, Concerning grading for sprint 1 , we all as a team created the views and the baseline code for the website which was the first commit I had pushed in the repo , furthermore, a team mate of ours called "Khaled" had completed his part ;however, he was coding with another team mate named "Ahmed" on the same pc when they finished they pushed with Ahmed's PC So Khaled didnt get any grades for the sprint 1. Since the team didnt know about the importance of individually pushing to github and it being a major factor of the grading. We had wanted to talk to you about these points in the prior weeks but our timings didn't coincide and it didn't come to mind at the moments our timings did , we hope you don't mind that we just wrote these points in the read me and thank you.
 
 <br>
 
