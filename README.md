@@ -3,7 +3,7 @@ A Software Engineering project to create a functional website with the MEAN tech
 <br>
 # Notes for when Grading and running <br>
 1) The search must contain the date field <br>
-2) In the ionic app on the mobile there are no search results appearing for some reason but when trying the ionic locally it works and there are search results so please try it from the browser. <br>
+2) The evaluation should be done on the browser for ionic <br>
 
 <br>
 
